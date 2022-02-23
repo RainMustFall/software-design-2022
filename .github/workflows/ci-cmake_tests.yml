@@ -14,14 +14,15 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Configure CMake
+      working-directory: cli-implementation
       run: cmake -S $GITHUB_WORKSPACE -B ${{runner.workspace}}/build
 
     - name: Build
-      working-directory: ${{runner.workspace}}/build
+      working-directory: cli-implementation/${{runner.workspace}}/build
       run: cmake --build .
 
     - name: Test
-      working-directory: ${{runner.workspace}}/build
+      working-directory: cli-implementation/${{runner.workspace}}/build
       run: GTEST_OUTPUT=xml:test-results/ GTEST_COLOR=1 ctest -V
 
     - name: Upload test results
@@ -29,4 +30,4 @@ jobs:
       if: failure()
       with:
         name: test_results_xml
-        path: ${{runner.workspace}}/build/test-results/**/*.xml
+        path: cli-implementation/${{runner.workspace}}/build/test-results/**/*.xml
