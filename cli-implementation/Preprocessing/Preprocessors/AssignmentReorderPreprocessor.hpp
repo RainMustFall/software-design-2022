@@ -20,12 +20,13 @@ public:
             auto& cur = tokens[i];
             auto& next = tokens[i + 1];
             if (cur.GetType() == TokenType::assignment) {
-                if (next.GetType() != TokenType::substitute || prev.GetType() != TokenType::text)
+                if (next.GetType() != TokenType::text || prev.GetType() != TokenType::text)
                     throw PreprocessingException("Invalid assignment");
                 newTokens.pop_back();
                 newTokens.emplace_back(TokenType::text, "=");
-                newTokens.emplace_back(TokenType::text, next.GetArgument());
                 newTokens.push_back(prev);
+                if (i != tokens.size() - 2)
+                    newTokens.push_back(next);
                 i++;
             }
             else {

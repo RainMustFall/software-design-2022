@@ -8,7 +8,7 @@
 #include "DefaultConfiguration.hpp"
 
 
-std::string start(const std::string& inputString, const DefaultConfiguration& configuration) {
+std::string handle(const std::string& inputString, const DefaultConfiguration& configuration) {
     std::istringstream inputStream(inputString);
     std::vector<Token> tokens;
     auto parsed = Parser::Parse(inputStream);
@@ -34,17 +34,27 @@ std::string start(const std::string& inputString, const DefaultConfiguration& co
 
 void smoke_test() {
     DefaultConfiguration configuration;
-    auto helloWorldTest = start("echo \"Hello, world!\"", configuration);
+    auto helloWorldTest = handle("echo \"Hello, world!\"", configuration);
     assert(helloWorldTest == "Hello, world!");
 }
 
+void start_cli() {
+    DefaultConfiguration configuration;
+    std::string line;
+    std::getline(std::cin, line);
+    while (line != "exit") {
+        try{
+            std::cout << handle(line, configuration) << std::endl;
+        }
+        catch (std::exception& err) {
+            auto what = err.what();
+            std::cerr << what << std::endl;
+        }
+        std::getline(std::cin, line);
+    }
+}
+
 int main() {
-    try {
-        smoke_test();
-    }
-    catch (std::exception& err) {
-        auto what = err.what();
-        std::cerr << what;
-    }
+    start_cli();
     return 0;
 }

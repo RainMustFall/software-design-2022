@@ -15,6 +15,7 @@
 #include "CommandRegistry.hpp"
 #include "EchoCommand.hpp"
 #include "QuoteToTextPreprocessor.hpp"
+#include "AssignCommand.hpp"
 
 class DefaultConfiguration {
 public:
@@ -48,16 +49,19 @@ private:
     static CommandRegistry* SetUpRegistry(){
         auto registry = new CommandRegistry();
         return registry
-            ->WithFactory("echo", [](std::vector<std::string>& args) { return reinterpret_cast<ICommand *>(new EchoCommand(args)); });
+            ->WithFactory("echo",
+                          [](std::vector<std::string>& args) { return reinterpret_cast<ICommand *>(new EchoCommand(args)); })
+            ->WithFactory("=",
+                          [](std::vector<std::string>& args) { return reinterpret_cast<ICommand *>(new AssignCommand(args)); });
     }
 
     static CombinedPreprocessor* SetUpPreprocessor(IStorage* storage){
         std::vector<IPreprocessor*> preprocessors = {
-                new AssignmentReorderPreprocessor(),
                 new SubstitutionPreprocessor(storage),
                 new DoubleQuoteMergePreprocessor(),
                 new SpaceFilterPreprocessor(),
-                new QuoteToTextPreprocessor()
+                new QuoteToTextPreprocessor(),
+                new AssignmentReorderPreprocessor(),
         };
         return new CombinedPreprocessor(preprocessors);
     }

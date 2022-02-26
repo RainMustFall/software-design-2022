@@ -18,7 +18,7 @@ public:
             if (token.GetType() == TokenType::substitute) {
                 std::string key = token.GetArgument();
                 std::string value;
-                if (_throwOnMissing && !_storage->TryGet(key, value))
+                if (!_storage->TryGet(key, value) && _throwOnMissing)
                     throw PreprocessingException("Unable to substitute " + key + ". No such value in underlying storage.");
                 token = TokenType::text;
                 token.SetArgument(value);
