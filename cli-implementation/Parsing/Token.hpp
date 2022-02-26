@@ -22,6 +22,8 @@ enum TokenType {
 
 class Token {
 public:
+    explicit Token() : _tokenType(TokenType::undefined) {}
+
     explicit Token(TokenType tokenType) : _tokenType(tokenType)
     {}
 
@@ -36,32 +38,23 @@ public:
         return _argument;
     }
 
+    void SetType(TokenType newType) {
+        _tokenType = newType;
+    }
+
+    void SetArgument(std::string newArg) {
+        _argument = newArg;
+    }
+
+    Token& operator=(const TokenType other) {
+        _tokenType = other;
+        _argument = "";
+        return *this;
+    }
+
 private:
     TokenType _tokenType;
     std::string  _argument;
 };
-
-// TODO: Remove?
-//
-//class TokenManager {
-//    using TokenMap = std::map<std::string, TokenType>;
-//
-//public:
-//    TokenManager() = default;;
-//
-//    static TokenType getToken(std::string & tokenStringRepresentation) {
-//        return tokenMap[tokenStringRepresentation];
-//    }
-//
-//private:
-//    static TokenMap tokenMap;
-//};
-//
-//TokenManager::TokenMap TokenManager::tokenMap({{"echo", echoCmdToken},
-//                                                 {"cat", catCmdToken},
-//                                                 {"wc", wcCmdToken},
-//                                                 {"pwd", pwdCmdToken},
-//                                                 {"exit", exitCmdToken},
-//                                                 {"|", pipelineOperatorToken}});
 
 #endif //CLI_TOKEN_MANAGER

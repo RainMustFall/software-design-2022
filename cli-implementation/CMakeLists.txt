@@ -27,7 +27,7 @@ include_directories(
 )
 
 add_executable(test_gtest tests/test_gtest.cpp)
-add_executable(cli cli.cpp Auxillary/Defines.hpp Auxillary/Storage.hpp)
+add_executable(cli cli.cpp Auxillary/Defines.hpp Auxillary/Storage.hpp Parsing/ParsingException.hpp)
 
 target_link_libraries(
         test_gtest
