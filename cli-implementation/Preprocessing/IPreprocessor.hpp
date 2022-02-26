@@ -10,6 +10,8 @@
 
 class IPreprocessor {
 public:
+    virtual ~IPreprocessor()= default;
+
     virtual std::vector<Token> Preprocess(std::vector<Token>& tokens) = 0;
 };
 

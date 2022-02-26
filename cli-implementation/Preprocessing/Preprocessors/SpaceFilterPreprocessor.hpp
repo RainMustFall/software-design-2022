@@ -8,7 +8,7 @@
 #include <vector>
 #include "IPreprocessor.hpp"
 
-class SubstitutionPreprocessor : public IPreprocessor {
+class SpaceFilterPreprocessor : public IPreprocessor {
 public:
     std::vector<Token> Preprocess (std::vector<Token>& tokens) override {
         std::vector<Token> newTokens;

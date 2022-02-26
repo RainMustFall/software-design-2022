@@ -4,15 +4,18 @@
 #include "Parser.hpp"
 #include "ExecutionBuilder.hpp"
 #include "ReturnCode.hpp"
-#include "DefaultPreprocessor.hpp"
+#include "CombinedPreprocessor.hpp"
+#include "DefaultConfiguration.hpp"
 
-std::string start(const std::string& inputString) {
+DefaultConfiguration globalConfiguration; // NOLINT(cert-err58-cpp)
+
+std::string start(const std::string& inputString, const DefaultConfiguration& configuration) {
     std::istringstream inputStream(inputString);
     std::vector<Token> tokens;
     if (!Parser::TryParse(inputStream, tokens)) {
         return "Unable to parse";
     }
-    if (!DefaultPreprocessor::TryPreprocess(tokens)) {
+    if (!configuration.GetCombinedPreprocessor()->TryPreprocess(tokens)) {
         return "Unable to preprocess";
     }
     auto executions = ExecutionBuilder::BuildExecutions(tokens);
@@ -27,7 +30,7 @@ std::string start(const std::string& inputString) {
 }
 
 void smoke_test() {
-    auto helloWorldTest = start("echo \"Hello, world!\"");
+    auto helloWorldTest = start("echo \"Hello, world!\"", globalConfiguration);
     assert(helloWorldTest == "Hello, world!");
 }
 

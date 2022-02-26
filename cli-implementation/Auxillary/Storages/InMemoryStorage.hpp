@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include "IStorage.hpp"
 
-class InMemoryStorage : IStorage {
+class InMemoryStorage : public: IStorage {
 public:
     bool TryGet(std::string& key, OUT std::string& value) override {
         if (_mapping.contains(key)) {

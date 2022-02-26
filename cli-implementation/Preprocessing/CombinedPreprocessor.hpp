@@ -2,18 +2,18 @@
 // Created by Zeliboba on 26.02.2022.
 //
 
-#ifndef CLI_IMPLEMENTATION_DEFAULTPREPROCESSOR_HPP
-#define CLI_IMPLEMENTATION_DEFAULTPREPROCESSOR_HPP
+#ifndef CLI_IMPLEMENTATION_COMBINEDPREPROCESSOR_HPP
+#define CLI_IMPLEMENTATION_COMBINEDPREPROCESSOR_HPP
 
 #include <utility>
 
 #include "IPreprocessor.hpp"
 
-class DefaultPreprocessor : IPreprocessor {
+class CombinedPreprocessor : IPreprocessor {
 public:
-    explicit DefaultPreprocessor() : _preprocessors(_defaultPreprocessors.begin(), _defaultPreprocessors.end()) {}
+    explicit CombinedPreprocessor() : _preprocessors(_defaultPreprocessors.begin(), _defaultPreprocessors.end()) {}
 
-    explicit DefaultPreprocessor(std::vector<IPreprocessor*> preprocessors) : _preprocessors(std::move(preprocessors)) {}
+    explicit CombinedPreprocessor(std::vector<IPreprocessor*> preprocessors) : _preprocessors(std::move(preprocessors)) {}
 
     std::vector<Token> Preprocess(std::vector<Token>& tokens) override {
         for (auto p : _preprocessors) {
@@ -25,7 +25,7 @@ public:
     // TODO: Error type?
     static bool TryPreprocess(OUT std::vector<Token>& tokens) {
         try {
-            tokens = DefaultPreprocessor().Preprocess(tokens);
+            tokens = CombinedPreprocessor().Preprocess(tokens);
             return true;
         }
         catch (std::exception& err) {
@@ -39,4 +39,4 @@ private:
     };
 };
 
-#endif //CLI_IMPLEMENTATION_DEFAULTPREPROCESSOR_HPP
+#endif //CLI_IMPLEMENTATION_COMBINEDPREPROCESSOR_HPP
