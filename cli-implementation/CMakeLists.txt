@@ -22,6 +22,15 @@ enable_testing()
 add_executable(
         test_gtest
         tests/test_gtest.cpp
+        main.cpp
+        Parser.hpp
+        TokenManager.hpp
+        ReturnCode.h
+        Preprocessor.hpp
+        ExecutionBuilder.hpp
+        Executor.hpp
+        Command.hpp
+        Process.hpp
 )
 
 target_link_libraries(
