@@ -9,6 +9,7 @@
 #include <list>
 #include <utility>
 
+// TODO: Remove command tokens
 enum TokenType {
     undefinedToken,
     catCmdToken,

@@ -19,19 +19,14 @@ endif()
 
 enable_testing()
 
-add_executable(
-        test_gtest
-        tests/test_gtest.cpp
-        main.cpp
-        Parser.hpp
-        TokenManager.hpp
-        ReturnCode.h
-        Preprocessor.hpp
-        ExecutionBuilder.hpp
-        Executor.hpp
-        Command.hpp
-        Process.hpp
+include_directories(
+        Executing
+        Parsing
+        Preprocessing
 )
+
+add_executable(test_gtest tests/test_gtest.cpp)
+add_executable(cli cli.cpp)
 
 target_link_libraries(
         test_gtest

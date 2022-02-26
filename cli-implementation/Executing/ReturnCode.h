@@ -7,7 +7,7 @@
 
 enum ReturnCode {
     ok = 0,
-    error = -1
+    error = 1
 };
 
 #endif //CLI_RETURNCODE_H
