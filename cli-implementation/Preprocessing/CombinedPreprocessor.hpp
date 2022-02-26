@@ -24,7 +24,6 @@ public:
         return tokens;
     }
 
-    // TODO: Error type?
     bool TryPreprocess(OUT std::vector<Token>& tokens) {
         try {
             tokens = Preprocess(tokens);

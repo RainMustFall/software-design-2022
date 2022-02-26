@@ -32,7 +32,6 @@ public:
         return tokens;
     }
 
-    // TODO: We can probably return information about problem here instead of bool
     static bool TryParse(std::istream& stream, OUT std::vector<Token>& tokens) {
         try {
             tokens = Parse(stream);

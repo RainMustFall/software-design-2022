@@ -11,7 +11,7 @@
 
 class AssignCommand : public ICommand {
 public:
-    AssignCommand(std::vector<std::string>& args) {
+    explicit AssignCommand(std::vector<std::string>& args) {
         key = args[0];
         value = args[1];
     }

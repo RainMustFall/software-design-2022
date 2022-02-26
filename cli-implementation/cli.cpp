@@ -23,12 +23,6 @@ std::string handle(const std::string& inputString, const DefaultConfiguration& c
     return output;
 }
 
-void smoke_test() {
-    DefaultConfiguration configuration;
-    auto helloWorldTest = handle("echo \"Hello, world!\"", configuration);
-    assert(helloWorldTest == "Hello, world!");
-}
-
 void start_cli() {
     DefaultConfiguration configuration;
     std::string line;

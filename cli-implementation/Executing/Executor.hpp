@@ -17,6 +17,7 @@ public:
         auto emptyStdin = std::stringstream();
         auto process = new SyncProcess();
         // TODO: Make use of edges
+        // For now we will just flush everything into stdout of current execution
         for (auto command : execution._commands) {
             // We can put stdout of previous command instead of stdin here
             auto curContext = ExecutionContext(_storage, emptyStdin);

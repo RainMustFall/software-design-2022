@@ -44,7 +44,7 @@ public:
     }
 
     void SetArgument(std::string newArg) {
-        _argument = newArg;
+        _argument = std::move(newArg);
     }
 
     Token& operator=(const TokenType other) {
