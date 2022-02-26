@@ -9,7 +9,7 @@
 #include <vector>
 
 #include "ReturnCode.h"
-#include "TokenManager.hpp"
+#include "Token.hpp"
 
 class Parser {
 public:
