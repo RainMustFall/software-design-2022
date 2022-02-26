@@ -12,24 +12,18 @@
 #include "SubstitutionPreprocessor.hpp"
 #include "DoubleQuoteMergePreprocessor.hpp"
 #include "SpaceFilterPreprocessor.hpp"
+#include "CommandRegistry.hpp"
 
 class DefaultConfiguration {
 public:
     DefaultConfiguration() {
         _storage = reinterpret_cast<IStorage *>(new InMemoryStorage());
-        _preprocessors = {
-            new AssignmentReorderPreprocessor(),
-            new SubstitutionPreprocessor(_storage),
-            new DoubleQuoteMergePreprocessor(),
-            new SpaceFilterPreprocessor(),
-        };
-        _combined = new CombinedPreprocessor(_preprocessors);
+        _combined = SetUpPreprocessor(_storage);
+        _registry = SetUpRegistry();
     }
 
     ~DefaultConfiguration(){
         delete _storage;
-        for (auto p : _preprocessors)
-            delete p;
         delete _combined;
     }
 
@@ -42,8 +36,25 @@ public:
     }
 private:
     IStorage* _storage;
-    std::vector<IPreprocessor*> _preprocessors;
     CombinedPreprocessor* _combined;
+    CommandRegistry* _registry;
+
+    static CommandRegistry* SetUpRegistry(){
+        auto registry = new CommandRegistry();
+        return registry
+            ->WithFactory()
+            ->WithFactory();
+    }
+
+    static CombinedPreprocessor* SetUpPreprocessor(IStorage* storage){
+        std::vector<IPreprocessor*> preprocessors = {
+                new AssignmentReorderPreprocessor(),
+                new SubstitutionPreprocessor(storage),
+                new DoubleQuoteMergePreprocessor(),
+                new SpaceFilterPreprocessor(),
+        };
+        return new CombinedPreprocessor(preprocessors);
+    }
 };
 
 #endif //CLI_IMPLEMENTATION_DEFAULTCONFIGURATION_HPP

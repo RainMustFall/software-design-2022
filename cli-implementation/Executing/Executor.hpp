@@ -33,7 +33,7 @@ class Executor {
 public:
     static std::string Run(Execution * execution) {
 
-        // TODO: need implementation use Command, CommandRegistry etc.
+        // TODO: need implementation use ICommand, CommandRegistry etc.
         //WIP: simple test implementation for echo cmd
         if (execution->GetTokenType() == TokenType::echoCmdToken) {
             return execution->GetExecutionContext();

@@ -5,7 +5,7 @@
 #ifndef CLI_PROCESS_HPP
 #define CLI_PROCESS_HPP
 
-class Process {
+class IProcess {
 
 };
 

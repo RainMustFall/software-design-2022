@@ -7,6 +7,9 @@
 #include <vector>
 #include "Executor.hpp"
 #include "Token.hpp"
+#include "ICommand.hpp"
+#include "IProcess.hpp"
+
 
 class ExecutionBuilder {
 public:

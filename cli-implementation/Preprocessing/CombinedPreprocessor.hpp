@@ -12,6 +12,10 @@
 class CombinedPreprocessor : IPreprocessor {
 public:
     explicit CombinedPreprocessor(std::vector<IPreprocessor*> preprocessors) : _preprocessors(std::move(preprocessors)) {}
+    ~CombinedPreprocessor() override {
+        for (auto p : _preprocessors)
+            delete p;
+    }
 
     std::vector<Token> Preprocess(std::vector<Token>& tokens) override {
         for (auto p : _preprocessors) {
