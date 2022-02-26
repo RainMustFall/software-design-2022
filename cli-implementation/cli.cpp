@@ -3,26 +3,17 @@
 
 #include "Parser.hpp"
 #include "Interpretation/ExecutionBuilder.hpp"
-#include "ReturnCode.hpp"
-#include "CombinedPreprocessor.hpp"
 #include "DefaultConfiguration.hpp"
 
-
+// TODO: Make use of return code; Make use of clearer 'Try' statements and error handling.
 std::string handle(const std::string& inputString, const DefaultConfiguration& configuration) {
     std::istringstream inputStream(inputString);
-    std::vector<Token> tokens;
-    auto parsed = Parser::Parse(inputStream);
-//    if (!Parser::TryParse(inputStream, tokens)) {
-//        return "Unable to parse";
-//    }
-    auto preprocessed = configuration.GetCombinedPreprocessor()->Preprocess(parsed);
-//    if (!configuration.GetCombinedPreprocessor()->TryPreprocess(tokens)) {
-//        return "Unable to preprocess";
-//    }
+    auto parsed = Parser::Parse(inputStream); // try parse also available
+    auto preprocessed = configuration.GetCombinedPreprocessor()->Preprocess(parsed); // try preprocess also available
     auto executionBuilder = ExecutionBuilder(configuration.GetCommandRegistry());
     auto executions = executionBuilder.BuildExecutions(preprocessed);
     auto executor = Executor(configuration.GetStorage());
-    std::string output; // TODO: Temporary stub
+    std::string output; // TODO: Temporary stub for testing purposes, should instead redirect stdout and stderr directly to cout and cerr
     for (auto execution : executions) {
         auto result = executor.Run(execution);
         std::ostringstream os;

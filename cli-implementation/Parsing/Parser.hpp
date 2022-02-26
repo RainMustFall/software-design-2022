@@ -75,7 +75,7 @@ private:
     }
 
     static bool _aggregateOperatorToken(std::istream& stream, OUT Token& token) {
-        if (_operators.contains(stream.peek())) {
+        if (_operators.contains((char) stream.peek())) {
             token = TokenType::_operator;
             token.SetArgument(std::string{(char) stream.get()});
             return true;
@@ -102,7 +102,7 @@ private:
             if (!stream.eof()) {
                 stream.get();
                 token = TokenType::pairedSingleQuote;
-                token.SetArgument(argument);
+                token.SetArgument('\'' + argument + '\'');
                 return true;
             }
             throw ParsingException("Unable to parse single quote token. Input stream ended prematurely.");

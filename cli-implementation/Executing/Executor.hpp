@@ -11,7 +11,7 @@
 
 class Executor {
 public:
-    Executor(IStorage* storage) : _storage(storage) {}
+    explicit Executor(IStorage* storage) : _storage(storage) {}
 
     IProcess* Run(Execution& execution) {
         auto emptyStdin = std::stringstream();
