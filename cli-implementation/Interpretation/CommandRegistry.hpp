@@ -15,7 +15,7 @@ using CommandFactory = std::function<ICommand*(std::vector<std::string>&)>;
 
 class CommandRegistry {
 public:
-    ICommand* Build(std::string& commandName, std::vector<std::string>& arguments){
+    ICommand* Build(const std::string& commandName, std::vector<std::string>& arguments){
         return _factories[commandName](arguments);
     }
 

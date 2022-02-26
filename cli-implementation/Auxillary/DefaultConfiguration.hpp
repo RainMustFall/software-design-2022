@@ -12,7 +12,7 @@
 #include "SubstitutionPreprocessor.hpp"
 #include "DoubleQuoteMergePreprocessor.hpp"
 #include "SpaceFilterPreprocessor.hpp"
-#include "CommandRegistry.hpp"
+#include "../Interpretation/CommandRegistry.hpp"
 
 class DefaultConfiguration {
 public:

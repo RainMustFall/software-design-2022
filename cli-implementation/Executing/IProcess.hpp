@@ -5,8 +5,13 @@
 #ifndef CLI_PROCESS_HPP
 #define CLI_PROCESS_HPP
 
-class IProcess {
+#include "ReturnCode.hpp"
 
+class IProcess {
+public:
+    virtual ReturnCode GetReturnCode() = 0;
+    virtual std::ostream& GetStdout() = 0;
+    virtual std::ostream& GetStderr() = 0;
 };
 
 #endif //CLI_PROCESS_HPP
