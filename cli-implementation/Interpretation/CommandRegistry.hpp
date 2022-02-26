@@ -3,6 +3,7 @@
 //
 
 #include <string>
+#include <utility>
 #include <vector>
 #include <unordered_map>
 #include <functional>
@@ -19,8 +20,8 @@ public:
         return _factories[commandName](arguments);
     }
 
-    CommandRegistry* WithFactory(std::string& commandName, CommandFactory& factory) {
-        _factories[commandName] = factory;
+    CommandRegistry* WithFactory(const std::string& commandName, CommandFactory factory) {
+        _factories[commandName] = std::move(factory);
         return this;
     }
 private:

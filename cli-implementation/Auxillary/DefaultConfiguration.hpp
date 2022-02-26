@@ -6,13 +6,15 @@
 #define CLI_IMPLEMENTATION_DEFAULTCONFIGURATION_HPP
 
 #include "IStorage.hpp"
-#include "Storages/InMemoryStorage.hpp"
+#include "InMemoryStorage.hpp"
 #include "CombinedPreprocessor.hpp"
 #include "AssignmentReorderPreprocessor.hpp"
 #include "SubstitutionPreprocessor.hpp"
 #include "DoubleQuoteMergePreprocessor.hpp"
 #include "SpaceFilterPreprocessor.hpp"
-#include "Interpretation/CommandRegistry.hpp"
+#include "CommandRegistry.hpp"
+#include "EchoCommand.hpp"
+#include "QuoteToTextPreprocessor.hpp"
 
 class DefaultConfiguration {
 public:
@@ -34,6 +36,10 @@ public:
     [[nodiscard]] CombinedPreprocessor* GetCombinedPreprocessor() const {
         return _combined;
     }
+
+    [[nodiscard]] CommandRegistry* GetCommandRegistry() const {
+        return _registry;
+    }
 private:
     IStorage* _storage;
     CombinedPreprocessor* _combined;
@@ -42,8 +48,7 @@ private:
     static CommandRegistry* SetUpRegistry(){
         auto registry = new CommandRegistry();
         return registry
-            ->WithFactory()
-            ->WithFactory();
+            ->WithFactory("echo", [](std::vector<std::string>& args) { return reinterpret_cast<ICommand *>(new EchoCommand(args)); });
     }
 
     static CombinedPreprocessor* SetUpPreprocessor(IStorage* storage){
@@ -52,6 +57,7 @@ private:
                 new SubstitutionPreprocessor(storage),
                 new DoubleQuoteMergePreprocessor(),
                 new SpaceFilterPreprocessor(),
+                new QuoteToTextPreprocessor()
         };
         return new CombinedPreprocessor(preprocessors);
     }

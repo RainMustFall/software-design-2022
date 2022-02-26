@@ -45,8 +45,8 @@ public:
 private:
     static bool _aggregateSpaceToken(std::istream& stream, OUT Token& token) {
         if (std::isspace(stream.peek())) {
-            stream.get();
             token = TokenType::space;
+            token.SetArgument(std::string{(char) stream.get()});
             return true;
         }
         return false;
@@ -75,9 +75,9 @@ private:
     }
 
     static bool _aggregateOperatorToken(std::istream& stream, OUT Token& token) {
-        if (_operators.contains((char) stream.peek())) {
+        if (_operators.contains(stream.peek())) {
             token = TokenType::_operator;
-            token.SetArgument(std::to_string(stream.get()));
+            token.SetArgument(std::string{(char) stream.get()});
             return true;
         }
         return false;
@@ -97,7 +97,7 @@ private:
             stream.get();
             std::string argument;
             while (!stream.eof() && stream.peek() != '\'') {
-                argument += std::to_string(stream.get());
+                argument += (char) stream.get();
             }
             if (!stream.eof()) {
                 stream.get();
@@ -112,8 +112,10 @@ private:
 
     static bool _aggregateTextToken(std::istream& stream, OUT Token& token) {
         std::string argument;
-        while (!stream.eof() && std::isalnum(stream.peek())) {
-            argument += std::to_string(stream.get());
+        // TODO: Punct characters can be used in text tokens -> they can also be used as assignments and command names which is kinda bad?
+        while (!stream.eof() && (std::isalnum(stream.peek()) ||
+        std::ispunct(stream.peek()) && !_forbiddenTextTokenCharacters.contains((char) stream.peek()))) {
+            argument += (char) stream.get();
         }
         if (!argument.empty()){
             token = TokenType::text;
@@ -138,6 +140,16 @@ private:
         ';',
         '&',
         '>',
+    };
+
+    static inline std::unordered_set<char> _forbiddenTextTokenCharacters{ // NOLINT(cert-err58-cpp)
+        '"',
+        '\'',
+        ';',
+        ';',
+        '&',
+        '>',
+        '|'
     };
 };
 

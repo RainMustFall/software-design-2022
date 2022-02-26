@@ -11,19 +11,23 @@
 std::string start(const std::string& inputString, const DefaultConfiguration& configuration) {
     std::istringstream inputStream(inputString);
     std::vector<Token> tokens;
-    if (!Parser::TryParse(inputStream, tokens)) {
-        return "Unable to parse";
-    }
-    if (!configuration.GetCombinedPreprocessor()->TryPreprocess(tokens)) {
-        return "Unable to preprocess";
-    }
-    auto executions = ExecutionBuilder::BuildExecutions(tokens);
-    //5. executor
-    //TODO:
-    //WIP: simple test implementation for echo cmd
-    if (executions[0] != nullptr && executions[0]->GetTokenType() == TokenType::echoCmdToken)
-    {
-        return Executor::Run(executions[0]);
+    auto parsed = Parser::Parse(inputStream);
+//    if (!Parser::TryParse(inputStream, tokens)) {
+//        return "Unable to parse";
+//    }
+    auto preprocessed = configuration.GetCombinedPreprocessor()->Preprocess(parsed);
+//    if (!configuration.GetCombinedPreprocessor()->TryPreprocess(tokens)) {
+//        return "Unable to preprocess";
+//    }
+    auto executionBuilder = ExecutionBuilder(configuration.GetCommandRegistry());
+    auto executions = executionBuilder.BuildExecutions(preprocessed);
+    auto executor = Executor(configuration.GetStorage());
+    std::string output; // TODO: Temporary stub
+    for (auto execution : executions) {
+        auto result = executor.Run(execution);
+        std::ostringstream os;
+        os << result->GetStdout().rdbuf();
+        output += os.str();
     }
     return output;
 }
@@ -35,6 +39,12 @@ void smoke_test() {
 }
 
 int main() {
-    smoke_test();
+    try {
+        smoke_test();
+    }
+    catch (std::exception& err) {
+        auto what = err.what();
+        std::cerr << what;
+    }
     return 0;
 }

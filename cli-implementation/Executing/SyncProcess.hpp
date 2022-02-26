@@ -10,6 +10,13 @@
 
 class SyncProcess : public IManageableProcess {
 public:
+    SyncProcess() {
+        _stdout = new std::stringstream();
+        _stderr = new std::stringstream();
+    }
+
+    explicit SyncProcess(std::iostream* outStream, std::iostream* errStream) : _stdout(outStream), _stderr(errStream) {}
+
     ReturnCode GetReturnCode() override {
         return _returnCode;
     }
@@ -26,17 +33,17 @@ public:
         _returnCode = returnCode;
     }
 
-    void SetStdout(std::istream& istream) override {
-        _stdout = &istream;
+    std::ostream& GetWritableStdout() override {
+        return *_stdout;
     }
 
-    void SetStderr(std::istream& istream) override {
-        _stderr = &istream;
+    std::ostream& GetWritableStderr() override {
+        return *_stderr;
     }
 private:
     ReturnCode _returnCode = ReturnCode::notFinishedYet;
-    std::istream* _stdout = nullptr;
-    std::istream* _stderr = nullptr;
+    std::iostream* _stdout;
+    std::iostream* _stderr;
 };
 
 #endif //CLI_IMPLEMENTATION_SYNCPROCESS_HPP

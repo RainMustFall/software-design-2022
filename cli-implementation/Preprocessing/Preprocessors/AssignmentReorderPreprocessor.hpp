@@ -13,10 +13,12 @@ class AssignmentReorderPreprocessor : public IPreprocessor {
 public:
     std::vector<Token> Preprocess (std::vector<Token>& tokens) override {
         std::vector<Token> newTokens;
+        if (!tokens.empty())
+            newTokens.push_back(tokens[0]);
         for (auto i = 1; i < tokens.size() - 1; ++i) {
-            auto prev = tokens[i - 1];
-            auto cur = tokens[i];
-            auto next = tokens[i + 1];
+            auto& prev = tokens[i - 1];
+            auto& cur = tokens[i];
+            auto& next = tokens[i + 1];
             if (cur.GetType() == TokenType::assignment) {
                 if (next.GetType() != TokenType::substitute || prev.GetType() != TokenType::text)
                     throw PreprocessingException("Invalid assignment");
@@ -30,6 +32,8 @@ public:
                 newTokens.push_back(cur);
             }
         }
+        if (tokens.size() > 1)
+            newTokens.push_back(tokens.back());
         return newTokens;
     }
 };

@@ -28,7 +28,7 @@ public:
                 throw InterpretationException("Expected text token, received token type of id " + std::to_string(command.GetType()));
             std::vector<std::string> args;
             while (i < tokens.size()) {
-                auto cur = tokens[i];
+                auto cur = tokens[i++];
                 if (cur.GetType() == TokenType::_operator) {
                     // TODO: Add edge
                     // TODO: Stop building current execution and begin a next one if faced parallel operator (&)

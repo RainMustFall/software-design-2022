@@ -14,7 +14,7 @@ public:
     explicit SubstitutionPreprocessor(IStorage* storage, bool throwOnMissing = false) : _storage(storage), _throwOnMissing(throwOnMissing) {}
 
     std::vector<Token> Preprocess (std::vector<Token>& tokens) override {
-        for (auto token : tokens) {
+        for (auto& token : tokens) {
             if (token.GetType() == TokenType::substitute) {
                 std::string key = token.GetArgument();
                 std::string value;

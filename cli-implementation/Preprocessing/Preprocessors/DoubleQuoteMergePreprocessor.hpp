@@ -18,7 +18,7 @@ public:
         while (i < tokens.size()) {
             auto cur = tokens[i++];
             if (cur.GetType() == TokenType::doubleQuote) {
-                Token merged(TokenType::text);
+                Token merged(TokenType::pairedDoubleQuote);
                 std::string mergedArgument;
                 auto closed = false;
                 while (i < tokens.size()) {
@@ -32,6 +32,7 @@ public:
                 }
                 if (!closed)
                     throw PreprocessingException("Unable to close double quotes");
+                newTokens.push_back(merged);
             }
             else {
                 newTokens.push_back(cur);

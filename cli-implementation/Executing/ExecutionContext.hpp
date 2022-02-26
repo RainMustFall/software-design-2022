@@ -10,6 +10,8 @@
 // TODO: Pointers to shared ptrs
 class ExecutionContext {
 public:
+    ExecutionContext(IStorage* storage, std::istream& istream) : _storage(storage), _stdin(istream) {}
+
     IStorage* GetStorage() {
         return _storage;
     }
@@ -17,19 +19,9 @@ public:
     std::istream& GetStdin() {
         return _stdin;
     }
-
-    std::ostream& GetStdout() {
-        return _stdout;
-    }
-
-    std::ostream& GetStderr() {
-        return _stderr;
-    }
 private:
     IStorage* _storage;
     std::istream& _stdin;
-    std::ostream& _stdout;
-    std::ostream& _stderr;
 };
 
 #endif //CLI_IMPLEMENTATION_EXECUTIONCONTEXT_HPP

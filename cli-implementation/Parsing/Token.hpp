@@ -17,6 +17,7 @@ enum TokenType {
     _operator,
     pairedSingleQuote,
     doubleQuote,
+    pairedDoubleQuote,
     space
 };
 
