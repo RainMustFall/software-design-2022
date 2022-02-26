@@ -6,10 +6,11 @@
 #define CLI_COMMAND_HPP
 
 #include "IProcess.hpp"
+#include "ExecutionContext.hpp"
 
 class ICommand {
 public:
-    virtual IProcess* Execute(std::istream& input, ExecutionContext context) = 0;
+    virtual IProcess* Execute(ExecutionContext& context) = 0;
 };
 
 #endif //CLI_COMMAND_HPP

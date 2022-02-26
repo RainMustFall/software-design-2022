@@ -8,14 +8,16 @@
 #include <utility>
 #include <vector>
 #include "Token.hpp"
-#include "../Interpretation/ICommand.hpp"
+#include "ICommand.hpp"
 #include "ExecutionContext.hpp"
 
 class Execution {
 public:
-    explicit Execution(std::vector<ICommand*> commands) : _commands(std::move(commands)){ }
+    explicit Execution(std::vector<ICommand*> commands) : _commands(std::move(commands)) { }
 private:
     std::vector<ICommand*> _commands;
+
+    friend class Executor;
 };
 
 #include <utility>

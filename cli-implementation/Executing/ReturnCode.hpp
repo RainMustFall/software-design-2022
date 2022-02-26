@@ -9,6 +9,7 @@ enum ReturnCode {
     ok = 0,
     executionError = 1,
     unableToParse = 43,
+    notFinishedYet = 99
 };
 
 #endif //CLI_RETURNCODE_HPP

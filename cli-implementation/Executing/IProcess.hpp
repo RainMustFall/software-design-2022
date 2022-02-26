@@ -10,8 +10,8 @@
 class IProcess {
 public:
     virtual ReturnCode GetReturnCode() = 0;
-    virtual std::ostream& GetStdout() = 0;
-    virtual std::ostream& GetStderr() = 0;
+    virtual std::istream& GetStdout() = 0;
+    virtual std::istream& GetStderr() = 0;
 };
 
 #endif //CLI_PROCESS_HPP
