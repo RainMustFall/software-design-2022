@@ -7,7 +7,6 @@
 #include "CombinedPreprocessor.hpp"
 #include "DefaultConfiguration.hpp"
 
-DefaultConfiguration globalConfiguration; // NOLINT(cert-err58-cpp)
 
 std::string start(const std::string& inputString, const DefaultConfiguration& configuration) {
     std::istringstream inputStream(inputString);
@@ -30,7 +29,8 @@ std::string start(const std::string& inputString, const DefaultConfiguration& co
 }
 
 void smoke_test() {
-    auto helloWorldTest = start("echo \"Hello, world!\"", globalConfiguration);
+    DefaultConfiguration configuration;
+    auto helloWorldTest = start("echo \"Hello, world!\"", configuration);
     assert(helloWorldTest == "Hello, world!");
 }
 
