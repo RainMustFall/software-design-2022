@@ -3,7 +3,7 @@
 
 #include "Parser.hpp"
 #include "ExecutionBuilder.hpp"
-#include "ReturnCode.h"
+#include "ReturnCode.hpp"
 
 std::string start(const std::string& inputString) {
     std::string output;

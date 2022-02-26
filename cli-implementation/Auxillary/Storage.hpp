@@ -1,0 +1,10 @@
+//
+// Created by Zeliboba on 26.02.2022.
+//
+
+#ifndef CLI_IMPLEMENTATION_STORAGE_HPP
+#define CLI_IMPLEMENTATION_STORAGE_HPP
+
+
+
+#endif //CLI_IMPLEMENTATION_STORAGE_HPP

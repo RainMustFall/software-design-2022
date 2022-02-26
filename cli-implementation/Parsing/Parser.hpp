@@ -8,12 +8,13 @@
 #include <iostream>
 #include <vector>
 
-#include "ReturnCode.h"
+#include "Defines.hpp"
+#include "ReturnCode.hpp"
 #include "Token.hpp"
 
 class Parser {
 public:
-    static ReturnCode TryParse(std::istream & stream, std::vector<Token> & tokens) {
+    static ReturnCode TryParse(std::istream& stream, OUT std::vector<Token>& tokens) {
         while(!stream.eof()) {
             if ((char) stream.peek() == ' ') {
                 //processing for space character
@@ -45,6 +46,9 @@ public:
         return ReturnCode::ok;
     }
 private:
+    static bool _aggregateSingleQuoteToken(std::istream& stream, OUT Token& singleQuoteToken) {
+
+    }
 };
 
 #endif //CLI_PARSER_HPP
