@@ -11,11 +11,11 @@
 
 class Executor {
 public:
-    explicit Executor(IStorage* storage) : _storage(storage) {}
+    explicit Executor(std::shared_ptr<IStorage> storage) : _storage(storage) {}
 
-    IProcess* Run(Execution& execution) {
+    std::shared_ptr<IProcess> Run(Execution& execution) {
         auto emptyStdin = std::stringstream();
-        auto process = new SynchronousProcess();
+        auto process = std::make_shared<SynchronousProcess>();
         // TODO: Make use of edges
         // For now we will just flush everything into stdout of current execution
         for (auto command : execution._commands) {
@@ -29,7 +29,7 @@ public:
         return process;
     }
 private:
-    IStorage* _storage;
+    std::shared_ptr<IStorage> _storage;
 
     static void _flush(std::istream& from, std::ostream& to){
         int ch;

@@ -17,7 +17,7 @@
 */
 class DoubleQuoteMergePreprocessor : public IPreprocessor {
 public:
-    std::vector<Token> Preprocess (std::vector<Token>& tokens) override {
+    std::vector<Token> Preprocess (std::vector<Token>& tokens) const override {
         std::vector<Token> newTokens;
         auto i = 0;
         while (i < tokens.size()) {

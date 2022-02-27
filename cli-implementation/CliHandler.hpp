@@ -11,13 +11,14 @@
 #include "ExecutionBuilder.hpp"
 
 // TODO: Make use of return code; Make use of clearer 'Try' statements and error handling.
-std::vector<IProcess*> handle(std::istream& istream, const DefaultConfiguration& configuration) {
+std::vector<IProcessPtr> handle(std::istream& istream, const
+DefaultConfiguration& configuration) {
     auto parsed = Parser::Parse(istream); // try parse also available
-    auto preprocessed = configuration.GetCombinedPreprocessor()->Preprocess(parsed); // try preprocess also available
+    auto preprocessed = configuration.GetCombinedPreprocessor().Preprocess(parsed); // try preprocess also available
     auto executionBuilder = ExecutionBuilder(configuration.GetCommandRegistry());
     auto executions = executionBuilder.BuildExecutions(preprocessed);
     auto executor = Executor(configuration.GetStorage());
-    std::vector<IProcess*> results;
+    std::vector<IProcessPtr> results;
     for (auto execution : executions) {
         auto result = executor.Run(execution);
         results.push_back(result);
@@ -25,13 +26,15 @@ std::vector<IProcess*> handle(std::istream& istream, const DefaultConfiguration&
     return results;
 }
 
-std::vector<IProcess*> handle(std::string& line, const DefaultConfiguration& configuration) {
+std::vector<IProcessPtr> handle(std::string& line, const DefaultConfiguration&
+configuration) {
     std::istringstream inputStream(line);
     return handle(inputStream, configuration);
 }
 
-std::vector<IProcess*> handle(std::vector<std::string>& lines, const DefaultConfiguration& configuration) {
-    std::vector<IProcess*> results;
+std::vector<IProcessPtr> handle(std::vector<std::string>& lines, const
+DefaultConfiguration& configuration) {
+    std::vector<IProcessPtr> results;
     for (auto line : lines) {
         for (auto result : handle(line, configuration)) {
             results.push_back(result);

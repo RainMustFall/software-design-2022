@@ -13,17 +13,19 @@
  * */
 class ExecutionContext {
 public:
-    ExecutionContext(IStorage* storage, std::istream& istream) : _storage(storage), _stdin(istream) {}
+    ExecutionContext(std::shared_ptr<IStorage> storage, std::istream& istream)
+    : _storage(storage),
+      _stdin(istream) {}
 
-    IStorage* GetStorage() {
-        return _storage;
+    IStorage& GetStorage() {
+        return *_storage;
     }
 
     std::istream& GetStdin() {
         return _stdin;
     }
 private:
-    IStorage* _storage;
+    std::shared_ptr<IStorage> _storage;
     std::istream& _stdin;
 };
 

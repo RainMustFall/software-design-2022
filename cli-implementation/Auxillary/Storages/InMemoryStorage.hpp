@@ -14,9 +14,9 @@
  * */
 class InMemoryStorage : public IStorage {
 public:
-    bool TryGet(std::string& key, OUT std::string& value) override {
+    bool TryGet(std::string& key, OUT std::string& value) const override {
         if (_mapping.contains(key)) {
-            value = _mapping[key];
+            value = _mapping.at(key);
             return true;
         }
         return false;

@@ -7,7 +7,7 @@
 #include <utility>
 #include "CliHandler.hpp"
 
-std::vector<IProcess*> RunPipeline(std::vector<std::string> lines) {
+std::vector<IProcessPtr> RunPipeline(std::vector<std::string> lines) {
     DefaultConfiguration configuration;
     return handle(lines, configuration);
 }
@@ -49,6 +49,10 @@ TEST(PipelineTest, DoubleQuotes) {
 
 TEST(PipelineTest, DoubleQuotesWithSubstitution) {
     ShouldBe({"X=\"Hello, world!\"", "echo $X"}, {"", "Hello, world!"});
+}
+
+TEST(PipelineTest, UnknownCommandsDontFall) {
+    ASSERT_NO_THROW(RunPipelineAndExtract({"gcc", "dimon", "kek"}));
 }
 
 TEST(PipelineTest, EmptyInput) {

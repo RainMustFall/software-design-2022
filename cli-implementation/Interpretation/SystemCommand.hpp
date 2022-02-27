@@ -21,8 +21,8 @@ public:
                          const std::vector<std::string> &arguments)
       : _command_line(AccumulateCommand(command, arguments)) {}
 
-  IProcess *Execute(ExecutionContext &context) override {
-    auto process = new SynchronousProcess();
+  IProcessPtr Execute(ExecutionContext &context) override {
+    auto process = std::make_shared<SynchronousProcess>();
     TempFile stdoutFile;
     TempFile stderrFile;
 
@@ -41,9 +41,9 @@ public:
 private:
   std::string _command_line;
 
-  std::string
+  static std::string
   AccumulateCommand(const std::string &command,
-                    const std::vector<std::string> &arguments) const {
+                    const std::vector<std::string> &arguments) {
     std::string result = command + " ";
     for (const auto &token : arguments) {
       result += token + " ";
@@ -51,7 +51,7 @@ private:
     return result;
   }
 
-  void PrintFile(const std::string &filename, std::ostream &out) {
+  static void PrintFile(const std::string &filename, std::ostream &out) {
     std::ifstream file(filename);
     out << file.rdbuf();
   }

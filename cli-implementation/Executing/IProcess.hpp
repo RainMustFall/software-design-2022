@@ -5,6 +5,8 @@
 #ifndef CLI_PROCESS_HPP
 #define CLI_PROCESS_HPP
 
+#include <memory>
+
 #include "ReturnCode.hpp"
 
 /*
@@ -16,5 +18,7 @@ public:
     virtual std::istream& GetStdout() = 0;
     virtual std::istream& GetStderr() = 0;
 };
+
+typedef std::shared_ptr<IProcess> IProcessPtr;
 
 #endif //CLI_PROCESS_HPP

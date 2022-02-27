@@ -16,7 +16,7 @@
 */
 class AssignmentReorderPreprocessor : public IPreprocessor {
 public:
-    std::vector<Token> Preprocess (std::vector<Token>& tokens) override {
+    std::vector<Token> Preprocess (std::vector<Token>& tokens) const override {
         std::vector<Token> newTokens;
         if (!tokens.empty())
             newTokens.push_back(tokens[0]);

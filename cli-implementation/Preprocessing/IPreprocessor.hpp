@@ -6,6 +6,7 @@
 #define CLI_PREPROCESSOR_HPP
 
 #include <vector>
+#include <memory>
 #include "Token.hpp"
 
 /*
@@ -16,7 +17,9 @@ class IPreprocessor {
 public:
     virtual ~IPreprocessor()= default;
 
-    virtual std::vector<Token> Preprocess(std::vector<Token>& tokens) = 0;
+    virtual std::vector<Token> Preprocess(std::vector<Token>& tokens) const = 0;
 };
+
+typedef std::shared_ptr<IPreprocessor> IPreprocessorPtr;
 
 #endif //CLI_PREPROCESSOR_HPP

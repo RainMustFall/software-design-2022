@@ -14,22 +14,24 @@
 #ifndef CLI_IMPLEMENTATION_COMMANDFACTORY_HPP
 #define CLI_IMPLEMENTATION_COMMANDFACTORY_HPP
 
-using CommandFactory = std::function<ICommand*(std::vector<std::string>&)>;
+using CommandFactory = std::function<ICommandPtr(std::vector<std::string>&)>;
 
 /*
  * Abstracts the creation of commands.
  * */
 class CommandRegistry {
 public:
-    ICommand* Build(const std::string& commandName, std::vector<std::string>& arguments){
+    ICommandPtr Build(const std::string& commandName, std::vector<std::string>&
+        arguments) const {
         if (!_factories.contains(commandName))
-          return new SystemCommand(commandName, arguments);
-        return _factories[commandName](arguments);
+          return std::make_shared<SystemCommand>(commandName, arguments);
+        return _factories.at(commandName)(arguments);
     }
 
-    CommandRegistry* WithFactory(const std::string& commandName, CommandFactory factory) {
+    CommandRegistry& WithFactory(const std::string& commandName,
+                                 CommandFactory factory) {
         _factories[commandName] = std::move(factory);
-        return this;
+        return *this;
     }
 private:
     std::unordered_map<std::string, CommandFactory> _factories;

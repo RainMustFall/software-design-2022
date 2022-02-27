@@ -13,7 +13,7 @@
 */
 class SpaceFilterPreprocessor : public IPreprocessor {
 public:
-    std::vector<Token> Preprocess (std::vector<Token>& tokens) override {
+    std::vector<Token> Preprocess (std::vector<Token>& tokens) const override {
         std::vector<Token> newTokens;
         for (auto token : tokens) {
             if (token.GetType() != TokenType::space)

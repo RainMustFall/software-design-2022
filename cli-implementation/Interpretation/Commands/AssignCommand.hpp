@@ -20,9 +20,9 @@ public:
         value = args[1];
     }
 
-    IProcess* Execute(ExecutionContext& context) override {
-        auto process = new SynchronousProcess();
-        context.GetStorage()->Set(key, value);
+    IProcessPtr Execute(ExecutionContext& context) override {
+        auto process = std::make_shared<SynchronousProcess>();
+        context.GetStorage().Set(key, value);
         process->SetReturnCode(ReturnCode::ok);
         return process;
     }

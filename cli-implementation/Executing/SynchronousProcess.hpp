@@ -6,8 +6,8 @@
 #define CLI_IMPLEMENTATION_SYNCHRONOUSPROCESS_HPP
 
 #include <istream>
+#include <utility>
 #include "IManageableProcess.hpp"
-
 
 /*
  * Represents synchronous process with internal buffers.
@@ -15,13 +15,15 @@
  * See 'EchoCommand' for an example of usage.
  * */
 class SynchronousProcess : public IManageableProcess {
-public:
-    SynchronousProcess() {
-        _stdout = new std::stringstream();
-        _stderr = new std::stringstream();
+ public:
+    SynchronousProcess()
+        : _stdout(std::make_shared<std::stringstream>()),
+          _stderr(std::make_shared<std::stringstream>()) {
     }
 
-    explicit SynchronousProcess(std::iostream* outStream, std::iostream* errStream) : _stdout(outStream), _stderr(errStream) {}
+    explicit SynchronousProcess(std::shared_ptr<std::iostream> outStream,
+                                std::shared_ptr<std::iostream> errStream)
+        : _stdout(std::move(outStream)), _stderr(std::move(errStream)) {}
 
     ReturnCode GetReturnCode() override {
         return _returnCode;
@@ -46,10 +48,10 @@ public:
     std::ostream& GetWritableStderr() override {
         return *_stderr;
     }
-private:
+ private:
     ReturnCode _returnCode = ReturnCode::notFinishedYet;
-    std::iostream* _stdout;
-    std::iostream* _stderr;
+    std::shared_ptr<std::iostream> _stdout;
+    std::shared_ptr<std::iostream> _stderr;
 };
 
 #endif //CLI_IMPLEMENTATION_SYNCHRONOUSPROCESS_HPP

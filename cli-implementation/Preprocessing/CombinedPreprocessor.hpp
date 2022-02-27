@@ -13,21 +13,18 @@
     Abstracts out a list of preprocessors and applies them all at the same time.
 */
 class CombinedPreprocessor : IPreprocessor {
-public:
-    explicit CombinedPreprocessor(std::vector<IPreprocessor*> preprocessors) : _preprocessors(std::move(preprocessors)) {}
-    ~CombinedPreprocessor() override {
-        for (auto p : _preprocessors)
-            delete p;
-    }
+ public:
+    explicit CombinedPreprocessor(std::vector<IPreprocessorPtr> preprocessors)
+        : _preprocessors(std::move(preprocessors)) {}
 
-    std::vector<Token> Preprocess(std::vector<Token>& tokens) override {
-        for (auto p : _preprocessors) {
+    std::vector<Token> Preprocess(std::vector<Token>& tokens) const override {
+        for (const auto& p: _preprocessors) {
             tokens = p->Preprocess(tokens);
         }
         return tokens;
     }
 
-    bool TryPreprocess(OUT std::vector<Token>& tokens) {
+    [[maybe_unused]] bool TryPreprocess(OUT std::vector<Token>& tokens) {
         try {
             tokens = Preprocess(tokens);
             return true;
@@ -36,8 +33,8 @@ public:
             return false;
         }
     }
-private:
-    std::vector<IPreprocessor*> _preprocessors;
+ private:
+    std::vector<IPreprocessorPtr> _preprocessors;
 };
 
 #endif //CLI_IMPLEMENTATION_COMBINEDPREPROCESSOR_HPP

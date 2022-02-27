@@ -15,7 +15,7 @@ class IStorage {
 public:
     virtual ~IStorage()= default;
 
-    virtual bool TryGet(std::string& key, OUT std::string& value) = 0;
+    virtual bool TryGet(std::string& key, OUT std::string& value) const = 0;
     virtual void Set(std::string& key, std::string& value) = 0;
 };
 

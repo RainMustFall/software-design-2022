@@ -14,7 +14,7 @@
 */
 class QuoteToTextPreprocessor : public IPreprocessor {
 public:
-    std::vector<Token> Preprocess (std::vector<Token>& tokens) override {
+    std::vector<Token> Preprocess (std::vector<Token>& tokens) const override {
         for (auto& token : tokens) {
             if (token.GetType() == TokenType::pairedSingleQuote || token.GetType() == TokenType::pairedDoubleQuote) {
                 token.SetType(TokenType::text);

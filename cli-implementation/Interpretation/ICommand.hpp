@@ -5,6 +5,7 @@
 #ifndef CLI_COMMAND_HPP
 #define CLI_COMMAND_HPP
 
+#include <memory>
 #include "IProcess.hpp"
 #include "ExecutionContext.hpp"
 
@@ -14,7 +15,9 @@
 */
 class ICommand {
 public:
-    virtual IProcess* Execute(ExecutionContext& context) = 0;
+    virtual IProcessPtr Execute(ExecutionContext& context) = 0;
 };
+
+typedef std::shared_ptr<ICommand> ICommandPtr;
 
 #endif //CLI_COMMAND_HPP

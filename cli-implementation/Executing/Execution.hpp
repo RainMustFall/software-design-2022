@@ -16,10 +16,12 @@
  * Its only purpose is to be used by the Executor.
  * */
 class Execution {
-public:
-    explicit Execution(std::vector<ICommand*> commands) : _commands(std::move(commands)) { }
-private:
-    std::vector<ICommand*> _commands;
+ public:
+    explicit Execution(std::vector<ICommandPtr> commands)
+        : _commands(std::move(commands)) {}
+
+ private:
+    std::vector<ICommandPtr> _commands;
 
     friend class Executor;
 };

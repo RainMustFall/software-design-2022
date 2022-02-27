@@ -20,8 +20,8 @@ public:
         }
     }
 
-    IProcess* Execute(ExecutionContext& context) override {
-        auto process = new SynchronousProcess();
+    IProcessPtr Execute(ExecutionContext& context) override {
+        auto process = std::make_shared<SynchronousProcess>();
         process->GetWritableStdout() << _toEcho;
         process->SetReturnCode(ReturnCode::ok);
         return process;

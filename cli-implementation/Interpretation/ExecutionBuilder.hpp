@@ -13,22 +13,24 @@
 #include "InterpretationException.hpp"
 #include "CommandRegistry.hpp"
 
-
 /*
     Transforms a sequence of tokens into a list of executions.
 */
 class ExecutionBuilder {
-public:
-    explicit ExecutionBuilder(CommandRegistry* registry) : _registry(registry) {}
+ public:
+    explicit ExecutionBuilder(const CommandRegistry& registry)
+        : _registry(registry) {}
 
-    std::vector<Execution> BuildExecutions (const std::vector<Token> & tokens) {
+    std::vector<Execution> BuildExecutions(const std::vector<Token>& tokens) {
         std::vector<Execution> executions;
-        std::vector<ICommand*> currentCommands;
+        std::vector<ICommandPtr> currentCommands;
         auto i = 0;
         while (i < tokens.size()) {
             auto command = tokens[i++];
             if (command.GetType() != TokenType::text)
-                throw InterpretationException("Expected text token, received token type of id " + std::to_string(command.GetType()));
+                throw InterpretationException(
+                    "Expected text token, received token type of id "
+                        + std::to_string(command.GetType()));
             std::vector<std::string> args;
             while (i < tokens.size()) {
                 auto cur = tokens[i++];
@@ -39,13 +41,14 @@ public:
                 }
                 args.push_back(cur.GetArgument());
             }
-            currentCommands.push_back(_registry->Build(command.GetArgument(), args));
+            currentCommands.push_back(
+                _registry.Build(command.GetArgument(), args));
         }
         executions.emplace_back(currentCommands);
         return executions;
     }
-private:
-    CommandRegistry* _registry;
+ private:
+    const CommandRegistry& _registry;
 };
 
 #endif //CLI_EXECUTIONBUILDER_HPP

@@ -14,16 +14,20 @@
     Not existing tokens are replaced with empty strings by default.
 */
 class SubstitutionPreprocessor : public IPreprocessor {
-public:
-    explicit SubstitutionPreprocessor(IStorage* storage, bool throwOnMissing = false) : _storage(storage), _throwOnMissing(throwOnMissing) {}
+ public:
+    explicit SubstitutionPreprocessor(std::shared_ptr<IStorage> storage,
+                                      bool throwOnMissing = false)
+        : _storage(storage),
+          _throwOnMissing(throwOnMissing) {}
 
-    std::vector<Token> Preprocess (std::vector<Token>& tokens) override {
-        for (auto& token : tokens) {
+    std::vector<Token> Preprocess(std::vector<Token>& tokens) const override {
+        for (auto& token: tokens) {
             if (token.GetType() == TokenType::substitute) {
                 std::string key = token.GetArgument();
                 std::string value;
                 if (!_storage->TryGet(key, value) && _throwOnMissing)
-                    throw PreprocessingException("Unable to substitute " + key + ". No such value in underlying storage.");
+                    throw PreprocessingException("Unable to substitute " + key
+                                                     + ". No such value in underlying storage.");
                 token = TokenType::text;
                 token.SetArgument(value);
             }
@@ -31,8 +35,8 @@ public:
         return tokens;
     }
 
-private:
-    IStorage* _storage;
+ private:
+    std::shared_ptr<IStorage> _storage;
     bool _throwOnMissing;
 };
 

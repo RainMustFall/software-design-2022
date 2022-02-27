@@ -21,52 +21,53 @@
  * Represents a default configuration for a whole pipeline of CLI.
  * */
 class DefaultConfiguration {
-public:
-    DefaultConfiguration() {
-        _storage = reinterpret_cast<IStorage *>(new InMemoryStorage());
-        _combined = SetUpPreprocessor(_storage);
-        _registry = SetUpRegistry();
+ public:
+    DefaultConfiguration()
+        : _storage(std::make_shared<InMemoryStorage>()),
+          _combined(SetUpPreprocessor(_storage)),
+          _registry(SetUpRegistry()) {
     }
 
-    ~DefaultConfiguration(){
-        delete _storage;
-        delete _combined;
-    }
-
-    [[nodiscard]] IStorage* GetStorage() const {
+    [[nodiscard]] auto GetStorage() const {
         return _storage;
     }
 
-    [[nodiscard]] CombinedPreprocessor* GetCombinedPreprocessor() const {
+    [[nodiscard]] const CombinedPreprocessor& GetCombinedPreprocessor() const {
         return _combined;
     }
 
-    [[nodiscard]] CommandRegistry* GetCommandRegistry() const {
+    [[nodiscard]] const CommandRegistry& GetCommandRegistry() const {
         return _registry;
     }
-private:
-    IStorage* _storage;
-    CombinedPreprocessor* _combined;
-    CommandRegistry* _registry;
+ private:
+    std::shared_ptr<IStorage> _storage;
+    CombinedPreprocessor _combined;
+    CommandRegistry _registry;
 
-    static CommandRegistry* SetUpRegistry(){
-        auto registry = new CommandRegistry();
+    static CommandRegistry SetUpRegistry() {
+        auto registry = CommandRegistry();
         return registry
-            ->WithFactory("echo",
-                          [](std::vector<std::string>& args) { return dynamic_cast<ICommand *>(new EchoCommand(args)); })
-            ->WithFactory("=",
-                          [](std::vector<std::string>& args) { return dynamic_cast<ICommand *>(new AssignCommand(args)); });
+            .WithFactory("echo",
+                         [](std::vector<std::string>& args) {
+                             return std::make_shared<EchoCommand>(args);
+                         })
+            .WithFactory("=",
+                         [](std::vector<std::string>& args) {
+                             return std::make_shared<AssignCommand>(args);
+                         });
     }
 
-    static CombinedPreprocessor* SetUpPreprocessor(IStorage* storage){
-        std::vector<IPreprocessor*> preprocessors = {
-                new SubstitutionPreprocessor(storage),
-                new DoubleQuoteMergePreprocessor(),
-                new SpaceFilterPreprocessor(),
-                new QuoteToTextPreprocessor(),
-                new AssignmentReorderPreprocessor(),
+    static CombinedPreprocessor SetUpPreprocessor(
+        std::shared_ptr<IStorage> storage) {
+        std::vector<IPreprocessorPtr> preprocessors = {
+            std::make_shared<SubstitutionPreprocessor>(storage),
+            std::make_shared<DoubleQuoteMergePreprocessor>(),
+            std::make_shared<SpaceFilterPreprocessor>(),
+            std::make_shared<QuoteToTextPreprocessor>(),
+            std::make_shared<AssignmentReorderPreprocessor>(),
         };
-        return new CombinedPreprocessor(preprocessors);
+
+        return CombinedPreprocessor(preprocessors);
     }
 };
 
