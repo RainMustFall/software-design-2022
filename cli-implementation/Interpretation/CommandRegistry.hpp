@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <functional>
 #include "ICommand.hpp"
+#include "InterpretationException.hpp"
 
 #ifndef CLI_IMPLEMENTATION_COMMANDFACTORY_HPP
 #define CLI_IMPLEMENTATION_COMMANDFACTORY_HPP
@@ -20,6 +21,8 @@ using CommandFactory = std::function<ICommand*(std::vector<std::string>&)>;
 class CommandRegistry {
 public:
     ICommand* Build(const std::string& commandName, std::vector<std::string>& arguments){
+        if (!_factories.contains(commandName))
+            throw InterpretationException("Unknown command. Please check input.");
         return _factories[commandName](arguments);
     }
 
