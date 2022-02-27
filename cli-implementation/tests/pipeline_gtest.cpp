@@ -14,7 +14,13 @@ std::vector<IProcess*> RunPipeline(std::vector<std::string> lines) {
 
 std::vector<std::string> RunPipelineAndExtract(std::vector<std::string> lines) {
     DefaultConfiguration configuration;
-    return handleAndExtract(lines, configuration);
+    std::vector<std::string> stdout_only;
+    stdout_only.reserve(lines.size());
+    for (const auto&[std_out, std_err]:
+        handleAndExtract(lines, configuration)) {
+        stdout_only.push_back(std_out);
+    }
+    return stdout_only;
 }
 
 void ShouldBe(std::vector<std::string> input, std::vector<std::string> output) {
