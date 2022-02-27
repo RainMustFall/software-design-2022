@@ -7,17 +7,21 @@
 
 #include <vector>
 #include "ICommand.hpp"
-#include "SyncProcess.hpp"
+#include "SynchronousProcess.hpp"
 
+/*
+ * Assigns a value to a key in the storage of the context.
+ * */
 class AssignCommand : public ICommand {
 public:
     explicit AssignCommand(std::vector<std::string>& args) {
+        // TODO: Exception may occur during building of command instead of during the execution. Fix.
         key = args[0];
         value = args[1];
     }
 
     IProcess* Execute(ExecutionContext& context) override {
-        auto process = new SyncProcess();
+        auto process = new SynchronousProcess();
         context.GetStorage()->Set(key, value);
         process->SetReturnCode(ReturnCode::ok);
         return process;

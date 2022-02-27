@@ -11,6 +11,10 @@
 #include "ICommand.hpp"
 #include "ExecutionContext.hpp"
 
+/*
+ * Represents a container for commands and interactions between them.
+ * Its only purpose is to be used by the Executor.
+ * */
 class Execution {
 public:
     explicit Execution(std::vector<ICommand*> commands) : _commands(std::move(commands)) { }

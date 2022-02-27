@@ -14,6 +14,9 @@
 
 using CommandFactory = std::function<ICommand*(std::vector<std::string>&)>;
 
+/*
+ * Abstracts the creation of commands.
+ * */
 class CommandRegistry {
 public:
     ICommand* Build(const std::string& commandName, std::vector<std::string>& arguments){

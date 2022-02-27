@@ -7,6 +7,9 @@
 
 #include "ReturnCode.hpp"
 
+/*
+ * Represents readonly side of a process: getting return codes and input streams.
+ * */
 class IProcess {
 public:
     virtual ReturnCode GetReturnCode() = 0;

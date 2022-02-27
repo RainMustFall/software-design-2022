@@ -7,8 +7,11 @@
 
 #include <vector>
 #include "ICommand.hpp"
-#include "SyncProcess.hpp"
+#include "SynchronousProcess.hpp"
 
+/*
+ * Concatenates given arguments and returns them.
+ * */
 class EchoCommand : public ICommand {
 public:
     explicit EchoCommand(const std::vector<std::string>& arguments) {
@@ -18,7 +21,7 @@ public:
     }
 
     IProcess* Execute(ExecutionContext& context) override {
-        auto process = new SyncProcess();
+        auto process = new SynchronousProcess();
         process->GetWritableStdout() << _toEcho;
         process->SetReturnCode(ReturnCode::ok);
         return process;

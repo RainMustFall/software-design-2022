@@ -8,6 +8,9 @@
 #include <string>
 #include "Defines.hpp"
 
+/*
+ * Abstracts out some key-value storage.
+ * */
 class IStorage {
 public:
     virtual ~IStorage()= default;

@@ -2,20 +2,26 @@
 // Created by Zeliboba on 26.02.2022.
 //
 
-#ifndef CLI_IMPLEMENTATION_SYNCPROCESS_HPP
-#define CLI_IMPLEMENTATION_SYNCPROCESS_HPP
+#ifndef CLI_IMPLEMENTATION_SYNCHRONOUSPROCESS_HPP
+#define CLI_IMPLEMENTATION_SYNCHRONOUSPROCESS_HPP
 
 #include <istream>
 #include "IManageableProcess.hpp"
 
-class SyncProcess : public IManageableProcess {
+
+/*
+ * Represents synchronous process with internal buffers.
+ * It's only purpose is to be returned only after completed execution.
+ * See 'EchoCommand' for an example of usage.
+ * */
+class SynchronousProcess : public IManageableProcess {
 public:
-    SyncProcess() {
+    SynchronousProcess() {
         _stdout = new std::stringstream();
         _stderr = new std::stringstream();
     }
 
-    explicit SyncProcess(std::iostream* outStream, std::iostream* errStream) : _stdout(outStream), _stderr(errStream) {}
+    explicit SynchronousProcess(std::iostream* outStream, std::iostream* errStream) : _stdout(outStream), _stderr(errStream) {}
 
     ReturnCode GetReturnCode() override {
         return _returnCode;
@@ -46,4 +52,4 @@ private:
     std::iostream* _stderr;
 };
 
-#endif //CLI_IMPLEMENTATION_SYNCPROCESS_HPP
+#endif //CLI_IMPLEMENTATION_SYNCHRONOUSPROCESS_HPP

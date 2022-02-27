@@ -8,6 +8,9 @@
 #include "IStorage.hpp"
 
 // TODO: Pointers to shared ptrs
+/*
+ * Represents an execution context of any operation.
+ * */
 class ExecutionContext {
 public:
     ExecutionContext(IStorage* storage, std::istream& istream) : _storage(storage), _stdin(istream) {}

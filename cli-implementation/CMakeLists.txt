@@ -31,7 +31,7 @@ include_directories(
 )
 
 add_executable(test_gtest tests/test_gtest.cpp)
-add_executable(cli cli.cpp Auxillary/Defines.hpp Auxillary/IStorage.hpp Parsing/ParsingException.hpp Preprocessing/CombinedPreprocessor.hpp Preprocessing/Preprocessors/SubstitutionPreprocessor.hpp Auxillary/Storages/InMemoryStorage.hpp Preprocessing/PreprocessingException.hpp Preprocessing/Preprocessors/DoubleQuoteMergePreprocessor.hpp Preprocessing/Preprocessors/SpaceFilterPreprocessor.hpp Preprocessing/Preprocessors/AssignmentReorderPreprocessor.hpp Auxillary/DefaultConfiguration.hpp Interpretation/CommandRegistry.hpp Executing/ExecutionContext.hpp Interpretation/InterpretationException.hpp Executing/SyncProcess.hpp Executing/IManageableProcess.hpp Interpretation/Commands/EchoCommand.hpp Preprocessing/Preprocessors/QuoteToTextPreprocessor.hpp Interpretation/Commands/AssignCommand.hpp)
+add_executable(cli cli.cpp Auxillary/Defines.hpp Auxillary/IStorage.hpp Parsing/ParsingException.hpp Preprocessing/CombinedPreprocessor.hpp Preprocessing/Preprocessors/SubstitutionPreprocessor.hpp Auxillary/Storages/InMemoryStorage.hpp Preprocessing/PreprocessingException.hpp Preprocessing/Preprocessors/DoubleQuoteMergePreprocessor.hpp Preprocessing/Preprocessors/SpaceFilterPreprocessor.hpp Preprocessing/Preprocessors/AssignmentReorderPreprocessor.hpp Auxillary/DefaultConfiguration.hpp Interpretation/CommandRegistry.hpp Executing/ExecutionContext.hpp Interpretation/InterpretationException.hpp Executing/SynchronousProcess.hpp Executing/IManageableProcess.hpp Interpretation/Commands/EchoCommand.hpp Preprocessing/Preprocessors/QuoteToTextPreprocessor.hpp Interpretation/Commands/AssignCommand.hpp)
 
 target_link_libraries(
         test_gtest

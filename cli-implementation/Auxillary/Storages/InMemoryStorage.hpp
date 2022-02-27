@@ -8,6 +8,10 @@
 #include <unordered_map>
 #include "IStorage.hpp"
 
+/*
+ * Represents an in memory storage.
+ * Mappings are only saved in a corresponding object and do not persist between usages.
+ * */
 class InMemoryStorage : public IStorage {
 public:
     bool TryGet(std::string& key, OUT std::string& value) override {

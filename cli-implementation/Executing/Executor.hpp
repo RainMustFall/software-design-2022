@@ -1,6 +1,6 @@
 #include <utility>
 #include "Execution.hpp"
-#include "SyncProcess.hpp"
+#include "SynchronousProcess.hpp"
 
 //
 // Created by sergbelom on 2/21/22.
@@ -15,7 +15,7 @@ public:
 
     IProcess* Run(Execution& execution) {
         auto emptyStdin = std::stringstream();
-        auto process = new SyncProcess();
+        auto process = new SynchronousProcess();
         // TODO: Make use of edges
         // For now we will just flush everything into stdout of current execution
         for (auto command : execution._commands) {

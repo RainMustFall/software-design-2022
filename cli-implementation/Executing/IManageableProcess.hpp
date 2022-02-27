@@ -7,6 +7,9 @@
 
 #include "IProcess.hpp"
 
+/*
+ * Represents a writable side of the process: getting output streams and setting return code.
+ * */
 class IManageableProcess : public IProcess {
 public:
     virtual void SetReturnCode(ReturnCode returnCode) = 0;

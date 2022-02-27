@@ -17,6 +17,9 @@
 #include "QuoteToTextPreprocessor.hpp"
 #include "AssignCommand.hpp"
 
+/*
+ * Represents a default configuration for a whole pipeline of CLI.
+ * */
 class DefaultConfiguration {
 public:
     DefaultConfiguration() {
