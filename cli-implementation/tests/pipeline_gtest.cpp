@@ -51,4 +51,9 @@ TEST(PipelineTest, DoubleQuotesWithSubstitution) {
     ShouldBe({"X=\"Hello, world!\"", "echo $X"}, {"", "Hello, world!"});
 }
 
+TEST(PipelineTest, EmptyInput) {
+    ShouldBe({""}, {""});
+}
+
+
 // TODO: Add more scenarios...

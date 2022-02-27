@@ -18,3 +18,7 @@ void ShouldBe(std::string input, std::vector<Token> expected) {
 TEST(Parser, SimpleScenario) {
     ShouldBe("echo test", {Token("echo"), Token(TokenType::space, " "), Token("test")});
 }
+
+TEST(Parser, EmptyInput) {
+    ShouldBe("", {});
+}

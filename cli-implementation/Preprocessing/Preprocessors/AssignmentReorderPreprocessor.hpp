@@ -20,7 +20,7 @@ public:
         std::vector<Token> newTokens;
         if (!tokens.empty())
             newTokens.push_back(tokens[0]);
-        for (auto i = 1; i < tokens.size() - 1; ++i) {
+        for (size_t i = 1; i + 1 < tokens.size(); ++i) {
             auto& prev = tokens[i - 1];
             auto& cur = tokens[i];
             auto& next = tokens[i + 1];
