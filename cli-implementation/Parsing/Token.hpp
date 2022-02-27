@@ -28,17 +28,19 @@ class Token {
 public:
     explicit Token() : _tokenType(TokenType::undefined) {}
 
+    explicit Token(std::string argument) : _tokenType(TokenType::text), _argument(std::move(argument)) {}
+
     explicit Token(TokenType tokenType) : _tokenType(tokenType)
     {}
 
     Token(TokenType tokenType, std::string argument) : _tokenType(tokenType), _argument(std::move(argument))
     {}
 
-    TokenType GetType() {
+    [[nodiscard]] TokenType GetType() const {
         return _tokenType;
     }
 
-    std::string GetArgument() {
+    [[nodiscard]] std::string GetArgument() const {
         return _argument;
     }
 
@@ -55,10 +57,13 @@ public:
         _argument = "";
         return *this;
     }
-
 private:
     TokenType _tokenType;
     std::string  _argument;
 };
+
+inline bool operator==(const Token& first, const Token& second) {
+    return first.GetType() == second.GetType() && first.GetArgument() == second.GetArgument();
+}
 
 #endif //CLI_TOKEN_MANAGER
