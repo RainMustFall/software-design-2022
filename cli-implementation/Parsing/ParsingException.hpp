@@ -9,6 +9,9 @@
 #include <string>
 #include <utility>
 
+/*
+    Indicator of appeared error during parsing.
+*/
 class ParsingException : public std::exception {
 public:
     explicit ParsingException(std::string msg) : _message(std::move(msg)) {}

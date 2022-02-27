@@ -8,6 +8,9 @@
 #include <vector>
 #include "IPreprocessor.hpp"
 
+/*
+    Filters out all spaces.
+*/
 class SpaceFilterPreprocessor : public IPreprocessor {
 public:
     std::vector<Token> Preprocess (std::vector<Token>& tokens) override {

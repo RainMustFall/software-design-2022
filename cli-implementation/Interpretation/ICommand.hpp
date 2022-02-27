@@ -8,6 +8,10 @@
 #include "IProcess.hpp"
 #include "ExecutionContext.hpp"
 
+/*
+    Abstracts a command execution. 
+    Every inheritor is responsible for creating an 'IProcess' instance as well as pass stdout/stderr.
+*/
 class ICommand {
 public:
     virtual IProcess* Execute(ExecutionContext& context) = 0;

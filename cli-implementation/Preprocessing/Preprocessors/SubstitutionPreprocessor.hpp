@@ -9,6 +9,10 @@
 #include "IStorage.hpp"
 #include "PreprocessingException.hpp"
 
+/*
+    Replaces 'substitute' tokens with text tokens from underlying storage.
+    Not existing tokens are replaced with empty strings by default.
+*/
 class SubstitutionPreprocessor : public IPreprocessor {
 public:
     explicit SubstitutionPreprocessor(IStorage* storage, bool throwOnMissing = false) : _storage(storage), _throwOnMissing(throwOnMissing) {}

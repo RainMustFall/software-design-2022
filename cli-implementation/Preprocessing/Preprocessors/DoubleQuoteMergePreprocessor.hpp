@@ -10,6 +10,11 @@
 #include "PreprocessingException.hpp"
 #include "IPreprocessor.hpp"
 
+
+/*
+    Greedily tries to pair all double quotes in an input sequence.
+    Throws exception if some double quote was left without a pair.
+*/
 class DoubleQuoteMergePreprocessor : public IPreprocessor {
 public:
     std::vector<Token> Preprocess (std::vector<Token>& tokens) override {

@@ -9,6 +9,11 @@
 #include "IPreprocessor.hpp"
 #include "PreprocessingException.hpp"
 
+/*
+    Transforms an assignment into a postfix notation.
+    For example, 'X=Y' should be transformed into '=XY'.
+    It allows to use an universal command pipeline later.
+*/
 class AssignmentReorderPreprocessor : public IPreprocessor {
 public:
     std::vector<Token> Preprocess (std::vector<Token>& tokens) override {

@@ -8,6 +8,9 @@
 #include <exception>
 #include <string>
 
+/*
+    Indicator of appeared error during preprocessing.
+*/
 class PreprocessingException : public std::exception {
 public:
     explicit PreprocessingException(std::string msg) : _message(std::move(msg)) {}

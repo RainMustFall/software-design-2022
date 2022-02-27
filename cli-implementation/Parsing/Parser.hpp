@@ -14,6 +14,9 @@
 #include "Token.hpp"
 #include "ParsingException.hpp"
 
+/*
+    Parser transforms input stream into a sequence of tokens.
+*/
 class Parser {
 public:
     static std::vector<Token> Parse(std::istream& stream) {

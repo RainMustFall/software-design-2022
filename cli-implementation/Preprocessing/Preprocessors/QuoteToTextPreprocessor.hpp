@@ -8,6 +8,10 @@
 #include <vector>
 #include "IPreprocessor.hpp"
 
+
+/*
+    Transforms paired quote tokens into text tokens without quotes.
+*/
 class QuoteToTextPreprocessor : public IPreprocessor {
 public:
     std::vector<Token> Preprocess (std::vector<Token>& tokens) override {

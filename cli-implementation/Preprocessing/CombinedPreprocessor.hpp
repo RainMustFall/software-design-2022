@@ -9,6 +9,9 @@
 
 #include "IPreprocessor.hpp"
 
+/*
+    Abstracts out a list of preprocessors and applies them all at the same time.
+*/
 class CombinedPreprocessor : IPreprocessor {
 public:
     explicit CombinedPreprocessor(std::vector<IPreprocessor*> preprocessors) : _preprocessors(std::move(preprocessors)) {}

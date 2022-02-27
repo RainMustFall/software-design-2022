@@ -21,6 +21,9 @@ enum TokenType {
     space
 };
 
+/*
+    Token wraps some string with predefined meaning so that it is easier to use input later.
+*/
 class Token {
 public:
     explicit Token() : _tokenType(TokenType::undefined) {}

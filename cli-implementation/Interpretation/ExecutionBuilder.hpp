@@ -14,6 +14,9 @@
 #include "CommandRegistry.hpp"
 
 
+/*
+    Transforms a sequence of tokens into a list of executions.
+*/
 class ExecutionBuilder {
 public:
     explicit ExecutionBuilder(CommandRegistry* registry) : _registry(registry) {}

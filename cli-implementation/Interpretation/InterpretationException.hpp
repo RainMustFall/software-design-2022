@@ -8,6 +8,9 @@
 #include <exception>
 #include <string>
 
+/*
+    Indicator of appeared error during command interpretation.
+*/
 class InterpretationException : public std::exception {
 public:
     explicit InterpretationException(std::string msg) : _message(std::move(msg)) {}

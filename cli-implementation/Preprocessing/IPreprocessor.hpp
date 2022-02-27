@@ -8,6 +8,10 @@
 #include <vector>
 #include "Token.hpp"
 
+/*
+    Abstracts an arbitrary transform of sequence of tokens.
+    It is allowed to transform tokens as well as filter / add / reorder them.
+*/
 class IPreprocessor {
 public:
     virtual ~IPreprocessor()= default;
