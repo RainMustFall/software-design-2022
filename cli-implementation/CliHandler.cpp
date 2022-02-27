@@ -9,9 +9,11 @@ void start_cli() {
     std::string line;
     std::getline(std::cin, line);
     while (line != "exit") {
-        try{
-            for (const auto& result : handleAndExtract(line, configuration)) {
-                std::cout << result << std::endl;
+        try {
+            for (const auto&[stdout_str, stderr_str]:
+                handleAndExtract(line, configuration)) {
+                std::cout << stdout_str << std::endl;
+                std::cerr << stderr_str << std::endl;
             }
         }
         catch (std::exception& err) {

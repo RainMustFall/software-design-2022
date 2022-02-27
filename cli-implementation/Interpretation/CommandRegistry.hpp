@@ -9,6 +9,7 @@
 #include <functional>
 #include "ICommand.hpp"
 #include "InterpretationException.hpp"
+#include "SystemCommand.hpp"
 
 #ifndef CLI_IMPLEMENTATION_COMMANDFACTORY_HPP
 #define CLI_IMPLEMENTATION_COMMANDFACTORY_HPP
@@ -22,7 +23,7 @@ class CommandRegistry {
 public:
     ICommand* Build(const std::string& commandName, std::vector<std::string>& arguments){
         if (!_factories.contains(commandName))
-            throw InterpretationException("Unknown command. Please check input.");
+          return new SystemCommand(commandName, arguments);
         return _factories[commandName](arguments);
     }
 

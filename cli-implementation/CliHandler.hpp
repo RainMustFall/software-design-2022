@@ -40,26 +40,32 @@ std::vector<IProcess*> handle(std::vector<std::string>& lines, const DefaultConf
     return results;
 }
 
-std::vector<std::string> handleAndExtract(std::istream& input, const DefaultConfiguration& configuration) {
+std::vector<std::pair<std::string, std::string>>
+handleAndExtract(std::istream& input,
+                 const DefaultConfiguration& configuration) {
     auto results = handle(input, configuration);
-    std::vector<std::string> extracted;
-    for (auto result : results) {
-        std::ostringstream os;
-        os << result->GetStdout().rdbuf();
-        extracted.push_back(os.str());
+    std::vector<std::pair<std::string, std::string>> extracted;
+    for (auto result: results) {
+        std::ostringstream stdout_os;
+        std::ostringstream stderr_os;
+        stdout_os << result->GetStdout().rdbuf();
+        stderr_os << result->GetStderr().rdbuf();
+        extracted.emplace_back(stdout_os.str(), stderr_os.str());
     }
     return extracted;
 }
 
-std::vector<std::string> handleAndExtract(std::string& line, const DefaultConfiguration& configuration) {
+std::vector<std::pair<std::string, std::string>>
+handleAndExtract(std::string &line, const DefaultConfiguration &configuration) {
     std::istringstream inputStream(line);
     return handleAndExtract(inputStream, configuration);
 }
 
-std::vector<std::string> handleAndExtract(std::vector<std::string>& lines, const DefaultConfiguration& configuration) {
-    std::vector<std::string> results;
-    for (auto line : lines) {
-        for (const auto& result : handleAndExtract(line, configuration)) {
+std::vector<std::pair<std::string, std::string>> handleAndExtract(std::vector<
+    std::string>& lines, const DefaultConfiguration& configuration) {
+    std::vector<std::pair<std::string, std::string>> results;
+    for (auto line: lines) {
+        for (const auto& result: handleAndExtract(line, configuration)) {
             results.push_back(result);
         }
     }

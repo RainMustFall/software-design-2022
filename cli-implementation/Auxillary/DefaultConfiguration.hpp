@@ -53,9 +53,9 @@ private:
         auto registry = new CommandRegistry();
         return registry
             ->WithFactory("echo",
-                          [](std::vector<std::string>& args) { return reinterpret_cast<ICommand *>(new EchoCommand(args)); })
+                          [](std::vector<std::string>& args) { return dynamic_cast<ICommand *>(new EchoCommand(args)); })
             ->WithFactory("=",
-                          [](std::vector<std::string>& args) { return reinterpret_cast<ICommand *>(new AssignCommand(args)); });
+                          [](std::vector<std::string>& args) { return dynamic_cast<ICommand *>(new AssignCommand(args)); });
     }
 
     static CombinedPreprocessor* SetUpPreprocessor(IStorage* storage){
