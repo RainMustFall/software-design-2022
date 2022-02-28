@@ -17,6 +17,7 @@
 #include "CatCommand.hpp"
 #include "QuoteToTextPreprocessor.hpp"
 #include "AssignCommand.hpp"
+#include "WordCountCommand.hpp"
 
 /*
  * Represents a default configuration for a whole pipeline of CLI.
@@ -55,6 +56,10 @@ class DefaultConfiguration {
             .WithFactory("cat",
                          [](std::vector<std::string>& args) {
                              return std::make_shared<CatCommand>(args);
+                         })
+            .WithFactory("wc",
+                         [](std::vector<std::string>& args) {
+                             return std::make_shared<WordCountCommand>(args);
                          })
             .WithFactory("=",
                          [](std::vector<std::string>& args) {

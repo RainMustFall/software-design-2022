@@ -60,7 +60,7 @@ TEST(PipelineTest, EmptyInput) {
     ShouldBe({""}, {""});
 }
 
-TEST(PipelineTest, CatCommand) {
+void testCommandOnFiles(const std::string & command, const std::string & correctAnswer) {
     // get the path of the current project use /proc/self/exe and look for test files
     char buff[1000];
     size_t length = ::readlink("/proc/self/exe", buff, sizeof(buff)-1);
@@ -70,10 +70,18 @@ TEST(PipelineTest, CatCommand) {
         auto cli_project_path = self_path.substr(0, self_path.find("/cmake"));
         std::ifstream test_file(cli_project_path + "/tests/test_file_1.txt");
         if (test_file.good()) {
-            auto input = "cat " + cli_project_path + "/tests/test_file_1.txt " + cli_project_path + "/tests/test_file_2.txt";
-            ShouldBe({input}, {"test1 data line 1\ntest1 data line 2\ntest2 data line 1\ntest2 data line 2\n"});
+            auto input = command + ' ' + cli_project_path + "/tests/test_file_1.txt " + cli_project_path + "/tests/test_file_2.txt";
+            ShouldBe({input}, {correctAnswer});
         }
     }
+}
+
+TEST(PipelineTest, CatCommand) {
+    testCommandOnFiles("cat","test1 data line 1\ntest1 data line 2\ntest2 data line 1\ntest2 data line 2\n");
+}
+
+TEST(PipelineTest, WordCountCommand) {
+    testCommandOnFiles("wc","2 8 34 test_file_1.txt\n2 8 34 test_file_2.txt\n");
 }
 
 // TODO: Add more scenarios...
