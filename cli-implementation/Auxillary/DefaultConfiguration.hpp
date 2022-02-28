@@ -18,6 +18,7 @@
 #include "QuoteToTextPreprocessor.hpp"
 #include "AssignCommand.hpp"
 #include "WordCountCommand.hpp"
+#include "PwdCommand.hpp"
 
 /*
  * Represents a default configuration for a whole pipeline of CLI.
@@ -60,6 +61,10 @@ class DefaultConfiguration {
             .WithFactory("wc",
                          [](std::vector<std::string>& args) {
                              return std::make_shared<WordCountCommand>(args);
+                         })
+            .WithFactory("pwd",
+                         [](std::vector<std::string>& args) {
+                             return std::make_shared<PwdCommand>(args);
                          })
             .WithFactory("=",
                          [](std::vector<std::string>& args) {

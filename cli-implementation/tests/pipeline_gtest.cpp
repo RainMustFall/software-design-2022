@@ -3,7 +3,6 @@
 //
 
 #include <gtest/gtest.h>
-#include <filesystem>
 #include <utility>
 #include "CliHandler.hpp"
 #include <cstring>
@@ -82,6 +81,11 @@ TEST(PipelineTest, CatCommand) {
 
 TEST(PipelineTest, WordCountCommand) {
     testCommandOnFiles("wc","2 8 34 test_file_1.txt\n2 8 34 test_file_2.txt\n");
+}
+
+TEST(PipelineTest, PwdCommand) {
+    std::vector<std::string>input {"pwd"};
+    auto results = RunPipelineAndExtract(input);
 }
 
 // TODO: Add more scenarios...
