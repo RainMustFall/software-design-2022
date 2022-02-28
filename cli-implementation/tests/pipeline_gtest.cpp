@@ -3,9 +3,10 @@
 //
 
 #include <gtest/gtest.h>
-
+#include <filesystem>
 #include <utility>
 #include "CliHandler.hpp"
+#include <cstring>
 
 std::vector<IProcessPtr> RunPipeline(std::vector<std::string> lines) {
     DefaultConfiguration configuration;
@@ -59,5 +60,17 @@ TEST(PipelineTest, EmptyInput) {
     ShouldBe({""}, {""});
 }
 
+TEST(PipelineTest, CatCommand) {
+    // get the path of the current project use /proc/self/exe and look for test files
+    char buff[1000];
+    size_t length = ::readlink("/proc/self/exe", buff, sizeof(buff)-1);
+    if (length != -1) {
+        buff[length] = '\0';
+        std::string self_path(buff);
+        auto cli_project_path = self_path.substr(0, self_path.find("/cmake"));
+        auto input = "cat " + cli_project_path + "/tests/test_file_1.txt " + cli_project_path + "/tests/test_file_2.txt";
+        ShouldBe({input}, {"test1 data line 1\ntest1 data line 2\ntest2 data line 1\ntest2 data line 2\n"});
+    }
+}
 
 // TODO: Add more scenarios...

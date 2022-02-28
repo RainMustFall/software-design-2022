@@ -14,6 +14,7 @@
 #include "SpaceFilterPreprocessor.hpp"
 #include "CommandRegistry.hpp"
 #include "EchoCommand.hpp"
+#include "CatCommand.hpp"
 #include "QuoteToTextPreprocessor.hpp"
 #include "AssignCommand.hpp"
 
@@ -50,6 +51,10 @@ class DefaultConfiguration {
             .WithFactory("echo",
                          [](std::vector<std::string>& args) {
                              return std::make_shared<EchoCommand>(args);
+                         })
+            .WithFactory("cat",
+                         [](std::vector<std::string>& args) {
+                             return std::make_shared<CatCommand>(args);
                          })
             .WithFactory("=",
                          [](std::vector<std::string>& args) {
