@@ -32,23 +32,23 @@ void ShouldBe(std::vector<std::string> input, std::vector<std::string> output) {
 }
 
 TEST(PipelineTest, SimpleCommand) {
-    ShouldBe({"echo hello"}, {"hello"});
+    ShouldBe({"echo hello"}, {"hello\n"});
 }
 
 TEST(PipelineTest, Substitution) {
-    ShouldBe({"X=Y", "echo $X"}, {"", "Y"});
+    ShouldBe({"X=Y", "echo $X"}, {"", "Y\n"});
 }
 
 TEST(PipelineTest, ComplexSubstitution) {
-    ShouldBe({"X=echo", "Y=hello", "$X $Y"}, {"", "", "hello"});
+    ShouldBe({"X=echo", "Y=hello", "$X $Y"}, {"", "", "hello\n"});
 }
 
 TEST(PipelineTest, DoubleQuotes) {
-    ShouldBe({"echo \"Hello, world!\""}, {"Hello, world!"});
+    ShouldBe({"echo \"Hello, world!\""}, {"Hello, world!\n"});
 }
 
 TEST(PipelineTest, DoubleQuotesWithSubstitution) {
-    ShouldBe({"X=\"Hello, world!\"", "echo $X"}, {"", "Hello, world!"});
+    ShouldBe({"X=\"Hello, world!\"", "echo $X"}, {"", "Hello, world!\n"});
 }
 
 TEST(PipelineTest, UnknownCommandsDontFall) {
@@ -57,6 +57,10 @@ TEST(PipelineTest, UnknownCommandsDontFall) {
 
 TEST(PipelineTest, EmptyInput) {
     ShouldBe({""}, {""});
+}
+
+TEST(PipelineTest, Piping) {
+    ShouldBe({"echo test | echo"}, {"test\n"});
 }
 
 void testCommandOnFiles(const std::string & command, const std::string & correctAnswer) {
