@@ -12,8 +12,8 @@ void start_cli() {
         try {
             for (const auto&[stdout_str, stderr_str]:
                 handleAndExtract(line, configuration)) {
-                std::cout << stdout_str << std::endl;
-                std::cerr << stderr_str << std::endl;
+                std::cout << stdout_str;
+                std::cerr << stderr_str;
             }
         }
         catch (std::exception& err) {

@@ -22,12 +22,22 @@ public:
 
     IProcessPtr Execute(ExecutionContext& context) override {
         auto process = std::make_shared<SynchronousProcess>();
-        process->GetWritableStdout() << _toEcho;
+        _flush(context.GetStdin(), process->GetWritableStdout());
+        if (!_toEcho.empty()) {
+            process->GetWritableStdout() << _toEcho << std::endl;
+        }
         process->SetReturnCode(ReturnCode::ok);
         return process;
     }
 private:
     std::string _toEcho;
+
+    static void _flush(std::istream& from, std::ostream& to){
+        int ch;
+        while ((ch = from.get()) != EOF) {
+            to << (char) ch;
+        }
+    }
 };
 
 #endif //CLI_IMPLEMENTATION_ECHOCOMMAND_HPP
