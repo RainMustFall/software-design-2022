@@ -7,7 +7,7 @@
 
 #include <vector>
 #include <cstring>
-#include <unistd.h>
+#include <filesystem>
 #include "ICommand.hpp"
 #include "SynchronousProcess.hpp"
 
@@ -22,13 +22,7 @@ public:
 
     IProcessPtr Execute(ExecutionContext& context) override {
         auto process = std::make_shared<SynchronousProcess>();
-        char buffer[1000];
-        size_t length = ::readlink("/proc/self/exe", buffer, sizeof(buffer)-1);
-        if (length != -1) {
-            buffer[length] = '\0';
-            std::string selfPath(buffer);
-            process->GetWritableStdout() << selfPath <<'\n';
-        }
+        process->GetWritableStdout() << std::filesystem::current_path().string() <<'\n';
         process->SetReturnCode(ReturnCode::ok);
         return process;
     }
