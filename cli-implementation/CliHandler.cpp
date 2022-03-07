@@ -4,9 +4,22 @@
 #include "DefaultConfiguration.hpp"
 #include "CliHandler.hpp"
 
+#define BOLDGREEN   "\033[1m\033[32m"
+#define BOLDBLUE    "\033[1m\033[34m"
+#define RESET   "\033[0m"
+
+void PrintPrompt() {
+    std::cout
+        << BOLDGREEN << std::getenv("USERNAME")
+        << RESET << ":"
+        << BOLDBLUE << std::filesystem::current_path().string()
+        << RESET << "$ " << std::flush;
+}
+
 void start_cli() {
     DefaultConfiguration configuration;
     std::string line;
+    PrintPrompt();
     std::getline(std::cin, line);
     while (line != "exit") {
         try {
@@ -20,6 +33,7 @@ void start_cli() {
             auto what = err.what();
             std::cerr << what << std::endl;
         }
+        PrintPrompt();
         std::getline(std::cin, line);
     }
 }
