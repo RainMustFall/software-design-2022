@@ -10,6 +10,7 @@
 #include "Token.hpp"
 #include "ICommand.hpp"
 #include "ExecutionContext.hpp"
+#include "ExecutionEdge.hpp"
 
 
 namespace cli {
@@ -20,11 +21,12 @@ namespace cli {
  * */
 class Execution {
  public:
-  explicit Execution(std::vector<ICommandPtr> commands)
-      : _commands(std::move(commands)) {}
+    explicit Execution(std::vector<ICommandPtr> commands, std::vector<ExecutionEdge> edges)
+        : _commands(std::move(commands)), _edges(std::move(edges)) {}
 
  private:
-  std::vector<ICommandPtr> _commands;
+    std::vector<ICommandPtr> _commands;
+    std::vector<ExecutionEdge> _edges;
 
   friend class Executor;
 };

@@ -25,11 +25,10 @@ public:
 
     IProcessPtr Execute(ExecutionContext& context) override {
         auto process = std::make_shared<SynchronousProcess>();
-            process->GetWritableStdout() << CurrentDirectory() <<'\n';
+        process->GetWritableStdout() << CurrentDirectory() <<'\n';
         process->SetReturnCode(ReturnCode::ok);
         return process;
     }
-private:
 };
 
 }

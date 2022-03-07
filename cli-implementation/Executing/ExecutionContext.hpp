@@ -5,6 +5,8 @@
 #ifndef CLI_IMPLEMENTATION_EXECUTIONCONTEXT_HPP
 #define CLI_IMPLEMENTATION_EXECUTIONCONTEXT_HPP
 
+#include <utility>
+
 #include "IStorage.hpp"
 
 
@@ -16,7 +18,7 @@ namespace cli {
 class ExecutionContext {
 public:
     ExecutionContext(std::shared_ptr<IStorage> storage, std::istream& istream)
-    : _storage(storage),
+    : _storage(std::move(storage)),
       _stdin(istream) {}
 
     IStorage& GetStorage() {

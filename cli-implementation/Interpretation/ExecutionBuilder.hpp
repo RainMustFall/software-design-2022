@@ -26,6 +26,7 @@ class ExecutionBuilder {
     std::vector<Execution> BuildExecutions(const std::vector<Token>& tokens) {
         std::vector<Execution> executions;
         std::vector<ICommandPtr> currentCommands;
+        std::vector<ExecutionEdge> currentEdges;
         auto i = 0;
         while (i < tokens.size()) {
             auto command = tokens[i++];
@@ -34,10 +35,20 @@ class ExecutionBuilder {
                     "Expected text token, received token type of id "
                         + std::to_string(command.GetType()));
             std::vector<std::string> args;
+            auto addedEdge = false;
             while (i < tokens.size()) {
                 auto cur = tokens[i++];
                 if (cur.GetType() == TokenType::_operator) {
-                    // TODO: Add edge
+                    if (cur.GetArgument() == "|") {
+                        currentEdges.push_back(ExecutionEdge::piping);
+                    }
+                    else if (cur.GetArgument() == ";") {
+                        currentEdges.push_back(ExecutionEdge::ignoring);
+                    }
+                    else {
+                        throw InterpretationException("Received unsupported type of operator: " + cur.GetArgument());
+                    }
+                    addedEdge = true;
                     // TODO: Stop building current execution and begin a next one if faced parallel operator (&)
                     break;
                 }
@@ -45,8 +56,11 @@ class ExecutionBuilder {
             }
             currentCommands.push_back(
                 _registry.Build(command.GetArgument(), args));
+            if (!addedEdge) {
+                currentEdges.push_back(ExecutionEdge::ignoring);
+            }
         }
-        executions.emplace_back(currentCommands);
+        executions.emplace_back(currentCommands, currentEdges);
         return executions;
     }
  private:
