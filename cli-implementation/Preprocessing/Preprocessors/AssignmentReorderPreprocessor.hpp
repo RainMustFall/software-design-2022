@@ -9,6 +9,8 @@
 #include "IPreprocessor.hpp"
 #include "PreprocessingException.hpp"
 
+namespace cli {
+
 /*
     Transforms an assignment into a postfix notation.
     For example, 'X=Y' should be transformed into '=XY'.
@@ -43,5 +45,7 @@ public:
         return newTokens;
     }
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_ASSIGNMENTREORDERPREPROCESSOR_HPP

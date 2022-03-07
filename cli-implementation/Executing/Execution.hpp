@@ -11,21 +11,24 @@
 #include "ICommand.hpp"
 #include "ExecutionContext.hpp"
 
+
+namespace cli {
+
 /*
  * Represents a container for commands and interactions between them.
  * Its only purpose is to be used by the Executor.
  * */
 class Execution {
  public:
-    explicit Execution(std::vector<ICommandPtr> commands)
-        : _commands(std::move(commands)) {}
+  explicit Execution(std::vector<ICommandPtr> commands)
+      : _commands(std::move(commands)) {}
 
  private:
-    std::vector<ICommandPtr> _commands;
+  std::vector<ICommandPtr> _commands;
 
-    friend class Executor;
+  friend class Executor;
 };
 
-#include <utility>
+}
 
 #endif //CLI_IMPLEMENTATION_EXECUTION_HPP

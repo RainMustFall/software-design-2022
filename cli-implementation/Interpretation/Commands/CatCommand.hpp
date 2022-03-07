@@ -13,6 +13,8 @@
 #include "ICommand.hpp"
 #include "SynchronousProcess.hpp"
 
+namespace cli {
+
 /*
  * implementation of command to display the content of file
  * */
@@ -39,5 +41,7 @@ public:
 private:
     std::vector<std::string> _file_paths;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_CATCOMMAND_HPP

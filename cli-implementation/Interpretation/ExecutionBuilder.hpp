@@ -13,6 +13,8 @@
 #include "InterpretationException.hpp"
 #include "CommandRegistry.hpp"
 
+namespace cli {
+
 /*
     Transforms a sequence of tokens into a list of executions.
 */
@@ -50,5 +52,7 @@ class ExecutionBuilder {
  private:
     const CommandRegistry& _registry;
 };
+
+}
 
 #endif //CLI_EXECUTIONBUILDER_HPP

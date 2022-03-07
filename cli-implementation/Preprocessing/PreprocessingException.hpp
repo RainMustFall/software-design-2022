@@ -8,6 +8,8 @@
 #include <exception>
 #include <string>
 
+namespace cli {
+
 /*
     Indicator of appeared error during preprocessing.
 */
@@ -22,5 +24,7 @@ public:
 private:
     std::string _message;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_PREPROCESSINGEXCEPTION_HPP

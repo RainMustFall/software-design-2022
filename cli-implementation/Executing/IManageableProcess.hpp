@@ -7,6 +7,8 @@
 
 #include "IProcess.hpp"
 
+namespace cli {
+
 /*
  * Represents a writable side of the process: getting output streams and setting return code.
  * */
@@ -16,5 +18,7 @@ public:
     virtual std::ostream& GetWritableStdout() = 0;
     virtual std::ostream& GetWritableStderr() = 0;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_IMANAGEABLEPROCESS_HPP

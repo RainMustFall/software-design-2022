@@ -23,6 +23,9 @@
 /*
  * Represents a default configuration for a whole pipeline of CLI.
  * */
+
+namespace cli {
+
 class DefaultConfiguration {
  public:
     DefaultConfiguration()
@@ -85,5 +88,7 @@ class DefaultConfiguration {
         return CombinedPreprocessor(preprocessors);
     }
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_DEFAULTCONFIGURATION_HPP

@@ -9,6 +9,8 @@
 #include <memory>
 #include "Token.hpp"
 
+namespace cli {
+
 /*
     Abstracts an arbitrary transform of sequence of tokens.
     It is allowed to transform tokens as well as filter / add / reorder them.
@@ -21,5 +23,7 @@ public:
 };
 
 typedef std::shared_ptr<IPreprocessor> IPreprocessorPtr;
+
+}
 
 #endif //CLI_PREPROCESSOR_HPP

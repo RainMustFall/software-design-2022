@@ -11,6 +11,9 @@
 /*
  * Abstracts out some key-value storage.
  * */
+
+namespace cli {
+
 class IStorage {
 public:
     virtual ~IStorage()= default;
@@ -18,5 +21,7 @@ public:
     virtual bool TryGet(std::string& key, OUT std::string& value) const = 0;
     virtual void Set(std::string& key, std::string& value) = 0;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_ISTORAGE_HPP

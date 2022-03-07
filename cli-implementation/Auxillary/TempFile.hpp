@@ -12,23 +12,28 @@
  * A small class that implements RAII to
  * create and delete temporary files in a timely manner.
  */
+
+namespace cli {
+
 class TempFile {
-public:
-  TempFile(): name_(std::tmpnam(nullptr)) {
-    std::ofstream file(name_);
-    file.close();
+ public:
+  TempFile() : name_(std::tmpnam(nullptr)) {
+      std::ofstream file(name_);
+      file.close();
   }
 
   [[nodiscard]] const std::string& GetName() const {
-    return name_;
+      return name_;
   }
 
-  ~TempFile(){
-    std::remove(name_.data());
+  ~TempFile() {
+      std::remove(name_.data());
   }
 
-private:
+ private:
   std::string name_;
 };
+
+}
 
 #endif // CLI_IMPLEMENTATION_AUXILLARY_TEMPFILE_HPP_

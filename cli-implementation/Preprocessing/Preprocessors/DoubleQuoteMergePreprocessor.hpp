@@ -11,6 +11,8 @@
 #include "IPreprocessor.hpp"
 
 
+namespace cli {
+
 /*
     Greedily tries to pair all double quotes in an input sequence.
     Throws exception if some double quote was left without a pair.
@@ -46,5 +48,7 @@ public:
         return newTokens;
     }
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_DOUBLEQUOTEMERGEPREPROCESSOR_HPP

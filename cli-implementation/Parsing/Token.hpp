@@ -9,6 +9,8 @@
 #include <list>
 #include <utility>
 
+namespace cli {
+
 enum TokenType {
     undefined,
     text,
@@ -64,6 +66,8 @@ private:
 
 inline bool operator==(const Token& first, const Token& second) {
     return first.GetType() == second.GetType() && first.GetArgument() == second.GetArgument();
+}
+
 }
 
 #endif //CLI_TOKEN_MANAGER

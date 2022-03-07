@@ -6,6 +6,8 @@
 #include "Token.hpp"
 #include "Parser.hpp"
 
+using namespace cli;
+
 void ShouldBe(std::string input, std::vector<Token> expected) {
     std::istringstream inputStream(input);
     auto actual = Parser::Parse(inputStream);

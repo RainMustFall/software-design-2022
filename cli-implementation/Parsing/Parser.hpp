@@ -14,6 +14,9 @@
 #include "Token.hpp"
 #include "ParsingException.hpp"
 
+
+namespace cli {
+
 /*
     Parser transforms input stream into a sequence of tokens.
 */
@@ -77,7 +80,7 @@ private:
     }
 
     static bool _aggregateOperatorToken(std::istream& stream, OUT Token& token) {
-        if (_operators.contains((char) stream.peek())) {
+        if (_operators.count((char) stream.peek()) != 0) {
             token = TokenType::_operator;
             token.SetArgument(std::string{(char) stream.get()});
             return true;
@@ -116,7 +119,8 @@ private:
         std::string argument;
         // TODO: Punct characters can be used in text tokens -> they can also be used as assignments and command names which is kinda bad?
         while (!stream.eof() && (std::isalnum(stream.peek()) ||
-        std::ispunct(stream.peek()) && !_forbiddenTextTokenCharacters.contains((char) stream.peek()))) {
+        std::ispunct(stream.peek()) && !_forbiddenTextTokenCharacters.count(
+            (char) stream.peek()) != 0)) {
             argument += (char) stream.get();
         }
         if (!argument.empty()){
@@ -155,5 +159,7 @@ private:
         '='
     };
 };
+
+}
 
 #endif //CLI_PARSER_HPP

@@ -9,6 +9,8 @@
 
 #include "ReturnCode.hpp"
 
+namespace cli {
+
 /*
  * Represents readonly side of a process: getting return codes and input streams.
  * */
@@ -20,5 +22,7 @@ public:
 };
 
 typedef std::shared_ptr<IProcess> IProcessPtr;
+
+}
 
 #endif //CLI_PROCESS_HPP

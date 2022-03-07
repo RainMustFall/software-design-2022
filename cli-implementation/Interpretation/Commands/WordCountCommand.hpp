@@ -15,6 +15,8 @@
 #include "ICommand.hpp"
 #include "SynchronousProcess.hpp"
 
+namespace cli {
+
 /*
  * Implementation of word count command.
  * Display the number of lines, words and bytes in the file.
@@ -55,5 +57,7 @@ private:
         return std::distance(std::istream_iterator<std::string>(stream), std::istream_iterator<std::string>());
     }
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_WORDCOUNTCOMMAND_HPP

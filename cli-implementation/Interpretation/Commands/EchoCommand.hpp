@@ -9,6 +9,8 @@
 #include "ICommand.hpp"
 #include "SynchronousProcess.hpp"
 
+namespace cli {
+
 /*
  * Concatenates given arguments and returns them.
  * */
@@ -29,5 +31,7 @@ public:
 private:
     std::string _toEcho;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_ECHOCOMMAND_HPP

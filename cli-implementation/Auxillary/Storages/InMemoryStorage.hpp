@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include "IStorage.hpp"
 
+namespace cli {
 /*
  * Represents an in memory storage.
  * Mappings are only saved in a corresponding object and do not persist between usages.
@@ -15,7 +16,7 @@
 class InMemoryStorage : public IStorage {
 public:
     bool TryGet(std::string& key, OUT std::string& value) const override {
-        if (_mapping.contains(key)) {
+        if (_mapping.count(key) != 0) {
             value = _mapping.at(key);
             return true;
         }
@@ -28,5 +29,7 @@ public:
 private:
     std::unordered_map<std::string, std::string> _mapping;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_INMEMORYSTORAGE_HPP

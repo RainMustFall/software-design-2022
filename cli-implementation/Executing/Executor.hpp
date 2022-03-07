@@ -9,6 +9,10 @@
 #ifndef CLI_EXECUTOR_HPP
 #define CLI_EXECUTOR_HPP
 
+
+namespace cli {
+
+
 class Executor {
 public:
     explicit Executor(std::shared_ptr<IStorage> storage) : _storage(storage) {}
@@ -38,5 +42,7 @@ private:
         }
     }
 };
+
+}
 
 #endif //CLI_EXECUTOR_HPP

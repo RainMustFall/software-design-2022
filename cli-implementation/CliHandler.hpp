@@ -10,6 +10,8 @@
 #include "Parser.hpp"
 #include "ExecutionBuilder.hpp"
 
+namespace cli {
+
 // TODO: Make use of return code; Make use of clearer 'Try' statements and error handling.
 std::vector<IProcessPtr> handle(std::istream& istream, const
 DefaultConfiguration& configuration) {
@@ -73,6 +75,8 @@ std::vector<std::pair<std::string, std::string>> handleAndExtract(std::vector<
         }
     }
     return results;
+}
+
 }
 
 #endif //CLI_IMPLEMENTATION_CLIHANDLER_HPP

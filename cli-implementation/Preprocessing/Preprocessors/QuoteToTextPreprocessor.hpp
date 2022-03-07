@@ -9,6 +9,8 @@
 #include "IPreprocessor.hpp"
 
 
+namespace cli {
+
 /*
     Transforms paired quote tokens into text tokens without quotes.
 */
@@ -24,5 +26,7 @@ public:
         return tokens;
     }
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_QUOTETOTEXTPREPROCESSOR_HPP

@@ -9,6 +9,8 @@
 #include <string>
 #include <utility>
 
+namespace cli {
+
 /*
     Indicator of appeared error during parsing.
 */
@@ -23,5 +25,7 @@ public:
 private:
     std::string _message;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_PARSINGEXCEPTION_HPP

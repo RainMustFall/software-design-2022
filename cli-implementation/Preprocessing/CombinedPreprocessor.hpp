@@ -9,6 +9,8 @@
 
 #include "IPreprocessor.hpp"
 
+namespace cli {
+
 /*
     Abstracts out a list of preprocessors and applies them all at the same time.
 */
@@ -36,5 +38,7 @@ class CombinedPreprocessor : IPreprocessor {
  private:
     std::vector<IPreprocessorPtr> _preprocessors;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_COMBINEDPREPROCESSOR_HPP

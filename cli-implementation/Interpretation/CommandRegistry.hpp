@@ -14,6 +14,9 @@
 #ifndef CLI_IMPLEMENTATION_COMMANDFACTORY_HPP
 #define CLI_IMPLEMENTATION_COMMANDFACTORY_HPP
 
+
+namespace cli {
+
 using CommandFactory = std::function<ICommandPtr(std::vector<std::string>&)>;
 
 /*
@@ -23,7 +26,7 @@ class CommandRegistry {
 public:
     ICommandPtr Build(const std::string& commandName, std::vector<std::string>&
         arguments) const {
-        if (!_factories.contains(commandName))
+        if (!_factories.count(commandName) != 0)
           return std::make_shared<SystemCommand>(commandName, arguments);
         return _factories.at(commandName)(arguments);
     }
@@ -36,5 +39,7 @@ public:
 private:
     std::unordered_map<std::string, CommandFactory> _factories;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_COMMANDFACTORY_HPP

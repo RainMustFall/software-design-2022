@@ -7,13 +7,13 @@
 #include "CliHandler.hpp"
 #include <cstring>
 
-std::vector<IProcessPtr> RunPipeline(std::vector<std::string> lines) {
-    DefaultConfiguration configuration;
+std::vector<cli::IProcessPtr> RunPipeline(std::vector<std::string> lines) {
+    cli::DefaultConfiguration configuration;
     return handle(lines, configuration);
 }
 
 std::vector<std::string> RunPipelineAndExtract(std::vector<std::string> lines) {
-    DefaultConfiguration configuration;
+    cli::DefaultConfiguration configuration;
     std::vector<std::string> stdout_only;
     stdout_only.reserve(lines.size());
     for (const auto&[std_out, std_err]:
@@ -59,6 +59,8 @@ TEST(PipelineTest, EmptyInput) {
     ShouldBe({""}, {""});
 }
 
+#ifdef unix
+
 void testCommandOnFiles(const std::string & command, const std::string & correctAnswer) {
     // get the path of the current project use /proc/self/exe and look for test files
     char buff[1000];
@@ -74,6 +76,8 @@ void testCommandOnFiles(const std::string & command, const std::string & correct
         }
     }
 }
+
+#endif
 
 TEST(PipelineTest, CatCommand) {
     testCommandOnFiles("cat","test1 data line 1\ntest1 data line 2\ntest2 data line 1\ntest2 data line 2\n");

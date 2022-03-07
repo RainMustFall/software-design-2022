@@ -7,9 +7,12 @@
 
 #include <vector>
 #include <cstring>
-#include <unistd.h>
+
+#include "Auxillary/CurrentDirectory.hpp"
 #include "ICommand.hpp"
 #include "SynchronousProcess.hpp"
+
+namespace cli {
 
 /*
  * Implementation of pwd command.
@@ -22,17 +25,13 @@ public:
 
     IProcessPtr Execute(ExecutionContext& context) override {
         auto process = std::make_shared<SynchronousProcess>();
-        char buffer[1000];
-        size_t length = ::readlink("/proc/self/exe", buffer, sizeof(buffer)-1);
-        if (length != -1) {
-            buffer[length] = '\0';
-            std::string selfPath(buffer);
-            process->GetWritableStdout() << selfPath <<'\n';
-        }
+            process->GetWritableStdout() << CurrentDirectory() <<'\n';
         process->SetReturnCode(ReturnCode::ok);
         return process;
     }
 private:
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_PWDCOMMAND_HPP

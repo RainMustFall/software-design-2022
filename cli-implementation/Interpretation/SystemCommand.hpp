@@ -12,6 +12,8 @@
 #include "ICommand.hpp"
 #include "SynchronousProcess.hpp"
 
+namespace cli {
+
 /*
  * Starts the specified child process
  * */
@@ -56,5 +58,7 @@ private:
     out << file.rdbuf();
   }
 };
+
+}
 
 #endif // CLI_IMPLEMENTATION_SYSTEMCOMMAND_HPP

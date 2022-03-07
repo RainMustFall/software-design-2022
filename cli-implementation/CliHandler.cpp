@@ -4,6 +4,8 @@
 #include "DefaultConfiguration.hpp"
 #include "CliHandler.hpp"
 
+namespace cli {
+
 void start_cli() {
     DefaultConfiguration configuration;
     std::string line;
@@ -24,7 +26,9 @@ void start_cli() {
     }
 }
 
+}
+
 int main() {
-    start_cli();
+    cli::start_cli();
     return 0;
 }

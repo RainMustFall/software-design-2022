@@ -9,6 +9,9 @@
 #include "ICommand.hpp"
 #include "SynchronousProcess.hpp"
 
+
+namespace cli {
+
 /*
  * Assigns a value to a key in the storage of the context.
  * */
@@ -30,5 +33,7 @@ private:
     std::string key;
     std::string value;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_ASSIGNCOMMAND_HPP

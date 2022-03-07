@@ -8,6 +8,8 @@
 #include <exception>
 #include <string>
 
+namespace cli {
+
 /*
     Indicator of appeared error during command interpretation.
 */
@@ -22,5 +24,7 @@ public:
 private:
     std::string _message;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_INTERPRETATIONEXCEPTION_HPP

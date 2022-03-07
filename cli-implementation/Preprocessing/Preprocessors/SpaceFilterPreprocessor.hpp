@@ -8,6 +8,8 @@
 #include <vector>
 #include "IPreprocessor.hpp"
 
+namespace cli {
+
 /*
     Filters out all spaces.
 */
@@ -22,5 +24,7 @@ public:
         return newTokens;
     }
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_SPACEFILTERPREPROCESSOR_HPP

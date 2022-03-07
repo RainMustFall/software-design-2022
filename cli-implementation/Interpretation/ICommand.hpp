@@ -9,6 +9,8 @@
 #include "IProcess.hpp"
 #include "ExecutionContext.hpp"
 
+namespace cli {
+
 /*
     Abstracts a command execution. 
     Every inheritor is responsible for creating an 'IProcess' instance as well as pass stdout/stderr.
@@ -19,5 +21,7 @@ public:
 };
 
 typedef std::shared_ptr<ICommand> ICommandPtr;
+
+}
 
 #endif //CLI_COMMAND_HPP

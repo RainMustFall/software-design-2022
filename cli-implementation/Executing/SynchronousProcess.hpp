@@ -9,6 +9,8 @@
 #include <utility>
 #include "IManageableProcess.hpp"
 
+namespace cli {
+
 /*
  * Represents synchronous process with internal buffers.
  * It's only purpose is to be returned only after completed execution.
@@ -53,5 +55,7 @@ class SynchronousProcess : public IManageableProcess {
     std::shared_ptr<std::iostream> _stdout;
     std::shared_ptr<std::iostream> _stderr;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_SYNCHRONOUSPROCESS_HPP

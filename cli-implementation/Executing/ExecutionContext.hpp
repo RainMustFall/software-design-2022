@@ -7,7 +7,9 @@
 
 #include "IStorage.hpp"
 
-// TODO: Pointers to shared ptrs
+
+namespace cli {
+
 /*
  * Represents an execution context of any operation.
  * */
@@ -28,5 +30,7 @@ private:
     std::shared_ptr<IStorage> _storage;
     std::istream& _stdin;
 };
+
+}
 
 #endif //CLI_IMPLEMENTATION_EXECUTIONCONTEXT_HPP
