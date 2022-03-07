@@ -52,5 +52,5 @@ cmake --build build --target cli
 Если вы прошли этот путь и не сошли с ума, то для запуска выполните
 
 ```
-build/cli.exe
+build\cli.exe
 ```
