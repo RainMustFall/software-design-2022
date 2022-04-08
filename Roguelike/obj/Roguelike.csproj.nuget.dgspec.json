@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "restore": {
+    "G:\\Shad\\software-design-2022\\Roguelike\\Roguelike.csproj": {}
+  },
+  "projects": {
+    "G:\\Shad\\software-design-2022\\Roguelike\\Roguelike.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "G:\\Shad\\software-design-2022\\Roguelike\\Roguelike.csproj",
+        "projectName": "Roguelike",
+        "projectPath": "G:\\Shad\\software-design-2022\\Roguelike\\Roguelike.csproj",
+        "packagesPath": "C:\\Users\\Zeliboba\\.nuget\\packages\\",
+        "outputPath": "G:\\Shad\\software-design-2022\\Roguelike\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Zeliboba\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Terminal.Gui": {
+              "target": "Package",
+              "version": "[1.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
