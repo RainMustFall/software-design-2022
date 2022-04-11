@@ -7,21 +7,21 @@ using Map = Map.Map;
 
 public class MapController
 {
-    private readonly Map map;
+    public readonly Map Map;
 
     public MapController(Map map)
     {
-        this.map = map;
+        Map = map;
     }
 
     public bool Move(ICell toMove, int toX, int toY)
     {
         var (fromX, fromY) = (toMove.X, toMove.Y);
         // todo: validate whether can move 
-        map.Cells[fromX, fromY].RemoveCell(toMove);
-        map.Cells[toX, toY].PutCell(toMove);
+        Map.Cells[fromX, fromY].RemoveCell(toMove);
+        Map.Cells[toX, toY].PutCell(toMove);
         if (toMove is PlayableCell playableCell)
-            playableCell.ParentCell = map.Cells[toX, toY];
+            playableCell.ParentCell = Map.Cells[toX, toY];
         return true;
     }
 }

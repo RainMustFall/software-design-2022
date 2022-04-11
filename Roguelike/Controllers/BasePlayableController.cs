@@ -1,15 +1,18 @@
+using Roguelike.Controllers.Misc;
 using Roguelike.Core.Abstractions.Controllers;
 
 namespace Roguelike.Controllers;
 
 public abstract class BasePlayableController : IPlayableController
 {
-    protected BasePlayableController(MapController mapController)
+    private readonly ControllerContainer controllerContainer;
+
+    protected BasePlayableController(ControllerContainer controllerContainer)
     {
-        MapController = mapController;
+        this.controllerContainer = controllerContainer;
     }
 
-    protected MapController MapController;
+    protected MapController MapController => controllerContainer.MapController;
 
     public abstract void Update();
 }

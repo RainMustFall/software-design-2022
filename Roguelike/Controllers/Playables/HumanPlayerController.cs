@@ -1,3 +1,4 @@
+using Roguelike.Controllers.Misc;
 using Roguelike.Playables;
 
 namespace Roguelike.Controllers.Playables;
@@ -6,7 +7,8 @@ public class HumanPlayerController : BasePlayableController
 {
     private readonly ProgressibleHumanoid player;
 
-    public HumanPlayerController(MapController controller, ProgressibleHumanoid player) : base(controller)
+    public HumanPlayerController(ControllerContainer controllerContainer,
+        ProgressibleHumanoid player) : base(controllerContainer)
     {
         this.player = player;
     }
