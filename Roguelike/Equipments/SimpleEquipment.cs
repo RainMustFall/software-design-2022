@@ -9,6 +9,7 @@ public class SimpleEquipment : IEquipment
     public IItem? Body { get; private set; }
     public IItem? Weapon { get; private set; }
 
+    // todo: validate input using itemtype?
     public IItem? PutHelmetOn(IItem helmet)
     {
         var previous = Helmet;
