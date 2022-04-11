@@ -9,6 +9,8 @@ namespace Roguelike.Playables;
 
 public class ProgressibleHumanoid : IProgressible, IHumanoid, IRenderable
 {
+    private CreatureProperties BaseProperties = new(100, 10); // todo: to constructor
+
     public ProgressibleHumanoid(ICell humanoidCell)
     {
         Cell = humanoidCell;
@@ -18,6 +20,13 @@ public class ProgressibleHumanoid : IProgressible, IHumanoid, IRenderable
     public IInventory Inventory { get; } = new SimpleInventory();
     public IEquipment Equipment { get; } = new SimpleEquipment();
     public CreatureState State { get; } = new(30); // todo: to constructor
-    public CreatureProperties Properties { get; } = new(100, 10);
+    public CreatureProperties Properties => GetCurrentProperties();
     public ICell Cell { get; }
+
+    private CreatureProperties GetCurrentProperties()
+    {
+        var clone = BaseProperties with { };
+        // todo: apply equipment bonuses to clone
+        return clone;
+    }
 }

@@ -22,6 +22,7 @@ public class GameController
         var parentCell = MapController.Map.Cells[x, y];
         var cell = new PlayableCell(parentCell);
         var humanoid = new ProgressibleHumanoid(cell);
+        cell.Renderable = humanoid;
         var humanPlayerController = new HumanPlayerController(GetControllerContainer(), humanoid);
         PlayableControllers.Add(humanPlayerController);
         return humanoid;

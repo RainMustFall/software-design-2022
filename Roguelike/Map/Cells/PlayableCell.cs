@@ -1,3 +1,4 @@
+using Roguelike.Core.Abstractions.Behaviours;
 using Roguelike.Core.Abstractions.Map;
 
 namespace Roguelike.Map.Cells;
@@ -5,6 +6,7 @@ namespace Roguelike.Map.Cells;
 public class PlayableCell : ICell
 {
     public CompositeCell ParentCell { get; set; }
+    public IRenderable Renderable { get; set; }
 
     public PlayableCell(CompositeCell parentCell)
     {

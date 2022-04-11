@@ -3,6 +3,8 @@ using Terminal.Gui;
 
 namespace Roguelike.Core;
 
+using Map = Map.Map;
+
 public class Game
 {
     private readonly GameController gameController;
@@ -10,7 +12,7 @@ public class Game
     public Game()
     {
         // todo: make use of DI container and initialization (i.e. load a save)
-        var map = new Map.Map(10, 10);
+        var map = new Map(10, 10);
         var mapController = new MapController(map);
         gameController = new GameController(mapController);
         gameController.CreateHumanPlayer(5, 5);
