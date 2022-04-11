@@ -8,7 +8,13 @@ public interface IEquipment
     IItem? Body { get; }
     IItem? Weapon { get; }
 
-    IItem? TakeHelmetOff();
-    IItem? TakeBodyOff();
-    IItem? TakeWeaponOff();
+    /// <summary>
+    /// Puts a helmet on.
+    /// </summary>
+    /// <param name="helmet">Helmet to wear</param>
+    /// <returns>Previous helmet if it was on</returns>
+    IItem? PutHelmetOn(IItem helmet);
+
+    IItem? PutBodyOn(IItem body);
+    IItem? PutWeaponOn(IItem weapon);
 }

@@ -1,5 +1,5 @@
 ﻿using Roguelike.Core.Abstractions.Items;
 
-namespace Roguelike.Core.Models;
+namespace Roguelike.Items;
 
 public record SimpleItem(string Name) : IItem;

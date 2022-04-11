@@ -2,7 +2,7 @@
 
 namespace Roguelike.Core.Abstractions.Behaviours;
 
-public interface IHumanoid : IPlayable
+public interface IHumanoid : ICreature
 {
     IInventory Inventory { get; }
     IEquipment Equipment { get; }
