@@ -30,4 +30,15 @@ public class CompositeCell : ICell
     {
         innerCells.Remove(cell);
     }
+
+    public bool Empty()
+    {
+        return innerCells.Count == 0;
+    }
+    
+    
+    public bool IsPlayer()
+    {
+        return innerCells.FindIndex(cell => cell is PlayableCell) != -1;
+    }
 }

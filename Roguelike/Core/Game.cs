@@ -8,14 +8,19 @@ using Map = Map.Map;
 public class Game
 {
     private readonly GameController gameController;
+    public Map map { get; }
 
     public Game()
     {
         // todo: make use of DI container and initialization (i.e. load a save)
-        var map = new Map(10, 10);
+        map = new Map(100, 100);
         var mapController = new MapController(map);
         gameController = new GameController(mapController);
-        gameController.CreateHumanPlayer(5, 5);
+        
+        var playerCell = map.GetFirstEmptyCell();
+        if (playerCell == null)
+            throw new Exception("Generated map has no empty cells");
+        gameController.CreateHumanPlayer(playerCell);
     }
 
     public void Run()

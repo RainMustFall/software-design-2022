@@ -17,10 +17,10 @@ public class GameController
     }
 
     // todo: other factories and game methods...
-    public ProgressibleHumanoid CreateHumanPlayer(int x, int y)
+    public ProgressibleHumanoid CreateHumanPlayer(CompositeCell initialPosition)
     {
-        var parentCell = MapController.Map.Cells[x, y];
-        var cell = new PlayableCell(parentCell);
+        var cell = new PlayableCell(initialPosition);
+        initialPosition.PutCell(cell);
         var humanoid = new ProgressibleHumanoid(cell);
         cell.Renderable = humanoid;
         var humanPlayerController = new HumanPlayerController(GetControllerContainer(), humanoid);
