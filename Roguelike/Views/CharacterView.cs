@@ -77,9 +77,9 @@ public class CharacterView : View
         frame.Add(bar);
     }
 
-    void AddEquipmentPart(FrameView frame, ref Label labelToInit, View anchor, int offset = 0)
+    void AddEquipmentPart(FrameView frame, string title, ref Label labelToInit, View anchor, int offset = 0)
     {
-        var boldCaption = new Label("Helmet")
+        var boldCaption = new Label(title)
         {
             X = 1,
             Y = Pos.Bottom(anchor) + offset,
@@ -99,9 +99,9 @@ public class CharacterView : View
     
     void AddEquipmentView(FrameView frame)
     {
-        AddEquipmentPart(frame, ref helmet, bar, offset:1);
-        AddEquipmentPart(frame, ref body, helmet);
-        AddEquipmentPart(frame, ref weapon, body);
+        AddEquipmentPart(frame, "Helmet", ref helmet, bar, offset:1);
+        AddEquipmentPart(frame, "Body", ref body, helmet);
+        AddEquipmentPart(frame, "Weapon", ref weapon, body);
     }
 
     void UpdateEquipmentCaption(Label label, IItem? item)
