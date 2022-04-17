@@ -1,4 +1,4 @@
-﻿using Roguelike.Core.Models;
+﻿using Roguelike.Properties;
 
 namespace Roguelike.Core.Abstractions.Behaviours;
 
