@@ -4,11 +4,15 @@ namespace Roguelike.Views;
 
 using Map = Map.Map;
 
+/// <summary>
+/// Class <c>CharacterView</c> is responsible for displaying the state of
+/// the map
+/// </summary>
 public class MapView : View
 {
     private Map map;
 
-    public MapView(Rect rect, Map map) : base(rect)
+    public MapView(Map map)
     {
         this.map = map;
     }
@@ -33,8 +37,14 @@ public class MapView : View
             Move(0, y);
             for (var x = 0; x < f.Width; x++)
             {
-                var r = map.Cells[y + centerY - f.Height / 2, x + centerX - f.Width / 2].Render();
-                Driver.AddRune(r);
+                var row = y + centerY - f.Height / 2;
+                var col = x + centerX - f.Width / 2;
+
+                if (row < mapHeight && col < mapWidth && row >= 0 && col >= 0)
+                {
+                    var r = map.Cells[row, col].Render();
+                    Driver.AddRune(r);
+                }
             }
         }
     }

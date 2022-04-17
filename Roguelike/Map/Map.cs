@@ -2,11 +2,14 @@ using Roguelike.Map.Cells;
 
 namespace Roguelike.Map;
 
+/// <summary>
+///  The class that stores the current state of the map
+/// </summary>
 public class Map
 {
     public Map(int width, int height)
     {
-        Cells = new CompositeCell[width, height];
+        Cells = new CompositeCell[height, width];
         for (var i = 0; i < height; ++i)
         for (var j = 0; j < width; ++j)
             Cells[i, j] = new CompositeCell(j, i);
@@ -30,15 +33,19 @@ public class Map
                 var nextDouble = random.NextDouble();
                 if (nextDouble > placementThreshold)
                 {
-                    Cells[i, j].PutCell(new WallCell(i, j));
+                    Cells[i, j].PutCell(new WallCell(j, i));
 
                     int a = nextDouble < .5 ? 0 : (nextDouble < .5 ? -1 : 1);
                     int b = a != 0 ? 0 : (nextDouble < .5 ? -1 : 1);
-                    Cells[i + a, j + b].PutCell(new WallCell(i, j));
+                    Cells[i + a, j + b].PutCell(new WallCell(j, i));
                 }
             }
     }
 
+    /// <summary>
+    /// Returns the topmost left cell, which is not
+    /// occupied by anything, and null if there is no such cell
+    /// </summary>
     public CompositeCell? GetFirstEmptyCell()
     {
         for (int i = 0; i <= Cells.GetUpperBound(0); i++)
@@ -48,6 +55,9 @@ public class Map
         return null;
     }
 
+    /// <summary>
+    /// Returns the cell the player is currently in
+    /// </summary>
     public CompositeCell? LocatePlayer()
     {
         for (int i = 0; i <= Cells.GetUpperBound(0); i++)

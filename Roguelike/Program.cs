@@ -1,46 +1,41 @@
 ﻿using System.Text;
 using NStack;
 using Roguelike.Core;
+using Roguelike.Playables;
 using Roguelike.Views;
 using Terminal.Gui;
 
 namespace Roguelike;
 
-using Rune = System.Rune;
-
 internal static class Demo
 {
-    private static void AddMapView(View? container, Map.Map map)
+    private static View AddMapView(View? container, Map.Map map)
     {
-        container?.Add(new MapView(new Rect(0, 0, 80, 16), map));
+        var mapView = new MapView(map)
+        {
+            X = 1,
+            Y = 1,
+            Width = Dim.Percent(70),
+            Height = Dim.Fill()
+        };
+        
+        container?.Add(mapView);
+        return mapView;
     }
 
-    private static void NewFile()
+    private static View AddCharacterView(View? container, ProgressibleHumanoid character, View anchor)
     {
-        var okButton = new Button("Ok", true);
-        okButton.Clicked += () => Application.RequestStop();
-        var cancelButton = new Button("Cancel");
-        cancelButton.Clicked += () => Application.RequestStop();
-
-        var d = new Dialog(
-            "New File", 50, 20,
-            okButton,
-            cancelButton);
-
-        var ml2 = new Label(1, 1, "Mouse Debug Line");
-        d.Add(ml2);
-        Application.Run(d);
-    }
-
-    private static bool Quit()
-    {
-        var n = MessageBox.Query(50, 7, "Quit Demo", "Are you sure you want to quit this demo?", "Yes", "No");
-        return n == 0;
-    }
-
-    private static void Close()
-    {
-        MessageBox.ErrorQuery(50, 7, "Error", "There is nothing to close", "Ok");
+        
+        var charView = new CharacterView(character)
+        {
+            X = Pos.Right(anchor) + 1,
+            Y = 1,
+            Width = Dim.Fill() - 1,
+            Height = Dim.Fill()
+        };
+        
+        container?.Add(charView);
+        return charView;
     }
 
     private static Label? ml;
@@ -59,7 +54,7 @@ internal static class Demo
 
         var top = Application.Top;
 
-        win = new Window("Hello")
+        win = new Window("Rougelike")
         {
             X = 0,
             Y = 1,
@@ -68,9 +63,10 @@ internal static class Demo
         };
         
         var game = new Game();
-        AddMapView(win, game.map);
+        var mapView = AddMapView(win, game.map);
+        AddCharacterView(win, game.character, mapView);
         top.Add(win);
-        
+
         Application.Run();
         game.Run();
         Application.Shutdown();
