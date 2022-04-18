@@ -6,6 +6,9 @@ using Roguelike.Playables;
 
 namespace Roguelike.Controllers;
 
+/// <summary>
+/// Main game controller class, that manipulates with instantiation of playable instances and disposal of those.
+/// </summary>
 public class GameController
 {
     public readonly List<IPlayableController> PlayableControllers = new();

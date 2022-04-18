@@ -1,5 +1,8 @@
 ﻿namespace Roguelike.Properties;
 
+/// <summary>
+/// Stores information that is sufficient to describe current level, experience and skills.
+/// </summary>
 public struct ProgressionProperties
 {
     public int Level { get; private set; }

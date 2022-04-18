@@ -2,10 +2,10 @@ namespace Roguelike.Helpers;
 
 public class IdGenerator
 {
-    private static int Counter;
+    private static int counter;
 
     public static int GenerateId()
     {
-        return ++Counter;
+        return ++counter;
     }
 }

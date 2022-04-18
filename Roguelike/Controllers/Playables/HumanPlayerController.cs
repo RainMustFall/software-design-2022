@@ -6,6 +6,9 @@ using SharpHook.Native;
 
 namespace Roguelike.Controllers.Playables;
 
+/// <summary>
+/// Controller of player humanoid.
+/// </summary>
 public class HumanPlayerController : BasePlayableController
 {
     private readonly ProgressibleHumanoid player;

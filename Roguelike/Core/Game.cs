@@ -8,6 +8,9 @@ namespace Roguelike.Core;
 
 using Map = Map.Map;
 
+/// <summary>
+/// Main game class that is responsible for the creation of the game and processing of playable controller instances.
+/// </summary>
 public class Game
 {
     public readonly GameController GameController;
@@ -36,5 +39,6 @@ public class Game
         foreach (var playableController in GameController.PlayableControllers.Shuffle())
             playableController.Update();
         Application.Refresh();
+        ShortcutHandler.UpdateState();
     }
 }

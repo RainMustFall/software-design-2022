@@ -1,9 +1,33 @@
 using Roguelike.Core.Abstractions.Behaviours;
+using Roguelike.Core.Abstractions.Items;
 
 namespace Roguelike.Controllers;
 
+/// <summary>
+/// Controls interactions of humanoid instances with equipment and inventory. 
+/// </summary>
 public class InventoryEquipmentController
 {
+    public void PutHelmetOn(IHumanoid humanoid, IItem helmet)
+    {
+        var existing = humanoid.Equipment.PutHelmetOn(helmet);
+        if (existing != null)
+            humanoid.Inventory.TryPutItem(existing);
+    }
+    public void PutBodyOn(IHumanoid humanoid, IItem body)
+    {
+        var existing = humanoid.Equipment.PutBodyOn(body);
+        if (existing != null)
+            humanoid.Inventory.TryPutItem(existing);
+    }
+
+    public void PutWeaponOn(IHumanoid humanoid, IItem weapon)
+    {
+        var existing = humanoid.Equipment.PutWeaponOn(weapon);
+        if (existing != null)
+            humanoid.Inventory.TryPutItem(existing);
+    }
+
     public void UnwearHelmet(IHumanoid humanoid)
     {
         var helmet = humanoid.Equipment.UnwearHelmet();

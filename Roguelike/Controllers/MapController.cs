@@ -5,6 +5,9 @@ namespace Roguelike.Controllers;
 
 using Map = Map.Map;
 
+/// <summary>
+/// Controls interactions of playable controllers with map (basically, movement).
+/// </summary>
 public class MapController
 {
     public readonly Map Map;

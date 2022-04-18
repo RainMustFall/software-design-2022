@@ -18,6 +18,10 @@ public class SimpleInventory : IInventory
         items.Add(item);
         return true;
     }
+    public bool TryRemoveItem(IItem toRemove)
+    {
+        return items.Remove(toRemove);
+    }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
