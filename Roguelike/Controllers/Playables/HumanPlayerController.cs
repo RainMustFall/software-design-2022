@@ -1,5 +1,7 @@
 using Roguelike.Controllers.Misc;
+using Roguelike.Helpers;
 using Roguelike.Playables;
+using SharpHook.Native;
 
 namespace Roguelike.Controllers.Playables;
 
@@ -15,8 +17,18 @@ public class HumanPlayerController : BasePlayableController
 
     public override void Update()
     {
-        // todo: handle buttons and move player accordingly
-        throw new NotImplementedException();
-        // MapController.Move(player.Cell, 10, 12);
+        var deltaX = 0;
+        var deltaY = 0;
+        if (ShortcutHandler.IsPressed(KeyCode.VcW))
+            deltaY += -1;
+        if (ShortcutHandler.IsPressed(KeyCode.VcS))
+            deltaY += 1;
+        if (ShortcutHandler.IsPressed(KeyCode.VcA))
+            deltaX += -1;
+        if (ShortcutHandler.IsPressed(KeyCode.VcD))
+            deltaX += 1;
+
+        if (deltaX != 0 || deltaY != 0)
+            MapController.Move(player.Cell, player.Cell.X + deltaX, player.Cell.Y + deltaY);
     }
 }

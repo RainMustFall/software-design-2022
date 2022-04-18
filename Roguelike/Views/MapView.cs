@@ -26,23 +26,23 @@ public class MapView : View
 
         var f = Frame;
 
-        int mapHeight = map.Cells.GetUpperBound(0);
-        int mapWidth = map.Cells.GetUpperBound(1);
+        var mapHeight = map.Cells.GetUpperBound(0);
+        var mapWidth = map.Cells.GetUpperBound(1);
 
-        int centerX = Math.Min(Math.Max(f.Width / 2, playerCell.X), mapWidth - f.Width / 2);
-        int centerY = Math.Min(Math.Max(f.Height / 2, playerCell.Y), mapHeight - f.Height / 2);
+        var centerX = Math.Min(Math.Max(f.Width / 2, playerCell.X), mapWidth - f.Width / 2);
+        var centerY = Math.Min(Math.Max(f.Height / 2, playerCell.Y), mapHeight - f.Height / 2);
 
         for (var y = 0; y < f.Height; y++)
         {
             Move(0, y);
             for (var x = 0; x < f.Width; x++)
             {
-                var row = y + centerY - f.Height / 2;
-                var col = x + centerX - f.Width / 2;
+                var col = y + centerY - f.Height / 2;
+                var row = x + centerX - f.Width / 2;
 
-                if (row < mapHeight && col < mapWidth && row >= 0 && col >= 0)
+                if (col < mapHeight && row < mapWidth && col >= 0 && row >= 0)
                 {
-                    var r = map.Cells[row, col].Render();
+                    var r = map.Cells[col, row].Render();
                     Driver.AddRune(r);
                 }
             }

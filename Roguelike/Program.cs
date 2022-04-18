@@ -18,14 +18,13 @@ internal static class Demo
             Width = Dim.Percent(70),
             Height = Dim.Fill()
         };
-        
+
         container?.Add(mapView);
         return mapView;
     }
 
     private static View AddCharacterView(View? container, ProgressibleHumanoid character, View anchor)
     {
-        
         var charView = new CharacterView(character)
         {
             X = Pos.Right(anchor) + 1,
@@ -33,7 +32,7 @@ internal static class Demo
             Width = Dim.Fill() - 1,
             Height = Dim.Fill()
         };
-        
+
         container?.Add(charView);
         return charView;
     }
@@ -61,14 +60,19 @@ internal static class Demo
             Width = Dim.Fill(),
             Height = Dim.Fill() - 1
         };
-        
+
         var game = new Game();
         var mapView = AddMapView(win, game.map);
         AddCharacterView(win, game.character, mapView);
         top.Add(win);
 
+        Application.MainLoop.AddTimeout(TimeSpan.FromMilliseconds(100), loop =>
+        {
+            game.MakeIteration();
+            return true;
+        });
+
         Application.Run();
-        game.Run();
         Application.Shutdown();
     }
 }

@@ -19,7 +19,7 @@ public class Game
         map = new Map(200, 100);
         var mapController = new MapController(map);
         gameController = new GameController(mapController);
-        
+
         var playerCell = map.GetFirstEmptyCell();
         if (playerCell == null)
             throw new Exception("Generated map has no empty cells");
@@ -30,13 +30,10 @@ public class Game
         character.Equipment.PutHelmetOn(new SimpleItem("Новогодняя шапка с оленями"));
     }
 
-    public void Run()
+    public void MakeIteration()
     {
-        while (true)
-        {
-            foreach (var playableController in gameController.PlayableControllers)
-                playableController.Update();
-            Application.Refresh();
-        }
+        foreach (var playableController in gameController.PlayableControllers)
+            playableController.Update();
+        Application.Refresh();
     }
 }
