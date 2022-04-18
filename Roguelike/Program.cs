@@ -66,7 +66,7 @@ internal static class Demo
         AddCharacterView(win, game.character, mapView);
         top.Add(win);
 
-        Application.MainLoop.AddTimeout(TimeSpan.FromMilliseconds(100), loop =>
+        Application.MainLoop.AddTimeout(TimeSpan.FromMilliseconds(300), loop =>
         {
             game.MakeIteration();
             return true;

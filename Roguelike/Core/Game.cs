@@ -16,7 +16,7 @@ public class Game
     public Game()
     {
         // todo: make use of DI container and initialization (i.e. load a save)
-        map = new Map(200, 100);
+        map = new Map(200, 200);
         var mapController = new MapController(map);
         gameController = new GameController(mapController);
 

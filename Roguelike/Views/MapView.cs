@@ -26,8 +26,8 @@ public class MapView : View
 
         var f = Frame;
 
-        var mapHeight = map.Cells.GetUpperBound(0);
-        var mapWidth = map.Cells.GetUpperBound(1);
+        var mapHeight = map.Cells.GetUpperBound(1);
+        var mapWidth = map.Cells.GetUpperBound(0);
 
         var centerX = Math.Min(Math.Max(f.Width / 2, playerCell.X), mapWidth - f.Width / 2);
         var centerY = Math.Min(Math.Max(f.Height / 2, playerCell.Y), mapHeight - f.Height / 2);
@@ -37,10 +37,10 @@ public class MapView : View
             Move(0, y);
             for (var x = 0; x < f.Width; x++)
             {
-                var col = y + centerY - f.Height / 2;
-                var row = x + centerX - f.Width / 2;
+                var row = y + centerY - f.Height / 2;
+                var col = x + centerX - f.Width / 2;
 
-                if (col < mapHeight && row < mapWidth && col >= 0 && row >= 0)
+                if (row < mapHeight && col < mapWidth && row >= 0 && col >= 0)
                 {
                     var r = map.Cells[col, row].Render();
                     Driver.AddRune(r);
