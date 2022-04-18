@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 using NStack;
 using Roguelike.Controllers;
@@ -21,14 +22,14 @@ public class CharacterView : View
     private Label body;
     private Label weapon;
     private ListView inventory;
-
+    
     public CharacterView(InventoryEquipmentController inventoryEquipmentController, ProgressibleHumanoid character)
     {
         this.inventoryEquipmentController = inventoryEquipmentController;
         this.character = character;
         Setup();
     }
-
+    
     private void Setup()
     {
         var frame = new FrameView("Your state")
@@ -80,14 +81,16 @@ public class CharacterView : View
         frame.Add(bar);
     }
 
-    void AddEquipmentPart(FrameView frame, string title, ref Label labelToInit, View anchor, int offset = 0)
+    void AddEquipmentPart(FrameView frame, string title, ref Label labelToInit, View anchor, Key shortcut, Action action, int offset = 0)
     {
         var boldCaption = new Label(title)
         {
             X = 1,
             Y = Pos.Bottom(anchor) + offset,
             Width = Dim.Fill() - 1,
-            ColorScheme = Colors.Dialog
+            ColorScheme = Colors.Dialog,
+            Shortcut = shortcut,
+            ShortcutAction = action
         };
 
         labelToInit = new Label()
@@ -95,6 +98,8 @@ public class CharacterView : View
             X = 1,
             Y = Pos.Bottom(boldCaption),
             Width = Dim.Fill(),
+            Shortcut = shortcut,
+            ShortcutAction = action
         };
         
         frame.Add(boldCaption, labelToInit);
@@ -102,11 +107,23 @@ public class CharacterView : View
     
     void AddEquipmentView(FrameView frame)
     {
-        AddEquipmentPart(frame, "Helmet", ref helmet, bar, offset:1);
-        AddEquipmentPart(frame, "Body", ref body, helmet);
-        AddEquipmentPart(frame, "Weapon", ref weapon, body);
+        AddEquipmentPart(frame, "Helmet", ref helmet, bar, Key.CtrlMask | Key.D1, HelmetAction, offset:1);
+        AddEquipmentPart(frame, "Body", ref body, helmet, Key.CtrlMask | Key.D2, BodyAction);
+        AddEquipmentPart(frame, "Weapon", ref weapon, body, Key.CtrlMask | Key.D2, WeaponAction);
     }
 
+    void Run (Action action)
+    {
+        Console.WriteLine("Run");
+        if (action == null)
+            return;
+
+        Application.MainLoop.AddIdle (() => {
+            action ();
+            return false;
+        });
+    }
+    
     void UpdateEquipmentCaption(Label label, IItem? item)
     {
         label.Text = item != null ? item.Name : "(none)";
@@ -123,5 +140,30 @@ public class CharacterView : View
         inventory.SetSource(character.Inventory.Select(x => x.Name).ToList());
 
         base.Redraw(rect);
+    }
+    
+    public override bool ProcessHotKey (KeyEvent kb)
+    {
+        // if (helmet)
+        // {
+        // Run (HelmetAction);
+        // return true;
+        // }
+        return false;
+    }
+    
+    void HelmetAction()
+    {
+        //TODO
+    }
+
+    void BodyAction()
+    {
+        //TODO
+    }
+
+    void WeaponAction()
+    {
+        //TODO
     }
 }
