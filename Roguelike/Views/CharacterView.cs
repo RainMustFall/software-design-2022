@@ -117,11 +117,7 @@ public class CharacterView : View
         UpdateEquipmentCaption(helmet, character.Equipment.Helmet);
         UpdateEquipmentCaption(weapon, character.Equipment.Weapon);
 
-        var enumerate = character.Inventory.GetEnumerator();
-        var newSource = new List<string>();
-        while (enumerate.MoveNext())
-            newSource.Add(enumerate.Current.Name);
-        inventory.SetSource(newSource);
+        inventory.SetSource(character.Inventory.Select(x => x.Name).ToList());
 
         base.Redraw(rect);
     }
