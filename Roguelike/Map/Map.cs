@@ -7,13 +7,14 @@ namespace Roguelike.Map;
 /// </summary>
 public class Map
 {
-    public Map(int width, int height)
+    public Map(int width, int height, bool generate = true)
     {
         Cells = new CompositeCell[height, width];
         for (var i = 0; i < height; ++i)
         for (var j = 0; j < width; ++j)
             Cells[i, j] = new CompositeCell(i, j);
-        GenerateMap();
+        if (generate)
+            GenerateMap();
     }
 
     public CompositeCell[,] Cells { get; }
