@@ -30,4 +30,25 @@ public class SimpleEquipment : IEquipment
         Weapon = weapon;
         return previous;
     }
+
+    public IItem? UnwearHelmet()
+    {
+        var helmet = Helmet;
+        Helmet = null;
+        return helmet;
+    }
+
+    public IItem? UnwearBody()
+    {
+        var body = Body;
+        Body = null;
+        return body;
+    }
+
+    public IItem? UnwearWeapon()
+    {
+        var weapon = Weapon;
+        Weapon = null;
+        return weapon;
+    }
 }

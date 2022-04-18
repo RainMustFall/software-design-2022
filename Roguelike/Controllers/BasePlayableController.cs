@@ -14,5 +14,8 @@ public abstract class BasePlayableController : IPlayableController
 
     protected MapController MapController => controllerContainer.MapController;
 
+    protected InventoryEquipmentController InventoryEquipmentController =>
+        controllerContainer.InventoryEquipmentController;
+
     public abstract void Update();
 }

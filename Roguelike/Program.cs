@@ -1,17 +1,18 @@
 ﻿using System.Text;
 using NStack;
 using Roguelike.Core;
+using Roguelike.Core.Abstractions.Map;
 using Roguelike.Playables;
 using Roguelike.Views;
 using Terminal.Gui;
 
 namespace Roguelike;
 
-internal static class Demo
+internal static class Program
 {
-    private static View AddMapView(View? container, Map.Map map)
+    private static View AddMapView(View? container, Map.Map map, ICell playerCell)
     {
-        var mapView = new MapView(map)
+        var mapView = new MapView(map, playerCell)
         {
             X = 1,
             Y = 1,
@@ -23,9 +24,9 @@ internal static class Demo
         return mapView;
     }
 
-    private static View AddCharacterView(View? container, ProgressibleHumanoid character, View anchor)
+    private static View AddCharacterView(View? container, Game game, View anchor)
     {
-        var charView = new CharacterView(character)
+        var charView = new CharacterView(game.GameController.InventoryEquipmentController, game.MainCharacter)
         {
             X = Pos.Right(anchor) + 1,
             Y = 1,
@@ -53,7 +54,7 @@ internal static class Demo
 
         var top = Application.Top;
 
-        win = new Window("Rougelike")
+        win = new Window("Roguelike")
         {
             X = 0,
             Y = 1,
@@ -62,8 +63,8 @@ internal static class Demo
         };
 
         var game = new Game();
-        var mapView = AddMapView(win, game.map);
-        AddCharacterView(win, game.character, mapView);
+        var mapView = AddMapView(win, game.GameController.MapController.Map, game.MainCharacter.Cell);
+        AddCharacterView(win, game, mapView);
         top.Add(win);
 
         Application.MainLoop.AddTimeout(TimeSpan.FromMilliseconds(300), loop =>

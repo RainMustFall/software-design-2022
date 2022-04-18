@@ -1,5 +1,6 @@
 using System.Data;
 using NStack;
+using Roguelike.Controllers;
 using Roguelike.Core.Abstractions.Items;
 using Roguelike.Playables;
 using Terminal.Gui;
@@ -12,7 +13,8 @@ namespace Roguelike.Views;
 /// </summary>
 public class CharacterView : View
 {
-    private ProgressibleHumanoid character;
+    private readonly InventoryEquipmentController inventoryEquipmentController;
+    private readonly ProgressibleHumanoid character;
     private ProgressBar bar;
     private TableView equipment;
     private Label helmet;
@@ -20,8 +22,9 @@ public class CharacterView : View
     private Label weapon;
     private ListView inventory;
 
-    public CharacterView(ProgressibleHumanoid character)
+    public CharacterView(InventoryEquipmentController inventoryEquipmentController, ProgressibleHumanoid character)
     {
+        this.inventoryEquipmentController = inventoryEquipmentController;
         this.character = character;
         Setup();
     }

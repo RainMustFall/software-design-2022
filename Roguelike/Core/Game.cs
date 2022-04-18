@@ -1,4 +1,5 @@
 using Roguelike.Controllers;
+using Roguelike.Helpers;
 using Roguelike.Items;
 using Roguelike.Playables;
 using Terminal.Gui;
@@ -9,30 +10,30 @@ using Map = Map.Map;
 
 public class Game
 {
-    private readonly GameController gameController;
-    public Map map { get; }
-    public ProgressibleHumanoid character { get; }
+    public readonly GameController GameController;
+    public ProgressibleHumanoid MainCharacter { get; }
 
     public Game()
     {
         // todo: make use of DI container and initialization (i.e. load a save)
-        map = new Map(200, 200);
+        var map = new Map(200, 200);
         var mapController = new MapController(map);
-        gameController = new GameController(mapController);
+        var inventoryEquipmentController = new InventoryEquipmentController();
+        GameController = new GameController(mapController, inventoryEquipmentController);
 
         var playerCell = map.GetFirstEmptyCell();
         if (playerCell == null)
             throw new Exception("Generated map has no empty cells");
-        character = gameController.CreateHumanPlayer(playerCell);
-        character.Inventory.TryPutItem(new SimpleItem("Камень"));
-        character.Inventory.TryPutItem(new SimpleItem("Японская удочка"));
-        character.Inventory.TryPutItem(new SimpleItem("Сушёный кальмар"));
-        character.Equipment.PutHelmetOn(new SimpleItem("Новогодняя шапка с оленями"));
+        MainCharacter = GameController.CreateHumanPlayer(playerCell);
+        MainCharacter.Inventory.TryPutItem(new SimpleItem("Камень"));
+        MainCharacter.Inventory.TryPutItem(new SimpleItem("Японская удочка"));
+        MainCharacter.Inventory.TryPutItem(new SimpleItem("Сушёный кальмар"));
+        MainCharacter.Equipment.PutHelmetOn(new SimpleItem("Новогодняя шапка с оленями"));
     }
 
     public void MakeIteration()
     {
-        foreach (var playableController in gameController.PlayableControllers)
+        foreach (var playableController in GameController.PlayableControllers.Shuffle())
             playableController.Update();
         Application.Refresh();
     }

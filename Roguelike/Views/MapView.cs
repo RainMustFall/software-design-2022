@@ -1,3 +1,4 @@
+using Roguelike.Core.Abstractions.Map;
 using Terminal.Gui;
 
 namespace Roguelike.Views;
@@ -10,19 +11,18 @@ using Map = Map.Map;
 /// </summary>
 public class MapView : View
 {
-    private Map map;
+    private readonly Map map;
+    private readonly ICell playerCell;
 
-    public MapView(Map map)
+    public MapView(Map map, ICell playerCell)
     {
         this.map = map;
+        this.playerCell = playerCell;
     }
 
     public override void Redraw(Rect region)
     {
         Driver.SetAttribute(ColorScheme.Focus);
-        var playerCell = map.LocatePlayer();
-        if (playerCell == null)
-            throw new Exception("No player found on the map");
 
         var f = Frame;
 

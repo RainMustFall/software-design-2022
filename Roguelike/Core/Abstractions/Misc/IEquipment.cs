@@ -17,4 +17,8 @@ public interface IEquipment
 
     IItem? PutBodyOn(IItem body);
     IItem? PutWeaponOn(IItem weapon);
+
+    IItem? UnwearHelmet();
+    IItem? UnwearBody();
+    IItem? UnwearWeapon();
 }

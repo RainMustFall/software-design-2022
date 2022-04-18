@@ -10,10 +10,12 @@ public class GameController
 {
     public readonly List<IPlayableController> PlayableControllers = new();
     public MapController MapController { get; }
+    public InventoryEquipmentController InventoryEquipmentController { get; }
 
-    public GameController(MapController mapController)
+    public GameController(MapController mapController, InventoryEquipmentController inventoryEquipmentController)
     {
         MapController = mapController;
+        InventoryEquipmentController = inventoryEquipmentController;
     }
 
     // todo: other factories and game methods...
@@ -30,6 +32,6 @@ public class GameController
 
     private ControllerContainer GetControllerContainer()
     {
-        return new ControllerContainer(MapController);
+        return new ControllerContainer(MapController, InventoryEquipmentController);
     }
 }
