@@ -1,6 +1,6 @@
 ﻿namespace Roguelike.Properties;
 
-public class CreatureProperties
+public struct CreatureProperties
 {
     public int MaxHealth { get; private set; }
     public int AttackPower { get; private set; }

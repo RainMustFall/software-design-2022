@@ -1,9 +1,10 @@
 ﻿namespace Roguelike.Properties;
 
-public class ProgressionProperties
+public struct ProgressionProperties
 {
     public int Level { get; private set; }
     public int Experience { get; private set; }
+
     public ProgressionProperties(int level, int experience)
     {
         Level = level;

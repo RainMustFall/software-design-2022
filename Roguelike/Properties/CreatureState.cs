@@ -1,8 +1,9 @@
 ﻿namespace Roguelike.Properties;
 
-public class CreatureState
+public struct CreatureState
 {
     public int CurrentHealth { get; private set; }
+
     public CreatureState(int currentHealth)
     {
         CurrentHealth = currentHealth;
