@@ -1,5 +1,6 @@
 using Roguelike.Controllers.Misc;
 using Roguelike.Helpers;
+using Roguelike.Map.Cells;
 using Roguelike.Playables;
 using SharpHook.Native;
 
@@ -19,6 +20,7 @@ public class HumanPlayerController : BasePlayableController
     {
         var deltaX = 0;
         var deltaY = 0;
+
         if (ShortcutHandler.IsPressed(KeyCode.VcW))
             deltaY += -1;
         if (ShortcutHandler.IsPressed(KeyCode.VcS))
@@ -29,6 +31,11 @@ public class HumanPlayerController : BasePlayableController
             deltaX += 1;
 
         if (deltaX != 0 || deltaY != 0)
-            MapController.Move(player.Cell, player.Cell.X + deltaX, player.Cell.Y + deltaY);
+        {
+            var newX = player.Cell.X + deltaX;
+            var newY = player.Cell.Y + deltaY;
+            if (MapController.Move(player.Cell, newX, newY))
+                (player.Cell as PlayableCell)!.ParentCell = MapController.Map.Cells[newX, newY];
+        }
     }
 }
