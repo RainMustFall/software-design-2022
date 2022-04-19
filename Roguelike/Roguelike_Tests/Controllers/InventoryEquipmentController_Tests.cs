@@ -24,7 +24,7 @@ public class InventoryEquipmentController_Tests
     {
         controller = new InventoryEquipmentController();
         humanoid = new TestHumanoid();
-        testItem = new SimpleItem("Test");
+        testItem = new SimpleItem("Test", ItemType.Helmet);
     }
 
     [Test]

@@ -1,4 +1,6 @@
+using System;
 using Roguelike.Controllers;
+using Roguelike.Core.Abstractions.Items;
 using Roguelike.Helpers;
 using Roguelike.Items;
 using Roguelike.Playables;
@@ -28,10 +30,10 @@ public class Game
         if (playerCell == null)
             throw new Exception("Generated map has no empty cells");
         MainCharacter = GameController.CreateHumanPlayer(playerCell);
-        MainCharacter.Inventory.TryPutItem(new SimpleItem("Камень"));
-        MainCharacter.Inventory.TryPutItem(new SimpleItem("Японская удочка"));
-        MainCharacter.Inventory.TryPutItem(new SimpleItem("Сушёный кальмар"));
-        MainCharacter.Equipment.PutHelmetOn(new SimpleItem("Новогодняя шапка с оленями"));
+        MainCharacter.Inventory.TryPutItem(new SimpleItem("Камень", ItemType.Weapon));
+        MainCharacter.Inventory.TryPutItem(new SimpleItem("Японская удочка", ItemType.Weapon));
+        MainCharacter.Inventory.TryPutItem(new SimpleItem("Сушёный кальмар", ItemType.Body));
+        MainCharacter.Equipment.PutHelmetOn(new SimpleItem("Новогодняя шапка с оленями", ItemType.Helmet));
     }
 
     public void MakeIteration()

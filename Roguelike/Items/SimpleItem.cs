@@ -2,4 +2,13 @@
 
 namespace Roguelike.Items;
 
-public record SimpleItem(string Name) : IItem;
+public class SimpleItem : IItem
+{
+    public string Name { get; }
+    public ItemType Type { get; }
+    public SimpleItem(string name, ItemType type)
+    {
+        Name = name;
+        Type = type;
+    }
+}

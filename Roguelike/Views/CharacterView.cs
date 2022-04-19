@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using NStack;
 using Roguelike.Controllers;
 using Roguelike.Core.Abstractions.Items;
@@ -88,9 +91,7 @@ public class CharacterView : View
             X = 1,
             Y = Pos.Bottom(anchor) + offset,
             Width = Dim.Fill() - 1,
-            ColorScheme = Colors.Dialog,
-            Shortcut = shortcut,
-            ShortcutAction = action
+            ColorScheme = Colors.Dialog
         };
 
         labelToInit = new Label()
@@ -107,13 +108,14 @@ public class CharacterView : View
     
     void AddEquipmentView(FrameView frame)
     {
-        AddEquipmentPart(frame, "Helmet", ref helmet, bar, Key.CtrlMask | Key.D1, HelmetAction, offset:1);
-        AddEquipmentPart(frame, "Body", ref body, helmet, Key.CtrlMask | Key.D2, BodyAction);
-        AddEquipmentPart(frame, "Weapon", ref weapon, body, Key.CtrlMask | Key.D2, WeaponAction);
+        AddEquipmentPart(frame, "Helmet", ref helmet, bar, Key.CtrlMask | Key.ShiftMask | Key.D1, UnwearHelmetAction, offset:1);
+        AddEquipmentPart(frame, "Body", ref body, helmet, Key.CtrlMask | Key.ShiftMask | Key.D2, UnwearBodyAction);
+        AddEquipmentPart(frame, "Weapon", ref weapon, body, Key.CtrlMask | Key.ShiftMask | Key.D3, UnwearWeaponAction);
     }
 
-    void Run (Action action)
+    private void Run (Label label)
     {
+        var action = label.ShortcutAction;
         Console.WriteLine("Run");
         if (action == null)
             return;
@@ -142,28 +144,83 @@ public class CharacterView : View
         base.Redraw(rect);
     }
     
+    /// <summary>
+    /// Process shortcuts
+    /// Ctrl+N: put inventory number N
+    /// </summary>
+    /// <param name="kb"></param>
+    /// <returns></returns>
     public override bool ProcessHotKey (KeyEvent kb)
     {
-        // if (helmet)
-        // {
-        // Run (HelmetAction);
-        // return true;
-        // }
+        // put inventory:
+        if (kb.IsCtrl && !kb.IsShift)
+            return TryPutInventory(kb.Key);
         return false;
     }
+
+    private static bool TryParseKeyString(string? numberString, out int number)
+    {
+        if (numberString!.FirstOrDefault() != 'D')
+        {
+            number = -1;
+            return false;
+        }
+        var numberStringShort = numberString?.Substring(1);
+        return int.TryParse(numberStringShort, out number);
+    }
     
-    void HelmetAction()
+    private bool TryPutInventory(Key key)
     {
-        //TODO
+        var keysString = key.ToString().Split(',').FirstOrDefault();
+        if (TryParseKeyString(keysString, out int number))
+        {
+            //TODO: optimization loop logic
+            var inventoryIndex = 0;
+            foreach (var inventoryItem in character.Inventory)
+            {
+                if (inventoryIndex == number - 1)
+                {
+                    if (inventoryItem is IItem item)
+                    {
+                        PutItem(item);
+                        return true;
+                    }
+                }
+                inventoryIndex++;
+            }
+        }
+        return false;
     }
 
-    void BodyAction()
+    //TODO: perhaps move to InventoryEquipmentController impl 
+    private void PutItem(IItem item)
     {
-        //TODO
+        switch (item.Type)
+        {
+            case ItemType.Helmet:
+                inventoryEquipmentController.PutHelmetOn(character, item);
+                break;
+            case ItemType.Body:
+                inventoryEquipmentController.PutBodyOn(character, item);
+                break;
+            case ItemType.Weapon:
+                inventoryEquipmentController.PutWeaponOn(character, item);
+                break;
+        }
     }
-
-    void WeaponAction()
+    
+    private void UnwearHelmetAction()
     {
-        //TODO
+        inventoryEquipmentController.UnwearHelmet(character);
+    }
+    
+    private void UnwearBodyAction()
+    {
+        inventoryEquipmentController.UnwearBody(character);
+    }
+    
+    private void UnwearWeaponAction()
+    {
+        inventoryEquipmentController.UnwearWeapon(character);
     }
 }
