@@ -21,4 +21,5 @@ public abstract class BasePlayableController : IPlayableController
         controllerContainer.InventoryEquipmentController;
 
     public abstract void Update();
+    public abstract void OnDeath();
 }

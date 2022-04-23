@@ -41,4 +41,9 @@ public class HumanPlayerController : BasePlayableController
                 (player.Cell as PlayableCell)!.ParentCell = MapController.Map.Cells[newX, newY];
         }
     }
+
+    public override void OnDeath()
+    {
+        //TODO
+    }
 }

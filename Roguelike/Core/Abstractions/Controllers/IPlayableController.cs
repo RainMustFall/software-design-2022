@@ -7,4 +7,5 @@
 public interface IPlayableController
 {
     void Update();
+    void OnDeath();
 }
