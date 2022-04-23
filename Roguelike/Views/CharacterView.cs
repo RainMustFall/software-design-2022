@@ -108,9 +108,9 @@ public class CharacterView : View
     
     void AddEquipmentView(FrameView frame)
     {
-        AddEquipmentPart(frame, "Helmet", ref helmet, bar, Key.CtrlMask | Key.ShiftMask | Key.D1, UnwearHelmetAction, offset:1);
-        AddEquipmentPart(frame, "Body", ref body, helmet, Key.CtrlMask | Key.ShiftMask | Key.D2, UnwearBodyAction);
-        AddEquipmentPart(frame, "Weapon", ref weapon, body, Key.CtrlMask | Key.ShiftMask | Key.D3, UnwearWeaponAction);
+        AddEquipmentPart(frame, "Helmet", ref helmet, bar, Key.CtrlMask | Key.ShiftMask | Key.D1, UnwearHelmetShortcutAction, offset:1);
+        AddEquipmentPart(frame, "Body", ref body, helmet, Key.CtrlMask | Key.ShiftMask | Key.D2, UnwearBodyShortcutAction);
+        AddEquipmentPart(frame, "Weapon", ref weapon, body, Key.CtrlMask | Key.ShiftMask | Key.D3, UnwearWeaponShortcutAction);
     }
     
     void UpdateEquipmentCaption(Label label, IItem? item)
@@ -141,7 +141,7 @@ public class CharacterView : View
     {
         // put inventory:
         if (kb.IsCtrl && !kb.IsShift)
-            return TryPutInventory(kb.Key);
+            return TryPutInventoryUseShortcut(kb.Key);
         return false;
     }
 
@@ -156,47 +156,28 @@ public class CharacterView : View
         return int.TryParse(numberStringShort, out number);
     }
     
-    private bool TryPutInventory(Key key)
+    private bool TryPutInventoryUseShortcut(Key key)
     {
         var keysString = key.ToString().Split(',').FirstOrDefault();
         if (TryParseKeyString(keysString, out int number))
         {
             var item = character.Inventory.GetItemByIndex(number - 1);
-            PutItem(item);
+            inventoryEquipmentController.PutItemOn(character, item);
         }
         return false;
     }
-
-    //TODO: perhaps move to InventoryEquipmentController impl 
-    private void PutItem(IItem? item)
-    {
-        if (null == item)
-            return;
-        switch (item.Type)
-        {
-            case ItemType.Helmet:
-                inventoryEquipmentController.PutHelmetOn(character, item);
-                break;
-            case ItemType.Body:
-                inventoryEquipmentController.PutBodyOn(character, item);
-                break;
-            case ItemType.Weapon:
-                inventoryEquipmentController.PutWeaponOn(character, item);
-                break;
-        }
-    }
     
-    private void UnwearHelmetAction()
+    private void UnwearHelmetShortcutAction()
     {
         inventoryEquipmentController.UnwearHelmet(character);
     }
     
-    private void UnwearBodyAction()
+    private void UnwearBodyShortcutAction()
     {
         inventoryEquipmentController.UnwearBody(character);
     }
     
-    private void UnwearWeaponAction()
+    private void UnwearWeaponShortcutAction()
     {
         inventoryEquipmentController.UnwearWeapon(character);
     }

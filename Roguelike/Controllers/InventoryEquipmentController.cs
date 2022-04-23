@@ -51,4 +51,28 @@ public class InventoryEquipmentController
         if (weapon != null)
             humanoid.Inventory.TryPutItem(weapon);
     }
+    
+    /// <summary>
+    /// Put on item without specify item type.
+    /// Each new type must be added to the method.
+    /// </summary>
+    /// <param name="character"></param>
+    /// <param name="item"></param>
+    public void PutItemOn(IHumanoid character, IItem? item)
+    {
+        if (null == item)
+            return;
+        switch (item.Type)
+        {
+            case ItemType.Helmet:
+                PutHelmetOn(character, item);
+                break;
+            case ItemType.Body:
+                PutBodyOn(character, item);
+                break;
+            case ItemType.Weapon:
+                PutWeaponOn(character, item);
+                break;
+        }
+    }
 }
