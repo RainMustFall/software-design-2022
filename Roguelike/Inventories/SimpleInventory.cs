@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Roguelike.Core.Abstractions.Items;
 using Roguelike.Core.Abstractions.Misc;
 
@@ -21,6 +22,13 @@ public class SimpleInventory : IInventory
     public bool TryRemoveItem(IItem toRemove)
     {
         return items.Remove(toRemove);
+    }
+
+    public IItem? GetItemByIndex(int index)
+    {
+        if (index >= 0 && index < items.Count)
+            return items[index];
+        return default(IItem);
     }
 
     IEnumerator IEnumerable.GetEnumerator()

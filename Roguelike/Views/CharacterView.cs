@@ -112,19 +112,6 @@ public class CharacterView : View
         AddEquipmentPart(frame, "Body", ref body, helmet, Key.CtrlMask | Key.ShiftMask | Key.D2, UnwearBodyAction);
         AddEquipmentPart(frame, "Weapon", ref weapon, body, Key.CtrlMask | Key.ShiftMask | Key.D3, UnwearWeaponAction);
     }
-
-    private void Run (Label label)
-    {
-        var action = label.ShortcutAction;
-        Console.WriteLine("Run");
-        if (action == null)
-            return;
-
-        Application.MainLoop.AddIdle (() => {
-            action ();
-            return false;
-        });
-    }
     
     void UpdateEquipmentCaption(Label label, IItem? item)
     {
@@ -174,27 +161,17 @@ public class CharacterView : View
         var keysString = key.ToString().Split(',').FirstOrDefault();
         if (TryParseKeyString(keysString, out int number))
         {
-            //TODO: optimization loop logic
-            var inventoryIndex = 0;
-            foreach (var inventoryItem in character.Inventory)
-            {
-                if (inventoryIndex == number - 1)
-                {
-                    if (inventoryItem is IItem item)
-                    {
-                        PutItem(item);
-                        return true;
-                    }
-                }
-                inventoryIndex++;
-            }
+            var item = character.Inventory.GetItemByIndex(number - 1);
+            PutItem(item);
         }
         return false;
     }
 
     //TODO: perhaps move to InventoryEquipmentController impl 
-    private void PutItem(IItem item)
+    private void PutItem(IItem? item)
     {
+        if (null == item)
+            return;
         switch (item.Type)
         {
             case ItemType.Helmet:

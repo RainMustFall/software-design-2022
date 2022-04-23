@@ -9,4 +9,5 @@ public interface IInventory : IEnumerable<IItem>
 {
     bool TryPutItem(IItem item);
     bool TryRemoveItem(IItem item);
+    IItem? GetItemByIndex(int index);
 }

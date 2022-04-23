@@ -13,12 +13,14 @@ public class InventoryEquipmentController
         var existing = humanoid.Equipment.PutHelmetOn(helmet);
         if (existing != null)
             humanoid.Inventory.TryPutItem(existing);
+        humanoid.Inventory.TryRemoveItem(helmet);
     }
     public void PutBodyOn(IHumanoid humanoid, IItem body)
     {
         var existing = humanoid.Equipment.PutBodyOn(body);
         if (existing != null)
             humanoid.Inventory.TryPutItem(existing);
+        humanoid.Inventory.TryRemoveItem(body);
     }
 
     public void PutWeaponOn(IHumanoid humanoid, IItem weapon)
@@ -26,6 +28,7 @@ public class InventoryEquipmentController
         var existing = humanoid.Equipment.PutWeaponOn(weapon);
         if (existing != null)
             humanoid.Inventory.TryPutItem(existing);
+        humanoid.Inventory.TryRemoveItem(weapon);
     }
 
     public void UnwearHelmet(IHumanoid humanoid)
