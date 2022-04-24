@@ -1,5 +1,6 @@
 using Roguelike.Controllers.Misc;
 using Roguelike.Controllers.Playables;
+using Roguelike.Core;
 using Roguelike.Core.Abstractions.Controllers;
 using Roguelike.Map.Cells;
 using Roguelike.Playables;
@@ -11,14 +12,23 @@ namespace Roguelike.Controllers;
 /// </summary>
 public class GameController
 {
+    private readonly Game game;
     public readonly List<IPlayableController> PlayableControllers = new();
     public MapController MapController { get; }
     public InventoryEquipmentController InventoryEquipmentController { get; }
 
-    public GameController(MapController mapController, InventoryEquipmentController inventoryEquipmentController)
+    public GameController(Game game,
+        MapController mapController,
+        InventoryEquipmentController inventoryEquipmentController)
     {
+        this.game = game;
         MapController = mapController;
         InventoryEquipmentController = inventoryEquipmentController;
+    }
+
+    public void EndGame()
+    {
+        game.End();
     }
 
     // todo: other factories and game methods...

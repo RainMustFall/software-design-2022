@@ -44,6 +44,5 @@ public class HumanPlayerController : BasePlayableController
 
     public override void OnDeath()
     {
-        //TODO
     }
 }

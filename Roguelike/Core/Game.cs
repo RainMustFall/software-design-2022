@@ -15,8 +15,11 @@ using Map = Map.Map;
 /// </summary>
 public class Game
 {
+    private int counter;
     public readonly GameController GameController;
     public ProgressibleHumanoid MainCharacter { get; }
+
+    private bool running = true;
 
     public Game()
     {
@@ -24,7 +27,7 @@ public class Game
         var map = new Map(200, 200);
         var mapController = new MapController(map);
         var inventoryEquipmentController = new InventoryEquipmentController();
-        GameController = new GameController(mapController, inventoryEquipmentController);
+        GameController = new GameController(this, mapController, inventoryEquipmentController);
 
         var playerCell = map.GetFirstEmptyCell();
         if (playerCell == null)
@@ -36,11 +39,20 @@ public class Game
         MainCharacter.Equipment.PutHelmetOn(new SimpleItem("Новогодняя шапка с оленями", ItemType.Helmet));
     }
 
-    public void MakeIteration()
+    public void End()
+    {
+        running = false;
+        Application.RequestStop();
+    }
+
+    public bool MakeIteration()
     {
         foreach (var playableController in GameController.PlayableControllers.Shuffle())
             playableController.Update();
+        if (counter++ == 45)
+            End();
         Application.Refresh();
         ShortcutHandler.UpdateState();
+        return running;
     }
 }
