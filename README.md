@@ -16,7 +16,7 @@
 Игровое поле:
 
 
-![Roguelike screen](https://github.com/RainMustFall/software-design-2022/tree/roguelike-first-iteration/Roguelike_screen.png)
+![Roguelike screen](https://github.com/RainMustFall/software-design-2022/blob/63b1acabbd019ed7199ebcebf376a7224fd98ecd/Roguelike_screen.png)
 
 
 Положение игрока обозначается символом **@**.
