@@ -11,7 +11,6 @@ namespace Roguelike.Controllers.Playables;
 /// </summary>
 public class HumanPlayerController : BasePlayableController
 {
-    private int counter;
     private readonly ProgressibleHumanoid player;
 
     public HumanPlayerController(ControllerContainer controllerContainer,
@@ -41,9 +40,6 @@ public class HumanPlayerController : BasePlayableController
             if (MapController.Move(player.Cell, newX, newY))
                 (player.Cell as PlayableCell)!.ParentCell = MapController.Map.Cells[newX, newY];
         }
-
-        if (counter++ == 45)
-            OnDeath();
     }
 
     protected override void OnDeathInner()
