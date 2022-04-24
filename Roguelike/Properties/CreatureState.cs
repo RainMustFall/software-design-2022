@@ -3,9 +3,9 @@
 /// <summary>
 /// Contains fields sufficient to describe current creature state, such as health, (mana, ...).
 /// </summary>
-public struct CreatureState
+public class CreatureState
 {
-    public int CurrentHealth { get; private set; }
+    public int CurrentHealth { get; set; }
 
     public CreatureState(int currentHealth)
     {

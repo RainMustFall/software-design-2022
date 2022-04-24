@@ -76,7 +76,7 @@ public class InventoryEquipmentController_Tests
 
     private class TestHumanoid : IHumanoid
     {
-        public CreatureState State { get; } = new();
+        public CreatureState State { get; } = new CreatureState(100);
         public CreatureProperties Properties { get; } = new();
         public IInventory Inventory { get; } = new SimpleInventory();
         public IEquipment Equipment { get; } = new SimpleEquipment();
