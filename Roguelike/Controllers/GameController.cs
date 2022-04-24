@@ -43,8 +43,13 @@ public class GameController
         return humanoid;
     }
 
+    public void OnPlayableDeath(IPlayableController controller)
+    {
+        PlayableControllers.Remove(controller);
+    }
+
     private ControllerContainer GetControllerContainer()
     {
-        return new ControllerContainer(MapController, InventoryEquipmentController);
+        return new ControllerContainer(this, MapController, InventoryEquipmentController);
     }
 }

@@ -15,7 +15,6 @@ using Map = Map.Map;
 /// </summary>
 public class Game
 {
-    private int counter;
     public readonly GameController GameController;
     public ProgressibleHumanoid MainCharacter { get; }
 
@@ -49,8 +48,6 @@ public class Game
     {
         foreach (var playableController in GameController.PlayableControllers.Shuffle())
             playableController.Update();
-        if (counter++ == 45)
-            End();
         Application.Refresh();
         ShortcutHandler.UpdateState();
         return running;

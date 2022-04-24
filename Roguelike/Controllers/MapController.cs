@@ -28,4 +28,9 @@ public class MapController
         Map.Cells[toX, toY].PutCell(toMove);
         return true;
     }
+
+    public void RemoveCell(ICell cell)
+    {
+        Map.Cells[cell.X, cell.Y].RemoveCell(cell);
+    }
 }

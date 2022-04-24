@@ -1,4 +1,5 @@
 using Roguelike.Controllers.Misc;
+using Roguelike.Core.Abstractions.Behaviours;
 using Roguelike.Core.Abstractions.Controllers;
 
 namespace Roguelike.Controllers;
@@ -9,11 +10,15 @@ namespace Roguelike.Controllers;
 public abstract class BasePlayableController : IPlayableController
 {
     private readonly ControllerContainer controllerContainer;
+    private readonly IPlayable playable;
 
-    protected BasePlayableController(ControllerContainer controllerContainer)
+    protected BasePlayableController(ControllerContainer controllerContainer, IPlayable playable)
     {
         this.controllerContainer = controllerContainer;
+        this.playable = playable;
     }
+
+    protected GameController GameController => controllerContainer.GameController;
 
     protected MapController MapController => controllerContainer.MapController;
 
@@ -21,5 +26,13 @@ public abstract class BasePlayableController : IPlayableController
         controllerContainer.InventoryEquipmentController;
 
     public abstract void Update();
-    public abstract void OnDeath();
+    public void OnDeath()
+    {
+        GameController.OnPlayableDeath(this);
+        if (playable is IRenderable renderable)
+            MapController.RemoveCell(renderable.Cell);
+        OnDeathInner();
+    }
+
+    protected abstract void OnDeathInner();
 }
