@@ -9,10 +9,10 @@ public class Map
 {
     public Map(int width, int height, bool generate = true)
     {
-        Cells = new CompositeCell[height, width];
-        for (var i = 0; i < height; ++i)
-        for (var j = 0; j < width; ++j)
-            Cells[i, j] = new CompositeCell(i, j);
+        Cells = new CompositeCell[width, height];
+        for (var x = 0; x < width; ++x)
+        for (var y = 0; y < height; ++y)
+            Cells[x, y] = new CompositeCell(x, y);
         if (generate)
             GenerateMap();
     }
@@ -36,11 +36,11 @@ public class Map
                 var nextDouble = random.NextDouble();
                 if (nextDouble > placementThreshold)
                 {
-                    Cells[i, j].PutCell(new WallCell(j, i));
+                    Cells[i, j].PutCell(new WallCell(i, j));
 
                     var a = nextDouble < .5 ? 0 : nextDouble < .5 ? -1 : 1;
                     var b = a != 0 ? 0 : nextDouble < .5 ? -1 : 1;
-                    Cells[i + a, j + b].PutCell(new WallCell(j, i));
+                    Cells[i + a, j + b].PutCell(new WallCell(i, j));
                 }
             }
     }
@@ -56,6 +56,25 @@ public class Map
             if (Cells[i, j].Empty())
                 return Cells[i, j];
         return null;
+    }
+    
+    /// <summary>
+    /// Random cell, which is not
+    /// occupied by anything, and null if there is no such cell
+    /// </summary>
+    public CompositeCell? GetRandomEmptyCell()
+    {
+        // prevent endless loop
+        if (GetFirstEmptyCell() == null)
+            return null;
+        
+        Random r = new Random();
+        while (true)
+        {
+            var cell = Cells[r.Next(Cells.GetLength(0)), r.Next(Cells.GetLength(1))];
+            if (cell.Empty())
+                return cell;
+        }
     }
 
     /// <summary>
