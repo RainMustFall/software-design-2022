@@ -1,10 +1,9 @@
+using Roguelike.Controllers.BaseControllers;
 using Roguelike.Controllers.Misc;
-using Roguelike.Core.Abstractions.Behaviours;
-using Roguelike.Core.Abstractions.Controllers;
 using Roguelike.Map.Cells;
 using Roguelike.Mobs;
 
-namespace Roguelike.Controllers;
+namespace Roguelike.Controllers.Playables;
 
 /// <summary>
 /// Base class that contains convenient methods and fields that might be useful for many IPlayableController instances.
@@ -14,14 +13,14 @@ public class MobController : BasePlayableController
     private readonly BaseMob mob;
 
     public MobController(ControllerContainer controllerContainer, BaseMob mob)
-        : base(controllerContainer, mob)
+        : base(controllerContainer, mob, BehaviourOptions.New().WithDeathHandling(mob))
     {
         this.mob = mob;
     }
 
-    public override void Update()
+    protected override void UpdateInner()
     {
-        (int newX, int newY) = mob.MovementStrategy.NextCoordinates(mob.Cell);
+        var (newX, newY) = mob.MovementStrategy.NextCoordinates(mob.Cell);
         if (MapController.Move(mob, newX, newY))
             (mob.Cell as MobCell)!.ParentCell = MapController.Map.Cells[newX, newY];
     }

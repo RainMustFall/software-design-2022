@@ -57,7 +57,7 @@ public class Map
                 return Cells[i, j];
         return null;
     }
-    
+
     /// <summary>
     /// Random cell, which is not
     /// occupied by anything, and null if there is no such cell
@@ -67,8 +67,8 @@ public class Map
         // prevent endless loop
         if (GetFirstEmptyCell() == null)
             return null;
-        
-        Random r = new Random();
+
+        var r = new Random();
         while (true)
         {
             var cell = Cells[r.Next(Cells.GetLength(0)), r.Next(Cells.GetLength(1))];
@@ -84,7 +84,7 @@ public class Map
     {
         for (var i = 0; i <= Cells.GetUpperBound(0); i++)
         for (var j = 0; j <= Cells.GetUpperBound(1); j++)
-            if (Cells[i, j].IsPlayer())
+            if (Cells[i, j].ContainsPlayer())
                 return Cells[i, j];
         return null;
     }

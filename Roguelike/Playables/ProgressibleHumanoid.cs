@@ -4,16 +4,18 @@ using Roguelike.Core.Abstractions.Misc;
 using Roguelike.Properties;
 using Roguelike.Equipments;
 using Roguelike.Inventories;
+using Roguelike.Map.Cells;
 
 namespace Roguelike.Playables;
 
 public class ProgressibleHumanoid : IProgressible, IHumanoid //, IRenderable
 {
-    private CreatureProperties BaseProperties = new CreatureProperties(100, 10);
+    private CreatureProperties BaseProperties = new CreatureProperties(100, 100);
 
-    public ProgressibleHumanoid(ICell humanoidCell)
+    public ProgressibleHumanoid(CompositeCell initialPosition)
     {
-        Cell = humanoidCell;
+        var playableCell = new PlayableCell(initialPosition, this);
+        Cell = playableCell;
     }
 
     public ProgressionProperties Progression { get; set; } = new(1, 0);

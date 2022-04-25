@@ -17,7 +17,7 @@ namespace Roguelike_Tests.Controllers;
 public class BattleController_Tests
 {
     private BattleController battleController;
-    private IRenderingCreature сreatureFisrt;
+    private IRenderingCreature? сreatureFisrt;
     private ICreature сreatureSecond;
 
     [SetUp]
@@ -31,7 +31,7 @@ public class BattleController_Tests
     [Test]
     public void SingleAttack_Test()
     {
-        battleController.Battle(ref сreatureFisrt, ref сreatureSecond);
+        battleController.Battle(сreatureFisrt, сreatureSecond);
         сreatureFisrt.State.CurrentHealth.Should().Be(90);
         сreatureSecond.State.CurrentHealth.Should().Be(100);
     }
@@ -42,12 +42,13 @@ public class BattleController_Tests
         // six attack for death second сreature 
         for (var i = 0; i < 6; i++)
         {
-            battleController.Battle(ref сreatureFisrt, ref сreatureSecond);
+            battleController.Battle(сreatureFisrt, сreatureSecond);
         }
+
         сreatureFisrt.State.CurrentHealth.Should().Be(40);
         сreatureSecond.State.CurrentHealth.Should().Be(0);
     }
-    
+
     private class TestBattleHumanoid : IHumanoid
     {
         public TestBattleHumanoid(int health, int attackPower)

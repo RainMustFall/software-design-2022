@@ -17,7 +17,7 @@ namespace Roguelike_Tests.Controllers;
 public class InventoryEquipmentController_Tests
 {
     private InventoryEquipmentController controller;
-    private IHumanoid humanoid;
+    private IHumanoid? humanoid;
     private IItem testItem;
     private IItem testItem2;
 

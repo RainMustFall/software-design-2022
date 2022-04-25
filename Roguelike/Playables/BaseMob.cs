@@ -5,17 +5,20 @@ using Roguelike.Properties;
 
 namespace Roguelike.Mobs;
 
-public class BaseMob :  IRenderingCreature //ICreature, IRenderable
+public class BaseMob : IRenderingCreature //ICreature, IRenderable
 {
     public CreatureState State { get; }
     public CreatureProperties Properties { get; }
     public ICell Cell { get; }
     public IStrategy MovementStrategy { get; }
 
-    public BaseMob(CompositeCell parentCell, IStrategy movementStrategy,
-        char image, CreatureState state, CreatureProperties properties)
+    public BaseMob(CompositeCell parentCell,
+        IStrategy movementStrategy,
+        char image,
+        CreatureState state,
+        CreatureProperties properties)
     {
-        Cell = new MobCell(parentCell, image);
+        Cell = new MobCell(parentCell, image, this);
         State = state;
         Properties = properties;
         MovementStrategy = movementStrategy;

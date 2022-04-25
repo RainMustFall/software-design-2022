@@ -24,8 +24,4 @@
       <None Remove="Roguelike_Tests\**" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Mobs" />
-    </ItemGroup>
-
 </Project>

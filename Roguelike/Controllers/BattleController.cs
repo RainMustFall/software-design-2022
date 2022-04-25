@@ -7,12 +7,11 @@ public class BattleController
 {
     public BattleController()
     {
-        
     }
-    
-    public void Battle(ref IRenderingCreature сreatureFisrt, ref ICreature сreatureSecond)
+
+    public void Battle(ICreature сreatureFirst, ICreature сreatureSecond)
     {
-        сreatureSecond.State.ChangeCurrentHealth(сreatureFisrt.Properties.AttackPower * -1);
-        сreatureFisrt.State.ChangeCurrentHealth(сreatureSecond.Properties.AttackPower * -1);
+        сreatureSecond.State.ChangeCurrentHealth(сreatureFirst.Properties.AttackPower * -1);
+        сreatureFirst.State.ChangeCurrentHealth(сreatureSecond.Properties.AttackPower * -1);
     }
 }

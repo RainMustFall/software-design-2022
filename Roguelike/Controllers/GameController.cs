@@ -35,12 +35,9 @@ public class GameController
     }
 
     // todo: other factories and game methods...
-    public ProgressibleHumanoid CreateHumanPlayer(CompositeCell initialPosition)
+    public ProgressibleHumanoid? CreateHumanPlayer(CompositeCell initialPosition)
     {
-        var cell = new PlayableCell(initialPosition);
-        initialPosition.PutCell(cell);
-        var humanoid = new ProgressibleHumanoid(cell);
-        cell.Renderable = humanoid;
+        var humanoid = new ProgressibleHumanoid(initialPosition);
         var humanPlayerController = new HumanPlayerController(GetControllerContainer(), humanoid);
         PlayableControllers.Add(humanPlayerController);
         return humanoid;
@@ -51,7 +48,6 @@ public class GameController
         var strategy = SelectStrategy();
         var dragon = new Dragon(initialPosition, strategy);
         var mobController = new MobController(GetControllerContainer(), dragon);
-        initialPosition.PutCell(dragon.Cell);
         PlayableControllers.Add(mobController);
     }
 
@@ -63,7 +59,7 @@ public class GameController
             case 0: return new AggressiveStrategy(MapController.Map);
             case 1: return new CowardlyStrategy(MapController.Map);
             case 2: return new RandomStrategy();
-            default: throw new Exception("Random is broken!");  // impossible
+            default: throw new Exception("Random is broken!"); // impossible
         }
     }
 

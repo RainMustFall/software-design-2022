@@ -1,3 +1,4 @@
+using Roguelike.Controllers.BaseControllers;
 using Roguelike.Controllers.Misc;
 using Roguelike.Helpers;
 using Roguelike.Map.Cells;
@@ -14,12 +15,13 @@ public class HumanPlayerController : BasePlayableController
     private readonly ProgressibleHumanoid player;
 
     public HumanPlayerController(ControllerContainer controllerContainer,
-        ProgressibleHumanoid player) : base(controllerContainer, player)
+        ProgressibleHumanoid player) : base(controllerContainer, player,
+        BehaviourOptions.New().WithDeathHandling(player))
     {
         this.player = player;
     }
 
-    public override void Update()
+    protected override void UpdateInner()
     {
         var deltaX = 0;
         var deltaY = 0;
@@ -46,7 +48,7 @@ public class HumanPlayerController : BasePlayableController
     {
         Task.Run(async () =>
         {
-            await Task.Delay(TimeSpan.FromSeconds(5));
+            await Task.Delay(TimeSpan.FromSeconds(2));
             GameController.EndGame();
             Console.WriteLine("You died :(");
         });

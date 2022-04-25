@@ -18,7 +18,7 @@ using Map = Map.Map;
 public class Game
 {
     public readonly GameController GameController;
-    public ProgressibleHumanoid MainCharacter { get; }
+    public ProgressibleHumanoid? MainCharacter { get; }
 
     private bool running = true;
     

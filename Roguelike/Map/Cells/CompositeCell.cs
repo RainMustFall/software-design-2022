@@ -21,14 +21,12 @@ public class CompositeCell : ICell
         return innerCells.Count > 0 ? innerCells.First().Render() : '.';
     }
 
-    public ICreature? GetCreatureInCell()
+    public ICreature GetCreatureInCell()
     {
-        if (IsPlayer() && innerCells.Find(cell => cell is PlayableCell) is PlayableCell playableCell)
-        {
-            if (playableCell.Renderable is ICreature creature)
-                return creature;
-        }
-        return default(ICreature);
+        if (ContainsPlayable() && innerCells.Find(cell => cell is IPlayableCell) is IPlayableCell { Renderable: ICreature creature })
+            return creature;
+
+        throw new Exception("Creature is not present in cell. This is surely a bug in code.");
     }
 
     public void PutCell(ICell cell)
@@ -46,10 +44,14 @@ public class CompositeCell : ICell
     {
         return innerCells.Count == 0;
     }
-    
-    
-    public bool IsPlayer()
+
+    public bool ContainsPlayer()
     {
         return innerCells.FindIndex(cell => cell is PlayableCell) != -1;
+    }
+    
+    public bool ContainsPlayable()
+    {
+        return innerCells.FindIndex(cell => cell is IPlayableCell) != -1;
     }
 }

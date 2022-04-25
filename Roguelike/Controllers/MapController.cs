@@ -26,11 +26,12 @@ public class MapController
     {
         var toMove = creature.Cell;
         var mapToCell = Map.Cells[toX, toY];
-        if (mapToCell.IsPlayer())
+        if (mapToCell.ContainsPlayable())
         {
             var playerCreature = mapToCell.GetCreatureInCell();
-            battleController.Battle(ref creature, ref playerCreature);
+            battleController.Battle(creature, playerCreature);
         }
+
         if (toX >= Map.Cells.GetLength(0) || toX < 0 || toY >= Map.Cells.GetLength(1) || toY < 0 ||
             !Map.Cells[toX, toY].Empty())
             return false;
@@ -39,7 +40,7 @@ public class MapController
         Map.Cells[toX, toY].PutCell(toMove);
         return true;
     }
-    
+
     public bool Move(ICell toMove, int toX, int toY)
     {
         // TODO: move validation somewhere else?
