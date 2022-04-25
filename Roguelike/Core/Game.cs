@@ -3,7 +3,9 @@ using Roguelike.Controllers;
 using Roguelike.Core.Abstractions.Items;
 using Roguelike.Helpers;
 using Roguelike.Items;
+using Roguelike.Mobs.Strategies;
 using Roguelike.Playables;
+using Roguelike.Playables.Mobs;
 using Terminal.Gui;
 
 namespace Roguelike.Core;
@@ -19,6 +21,8 @@ public class Game
     public ProgressibleHumanoid MainCharacter { get; }
 
     private bool running = true;
+    
+     static int MOB_COUNT = 100;
 
     public Game()
     {
@@ -32,6 +36,10 @@ public class Game
         if (playerCell == null)
             throw new Exception("Generated map has no empty cells");
         MainCharacter = GameController.CreateHumanPlayer(playerCell);
+        
+        for (int i = 0; i < MOB_COUNT; ++i)
+            GameController.SpawnMob(map.GetRandomEmptyCell()!);
+
         MainCharacter.Inventory.TryPutItem(new SimpleItem("Камень", ItemType.Weapon));
         MainCharacter.Inventory.TryPutItem(new SimpleItem("Японская удочка", ItemType.Weapon));
         MainCharacter.Inventory.TryPutItem(new SimpleItem("Сушёный кальмар", ItemType.Body));

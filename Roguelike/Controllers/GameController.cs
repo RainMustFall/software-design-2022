@@ -3,7 +3,10 @@ using Roguelike.Controllers.Playables;
 using Roguelike.Core;
 using Roguelike.Core.Abstractions.Controllers;
 using Roguelike.Map.Cells;
+using Roguelike.Mobs;
+using Roguelike.Mobs.Strategies;
 using Roguelike.Playables;
+using Roguelike.Playables.Mobs;
 
 namespace Roguelike.Controllers;
 
@@ -41,6 +44,27 @@ public class GameController
         var humanPlayerController = new HumanPlayerController(GetControllerContainer(), humanoid);
         PlayableControllers.Add(humanPlayerController);
         return humanoid;
+    }
+
+    public void SpawnMob(CompositeCell initialPosition)
+    {
+        var strategy = SelectStrategy();
+        var dragon = new Dragon(initialPosition, strategy);
+        var mobController = new MobController(GetControllerContainer(), dragon);
+        initialPosition.PutCell(dragon.Cell);
+        PlayableControllers.Add(mobController);
+    }
+
+    private IStrategy SelectStrategy()
+    {
+        var random = new Random();
+        switch (random.Next(3))
+        {
+            case 0: return new AggressiveStrategy(MapController.Map);
+            case 1: return new CowardlyStrategy(MapController.Map);
+            case 2: return new RandomStrategy();
+            default: throw new Exception("Random is broken!");  // impossible
+        }
     }
 
     public void OnPlayableDeath(IPlayableController controller)
