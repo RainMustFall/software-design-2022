@@ -5,6 +5,7 @@ using Roguelike.Controllers;
 using Roguelike.Core.Abstractions.Behaviours;
 using Roguelike.Core.Abstractions.Items;
 using Roguelike.Core.Abstractions.Misc;
+using Roguelike.Core.Abstractions.Map;
 using Roguelike.Equipments;
 using Roguelike.Inventories;
 using Roguelike.Items;
@@ -16,7 +17,7 @@ namespace Roguelike_Tests.Controllers;
 public class BattleController_Tests
 {
     private BattleController battleController;
-    private ICreature сreatureFisrt;
+    private IRenderingCreature сreatureFisrt;
     private ICreature сreatureSecond;
 
     [SetUp]
@@ -34,7 +35,19 @@ public class BattleController_Tests
         сreatureFisrt.State.CurrentHealth.Should().Be(90);
         сreatureSecond.State.CurrentHealth.Should().Be(100);
     }
- 
+
+    [Test]
+    public void DeathCreature_Test()
+    {
+        // six attack for death second сreature 
+        for (var i = 0; i < 6; i++)
+        {
+            battleController.Battle(ref сreatureFisrt, ref сreatureSecond);
+        }
+        сreatureFisrt.State.CurrentHealth.Should().Be(40);
+        сreatureSecond.State.CurrentHealth.Should().Be(0);
+    }
+    
     private class TestBattleHumanoid : IHumanoid
     {
         public TestBattleHumanoid(int health, int attackPower)
@@ -46,5 +59,6 @@ public class BattleController_Tests
         public CreatureProperties Properties { get; }
         public IInventory Inventory { get; } = new SimpleInventory();
         public IEquipment Equipment { get; } = new SimpleEquipment();
+        public ICell Cell { get; }
     }
 }

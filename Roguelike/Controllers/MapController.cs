@@ -1,4 +1,7 @@
+using System.Data;
+using System.Net.Mail;
 using Roguelike.Core.Abstractions.Map;
+using Roguelike.Core.Abstractions.Behaviours;
 using Roguelike.Map.Cells;
 
 namespace Roguelike.Controllers;
@@ -11,12 +14,32 @@ using Map = Map.Map;
 public class MapController
 {
     public readonly Map Map;
+    private BattleController battleController;
 
     public MapController(Map map)
     {
         Map = map;
+        battleController = new BattleController();
     }
 
+    public bool Move(IRenderingCreature creature, int toX, int toY)
+    {
+        var toMove = creature.Cell;
+        var mapToCell = Map.Cells[toX, toY];
+        if (mapToCell.IsPlayer())
+        {
+            var playerCreature = mapToCell.GetCreatureInCell();
+            battleController.Battle(ref creature, ref playerCreature);
+        }
+        if (toX >= Map.Cells.GetLength(0) || toX < 0 || toY >= Map.Cells.GetLength(1) || toY < 0 ||
+            !Map.Cells[toX, toY].Empty())
+            return false;
+        var (fromX, fromY) = (toMove.X, toMove.Y);
+        Map.Cells[fromX, fromY].RemoveCell(toMove);
+        Map.Cells[toX, toY].PutCell(toMove);
+        return true;
+    }
+    
     public bool Move(ICell toMove, int toX, int toY)
     {
         // TODO: move validation somewhere else?

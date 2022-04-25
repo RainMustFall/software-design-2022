@@ -1,4 +1,5 @@
 using Roguelike.Core.Abstractions.Map;
+using Roguelike.Core.Abstractions.Behaviours;
 
 namespace Roguelike.Map.Cells;
 
@@ -18,6 +19,16 @@ public class CompositeCell : ICell
     public char Render()
     {
         return innerCells.Count > 0 ? innerCells.First().Render() : '.';
+    }
+
+    public ICreature? GetCreatureInCell()
+    {
+        if (IsPlayer() && innerCells.Find(cell => cell is PlayableCell) is PlayableCell playableCell)
+        {
+            if (playableCell.Renderable is ICreature creature)
+                return creature;
+        }
+        return default(ICreature);
     }
 
     public void PutCell(ICell cell)

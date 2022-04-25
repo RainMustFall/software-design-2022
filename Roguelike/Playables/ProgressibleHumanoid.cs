@@ -7,9 +7,9 @@ using Roguelike.Inventories;
 
 namespace Roguelike.Playables;
 
-public class ProgressibleHumanoid : IProgressible, IHumanoid, IRenderable
+public class ProgressibleHumanoid : IProgressible, IHumanoid //, IRenderable
 {
-    private CreatureProperties BaseProperties = new(100, 10);
+    private CreatureProperties BaseProperties = new CreatureProperties(100, 10);
 
     public ProgressibleHumanoid(ICell humanoidCell)
     {
@@ -19,7 +19,7 @@ public class ProgressibleHumanoid : IProgressible, IHumanoid, IRenderable
     public ProgressionProperties Progression { get; set; } = new(1, 0);
     public IInventory Inventory { get; } = new SimpleInventory();
     public IEquipment Equipment { get; } = new SimpleEquipment();
-    public CreatureState State { get; } = new(30);
+    public CreatureState State { get; } = new CreatureState(100);
     public CreatureProperties Properties => GetCurrentProperties();
     public ICell Cell { get; }
 

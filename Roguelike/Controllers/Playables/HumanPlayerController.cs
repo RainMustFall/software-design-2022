@@ -37,7 +37,7 @@ public class HumanPlayerController : BasePlayableController
         {
             var newX = player.Cell.X + deltaX;
             var newY = player.Cell.Y + deltaY;
-            if (MapController.Move(player.Cell, newX, newY))
+            if (MapController.Move(player, newX, newY))
                 (player.Cell as PlayableCell)!.ParentCell = MapController.Map.Cells[newX, newY];
         }
     }

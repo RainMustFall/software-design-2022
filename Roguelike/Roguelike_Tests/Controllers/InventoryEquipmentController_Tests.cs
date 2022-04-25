@@ -5,6 +5,7 @@ using Roguelike.Controllers;
 using Roguelike.Core.Abstractions.Behaviours;
 using Roguelike.Core.Abstractions.Items;
 using Roguelike.Core.Abstractions.Misc;
+using Roguelike.Core.Abstractions.Map;
 using Roguelike.Equipments;
 using Roguelike.Inventories;
 using Roguelike.Items;
@@ -77,8 +78,9 @@ public class InventoryEquipmentController_Tests
     private class TestHumanoid : IHumanoid
     {
         public CreatureState State { get; } = new CreatureState(100);
-        public CreatureProperties Properties { get; } = new();
+        public CreatureProperties Properties { get; } = new CreatureProperties(100, 10);
         public IInventory Inventory { get; } = new SimpleInventory();
         public IEquipment Equipment { get; } = new SimpleEquipment();
+        public ICell Cell { get; }
     }
 }

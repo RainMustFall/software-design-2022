@@ -5,7 +5,7 @@
 /// </summary>
 public class CreatureState
 {
-    public int CurrentHealth { get; set; }
+    public int CurrentHealth { get; private set; }
 
     public CreatureState(int currentHealth)
     {

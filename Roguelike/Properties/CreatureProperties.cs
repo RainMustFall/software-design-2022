@@ -3,7 +3,7 @@
 /// <summary>
 /// Contains properties sufficient to describe creature properties, such as maximum health, attack power, (attack speed, ...).
 /// </summary>
-public struct CreatureProperties
+public class CreatureProperties
 {
     public int MaxHealth { get; private set; }
     public int AttackPower { get; private set; }
