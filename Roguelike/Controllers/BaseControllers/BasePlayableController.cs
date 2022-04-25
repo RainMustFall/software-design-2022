@@ -1,18 +1,19 @@
-using Roguelike.Controllers.BaseControllers;
 using Roguelike.Controllers.Misc;
 using Roguelike.Core.Abstractions.Behaviours;
 using Roguelike.Core.Abstractions.Controllers;
+using Roguelike.Helpers;
 
-namespace Roguelike.Controllers;
+namespace Roguelike.Controllers.BaseControllers;
 
 /// <summary>
 /// Base class that contains convenient methods and fields that might be useful for many IPlayableController instances.
 /// </summary>
-public abstract class BasePlayableController : IPlayableController
+public abstract partial class BasePlayableController : IPlayableController
 {
     private readonly ControllerContainer controllerContainer;
-    private readonly IPlayable? playable;
     private readonly BehaviourOptions options;
+    private readonly IPlayable? playable;
+    private readonly TemporaryBoolean shouldSkipUpdate = new();
     private bool dead;
 
     protected BasePlayableController(ControllerContainer controllerContainer,
@@ -35,20 +36,21 @@ public abstract class BasePlayableController : IPlayableController
     {
         foreach (var action in options.OnUpdateActions())
             action(this);
-        if (dead)
+        if (dead || shouldSkipUpdate)
             return;
         UpdateInner();
     }
 
-    protected abstract void UpdateInner();
     public void OnDeath()
     {
+        dead = true;
+        OnDeathInner();
         GameController.OnPlayableDeath(this);
         if (playable is IRenderable renderable)
             MapController.RemoveCell(renderable.Cell);
-        OnDeathInner();
-        dead = true;
     }
+
+    protected abstract void UpdateInner();
 
     protected abstract void OnDeathInner();
 }

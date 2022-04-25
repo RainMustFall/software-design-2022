@@ -13,7 +13,7 @@ public class MobController : BasePlayableController
     private readonly BaseMob mob;
 
     public MobController(ControllerContainer controllerContainer, BaseMob mob)
-        : base(controllerContainer, mob, BehaviourOptions.New().WithDeathHandling(mob))
+        : base(controllerContainer, mob, BehaviourOptions.New().WithDeathHandling(mob).WithConfusionHandling(mob))
     {
         this.mob = mob;
     }
@@ -25,7 +25,5 @@ public class MobController : BasePlayableController
             (mob.Cell as MobCell)!.ParentCell = MapController.Map.Cells[newX, newY];
     }
 
-    protected override void OnDeathInner()
-    {
-    }
+    protected override void OnDeathInner() { }
 }

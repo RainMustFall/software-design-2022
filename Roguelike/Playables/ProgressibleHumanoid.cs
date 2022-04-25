@@ -10,7 +10,7 @@ namespace Roguelike.Playables;
 
 public class ProgressibleHumanoid : IProgressible, IHumanoid //, IRenderable
 {
-    private CreatureProperties BaseProperties = new(100, 100);
+    private readonly CreatureProperties BaseProperties = new(100, 34);
 
     public ProgressibleHumanoid(CompositeCell initialPosition)
     {
@@ -18,12 +18,13 @@ public class ProgressibleHumanoid : IProgressible, IHumanoid //, IRenderable
         Cell = playableCell;
     }
 
-    public ProgressionProperties Progression { get; set; } = new(1, 0);
     public IInventory Inventory { get; } = new SimpleInventory();
     public IEquipment Equipment { get; } = new SimpleEquipment();
     public CreatureState State { get; } = new(100);
     public CreatureProperties Properties => GetCurrentProperties();
     public ICell Cell { get; }
+
+    public ProgressionProperties Progression { get; set; } = new(1, 0);
 
     private CreatureProperties GetCurrentProperties()
     {

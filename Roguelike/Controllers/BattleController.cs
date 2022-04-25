@@ -1,17 +1,21 @@
-﻿using System;
-using Roguelike.Core.Abstractions.Behaviours;
+﻿using Roguelike.Core.Abstractions.Behaviours;
 
 namespace Roguelike.Controllers;
 
 public class BattleController
 {
-    public BattleController()
+    private readonly Random random = new();
+
+    public void Battle(ICreature creatureFirst, ICreature creatureSecond)
     {
+        HandleDamage(creatureFirst, creatureSecond.Properties.AttackPower);
+        HandleDamage(creatureSecond, creatureFirst.Properties.AttackPower);
     }
 
-    public void Battle(ICreature сreatureFirst, ICreature сreatureSecond)
+    private void HandleDamage(ICreature creature, int damage)
     {
-        сreatureSecond.State.ChangeCurrentHealth(сreatureFirst.Properties.AttackPower * -1);
-        сreatureFirst.State.ChangeCurrentHealth(сreatureSecond.Properties.AttackPower * -1);
+        if (true)
+            creature.State.Confused.SetTrue(30);
+        creature.State.ChangeCurrentHealth(damage * -1);
     }
 }

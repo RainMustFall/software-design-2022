@@ -14,8 +14,6 @@ public class Dragon : BaseMob
             strategy,
             'D',
             new CreatureState(100),
-            new CreatureProperties(100, 50)
-        )
-    {
-    }
+            new CreatureProperties(100, 10)
+        ) { }
 }

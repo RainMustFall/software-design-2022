@@ -1,40 +1,64 @@
 using Roguelike.Core.Abstractions.Behaviours;
+using Roguelike.Core.Abstractions.Map;
+using Roguelike.Mobs.Strategies;
 
 namespace Roguelike.Controllers.BaseControllers;
 
-public class BehaviourOptions
+// little dirty hack just to see internals of base playable controller
+public abstract partial class BasePlayableController
 {
-    private readonly List<Action<BasePlayableController>> additionalActions;
-    private BehaviourOptions(List<Action<BasePlayableController>>? additionalActions = null)
+    public class BehaviourOptions
     {
-        this.additionalActions = additionalActions ?? new List<Action<BasePlayableController>>();
-    }
+        private readonly List<Action<BasePlayableController>> additionalActions;
 
-    public static BehaviourOptions New()
-    {
-        return new BehaviourOptions();
-    }
-
-    public void AddAction(Action<BasePlayableController> action)
-    {
-        additionalActions.Add(action);
-    }
-
-    public IEnumerable<Action<BasePlayableController>> OnUpdateActions()
-    {
-        return additionalActions;
-    }
-}
-
-public static class BehaviourOptionsExtensions
-{
-    public static BehaviourOptions WithDeathHandling(this BehaviourOptions behaviourOptions, ICreature creature)
-    {
-        behaviourOptions.AddAction(controller =>
+        private BehaviourOptions(List<Action<BasePlayableController>>? additionalActions = null)
         {
-            if (creature.State.CurrentHealth <= 0)
-                controller.OnDeath();
-        });
-        return behaviourOptions;
+            this.additionalActions = additionalActions ?? new List<Action<BasePlayableController>>();
+        }
+
+        public static BehaviourOptions New()
+        {
+            return new BehaviourOptions();
+        }
+
+        public void AddAction(Action<BasePlayableController> action)
+        {
+            additionalActions.Add(action);
+        }
+
+        public IEnumerable<Action<BasePlayableController>> OnUpdateActions()
+        {
+            return additionalActions;
+        }
+
+        #region Handlers
+
+        public BehaviourOptions WithDeathHandling(ICreature creature)
+        {
+            AddAction(controller =>
+            {
+                if (creature.State.CurrentHealth <= 0)
+                    controller.OnDeath();
+            });
+            return this;
+        }
+
+        public BehaviourOptions WithConfusionHandling(IRenderingCreature creature)
+        {
+            AddAction(controller =>
+            {
+                if (!creature.State.Confused)
+                    return;
+
+                controller.shouldSkipUpdate.SetTrue(1);
+                var (newX, newY) = new RandomStrategy().NextCoordinates(creature.Cell);
+                if (controller.MapController.Move(creature, newX, newY) &&
+                    creature.Cell is IPlayableCell playableCell)
+                    playableCell.ParentCell = controller.MapController.Map.Cells[newX, newY];
+            });
+            return this;
+        }
+
+        #endregion
     }
 }
