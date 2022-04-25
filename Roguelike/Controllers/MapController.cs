@@ -24,17 +24,20 @@ public class MapController
 
     public bool Move(IRenderingCreature creature, int toX, int toY)
     {
+        if (toX >= Map.Cells.GetLength(0) || toX < 0 || toY >= Map.Cells.GetLength(1) || toY < 0)
+            return false;
+
         var toMove = creature.Cell;
         var mapToCell = Map.Cells[toX, toY];
-        if (mapToCell.ContainsPlayable())
+        if (mapToCell.ContainsPlayer() || toMove is PlayableCell && mapToCell.ContainsPlayable())
         {
             var playerCreature = mapToCell.GetCreatureInCell();
             battleController.Battle(creature, playerCreature);
         }
 
-        if (toX >= Map.Cells.GetLength(0) || toX < 0 || toY >= Map.Cells.GetLength(1) || toY < 0 ||
-            !Map.Cells[toX, toY].Empty())
+        if (!Map.Cells[toX, toY].Empty())
             return false;
+
         var (fromX, fromY) = (toMove.X, toMove.Y);
         Map.Cells[fromX, fromY].RemoveCell(toMove);
         Map.Cells[toX, toY].PutCell(toMove);

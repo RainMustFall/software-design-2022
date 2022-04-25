@@ -33,11 +33,10 @@ public abstract class BasePlayableController : IPlayableController
 
     public void Update()
     {
-        if (dead)
-            return;
-
         foreach (var action in options.OnUpdateActions())
             action(this);
+        if (dead)
+            return;
         UpdateInner();
     }
 
