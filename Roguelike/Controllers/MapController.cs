@@ -26,7 +26,6 @@ public class MapController
     {
         if (toX >= Map.Cells.GetLength(0) || toX < 0 || toY >= Map.Cells.GetLength(1) || toY < 0)
             return false;
-
         var toMove = creature.Cell;
         var mapToCell = Map.Cells[toX, toY];
         if (mapToCell.ContainsPlayer() || toMove is PlayableCell && mapToCell.ContainsPlayable())
@@ -34,21 +33,12 @@ public class MapController
             var playerCreature = mapToCell.GetCreatureInCell();
             battleController.Battle(creature, playerCreature);
         }
-
-        if (!Map.Cells[toX, toY].Empty())
-            return false;
-
-        var (fromX, fromY) = (toMove.X, toMove.Y);
-        Map.Cells[fromX, fromY].RemoveCell(toMove);
-        Map.Cells[toX, toY].PutCell(toMove);
-        return true;
+        return Move(toMove, toX, toY);
     }
 
     public bool Move(ICell toMove, int toX, int toY)
     {
-        // TODO: move validation somewhere else?
-        if (toX >= Map.Cells.GetLength(0) || toX < 0 || toY >= Map.Cells.GetLength(1) || toY < 0 ||
-            !Map.Cells[toX, toY].Empty())
+        if (!Map.Cells[toX, toY].Empty())
             return false;
         var (fromX, fromY) = (toMove.X, toMove.Y);
         Map.Cells[fromX, fromY].RemoveCell(toMove);

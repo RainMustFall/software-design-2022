@@ -25,7 +25,7 @@ public class InventoryEquipmentController_Tests
     public void TestSetup()
     {
         controller = new InventoryEquipmentController();
-        humanoid = new TestHumanoid();
+        humanoid = new TestHumanoid(100, 10);
         testItem = new SimpleItem("Test", ItemType.Body);
         testItem2 = new SimpleItem("Test2", ItemType.Body);
     }
@@ -72,15 +72,5 @@ public class InventoryEquipmentController_Tests
         humanoid.Inventory.Should().Contain(testItem);
         humanoid.Equipment.Body.Should().Be(testItem2);
     }
-    
     // TODO: Test checking case when inventory is about to be full
-
-    private class TestHumanoid : IHumanoid
-    {
-        public CreatureState State { get; } = new CreatureState(100);
-        public CreatureProperties Properties { get; } = new CreatureProperties(100, 10);
-        public IInventory Inventory { get; } = new SimpleInventory();
-        public IEquipment Equipment { get; } = new SimpleEquipment();
-        public ICell Cell { get; }
-    }
 }

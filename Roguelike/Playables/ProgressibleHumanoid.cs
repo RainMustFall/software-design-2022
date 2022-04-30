@@ -8,7 +8,7 @@ using Roguelike.Map.Cells;
 
 namespace Roguelike.Playables;
 
-public class ProgressibleHumanoid : IProgressible, IHumanoid //, IRenderable
+public class ProgressibleHumanoid : IProgressible, IHumanoid
 {
     private readonly CreatureProperties BaseProperties = new(100, 34);
 

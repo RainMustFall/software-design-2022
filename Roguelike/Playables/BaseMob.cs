@@ -5,7 +5,7 @@ using Roguelike.Properties;
 
 namespace Roguelike.Mobs;
 
-public class BaseMob : IRenderingCreature //ICreature, IRenderable
+public class BaseMob : IRenderingCreature
 {
     public CreatureState State { get; }
     public CreatureProperties Properties { get; }

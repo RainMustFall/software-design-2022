@@ -17,23 +17,23 @@ namespace Roguelike_Tests.Controllers;
 public class BattleController_Tests
 {
     private BattleController battleController;
-    private IRenderingCreature? сreatureFisrt;
-    private ICreature сreatureSecond;
+    private ICreature? сreatureFisrt;
+    private ICreature? сreatureSecond;
 
     [SetUp]
     public void TestSetup()
     {
         battleController = new BattleController();
-        сreatureFisrt = new TestBattleHumanoid(100, 20);
-        сreatureSecond = new TestBattleHumanoid(120, 10);
+        сreatureFisrt = new TestHumanoid(100, 20);
+        сreatureSecond = new TestHumanoid(120, 10);
     }
 
     [Test]
     public void SingleAttack_Test()
     {
         battleController.Battle(сreatureFisrt, сreatureSecond);
-        сreatureFisrt.State.CurrentHealth.Should().Be(90);
-        сreatureSecond.State.CurrentHealth.Should().Be(100);
+        сreatureFisrt?.State.CurrentHealth.Should().Be(90);
+        сreatureSecond?.State.CurrentHealth.Should().Be(100);
     }
 
     [Test]
@@ -44,22 +44,7 @@ public class BattleController_Tests
         {
             battleController.Battle(сreatureFisrt, сreatureSecond);
         }
-
-        сreatureFisrt.State.CurrentHealth.Should().Be(40);
-        сreatureSecond.State.CurrentHealth.Should().Be(0);
-    }
-
-    private class TestBattleHumanoid : IHumanoid
-    {
-        public TestBattleHumanoid(int health, int attackPower)
-        {
-            State = new CreatureState(health);
-            Properties = new CreatureProperties(health, attackPower);
-        }
-        public CreatureState State { get; }
-        public CreatureProperties Properties { get; }
-        public IInventory Inventory { get; } = new SimpleInventory();
-        public IEquipment Equipment { get; } = new SimpleEquipment();
-        public ICell Cell { get; }
+        сreatureFisrt?.State.CurrentHealth.Should().Be(40);
+        сreatureSecond?.State.CurrentHealth.Should().Be(0);
     }
 }
