@@ -1,6 +1,9 @@
 using Roguelike.Controllers.BaseControllers;
 using Roguelike.Controllers.Misc;
+using Roguelike.Core.Abstractions.Map;
+using Roguelike.Helpers;
 using Roguelike.Map.Cells;
+using Roguelike.Playables;
 using Roguelike.Mobs;
 
 namespace Roguelike.Controllers.Playables;
@@ -21,8 +24,19 @@ public class MobController : BasePlayableController
     protected override void UpdateInner()
     {
         var (newX, newY) = mob.MovementStrategy.NextCoordinates(mob.Cell);
-        if (MapController.Move(mob, newX, newY))
+        var mobCell = MapController.Map.Cells[newX, newY];
+        if (mobCell.ContainsPlayer())
+            OnTrigger(mobCell);
+        if (MapController.Move(mob.Cell, newX, newY))
             (mob.Cell as MobCell)!.ParentCell = MapController.Map.Cells[newX, newY];
+    }
+
+    public override void OnTrigger(ICell cell)
+    {
+        if (cell is CompositeCell compositeCell)
+        {
+            BattleController.Battle(mob, compositeCell.GetCreatureInCell());
+        }
     }
 
     protected override void OnDeathInner() { }

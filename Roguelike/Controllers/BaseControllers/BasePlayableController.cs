@@ -1,6 +1,7 @@
 using Roguelike.Controllers.Misc;
 using Roguelike.Core.Abstractions.Behaviours;
 using Roguelike.Core.Abstractions.Controllers;
+using Roguelike.Core.Abstractions.Map;
 using Roguelike.Helpers;
 
 namespace Roguelike.Controllers.BaseControllers;
@@ -31,6 +32,8 @@ public abstract partial class BasePlayableController : IPlayableController
 
     protected InventoryEquipmentController InventoryEquipmentController =>
         controllerContainer.InventoryEquipmentController;
+    
+    protected BattleController BattleController => controllerContainer.BattleController;  
 
     public void Update()
     {
@@ -49,6 +52,8 @@ public abstract partial class BasePlayableController : IPlayableController
         if (playable is IRenderable renderable)
             MapController.RemoveCell(renderable.Cell);
     }
+
+    public abstract void OnTrigger(ICell cell);
 
     protected abstract void UpdateInner();
 

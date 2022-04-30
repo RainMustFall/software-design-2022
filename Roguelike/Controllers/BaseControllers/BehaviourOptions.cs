@@ -52,7 +52,7 @@ public abstract partial class BasePlayableController
 
                 controller.shouldSkipUpdate.SetTrue(1);
                 var (newX, newY) = new RandomStrategy().NextCoordinates(creature.Cell);
-                if (controller.MapController.Move(creature, newX, newY) &&
+                if (controller.MapController.Move(creature.Cell, newX, newY) &&
                     creature.Cell is IPlayableCell playableCell)
                     playableCell.ParentCell = controller.MapController.Map.Cells[newX, newY];
             });

@@ -13,7 +13,6 @@ public class MapController_Tests
     private MapController mapController;
     private Map map;
     private readonly TestCell testCell = new(1, 1);
-    private TestHumanoid testHumanoid;
 
     [SetUp]
     public void TestSetup()
@@ -21,7 +20,6 @@ public class MapController_Tests
         map = new Map(5, 5, false);
         mapController = new MapController(map);
         map.Cells[1, 1].PutCell(testCell);
-        testHumanoid = new TestHumanoid(100, 10, testCell);
     }
 
     [Test]
@@ -35,7 +33,7 @@ public class MapController_Tests
     [Test]
     public void Should_ReturnFalse_IfOutOfBounds()
     {
-        mapController.Move(testHumanoid, -1, 0).Should().BeFalse();
+        mapController.Move(testCell, -1, 0).Should().BeFalse();
         map.Cells[1, 1].Empty().Should().BeFalse();
         map.Cells[2, 2].Empty().Should().BeTrue();
     }
@@ -44,7 +42,7 @@ public class MapController_Tests
     public void Should_ReturnFalse_WhenMovingIntoAWall()
     {
         map.Cells[2, 2].PutCell(new WallCell(2, 2));
-        mapController.Move(testHumanoid, -1, 0).Should().BeFalse();
+        mapController.Move(testCell, -1, 0).Should().BeFalse();
         map.Cells[1, 1].Empty().Should().BeFalse();
     }
 }

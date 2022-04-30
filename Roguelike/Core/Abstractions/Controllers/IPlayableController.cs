@@ -1,4 +1,6 @@
-﻿namespace Roguelike.Core.Abstractions.Controllers;
+﻿using Roguelike.Core.Abstractions.Map;
+
+namespace Roguelike.Core.Abstractions.Controllers;
 
 /// <summary>
 /// Contains fields that are applicable to every playable actor of the game.
@@ -8,4 +10,5 @@ public interface IPlayableController
 {
     void Update();
     void OnDeath();
+    void OnTrigger(ICell cell);
 }

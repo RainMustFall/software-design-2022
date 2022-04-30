@@ -1,5 +1,6 @@
 using Roguelike.Controllers.BaseControllers;
 using Roguelike.Controllers.Misc;
+using Roguelike.Core.Abstractions.Map;
 using Roguelike.Helpers;
 using Roguelike.Map.Cells;
 using Roguelike.Playables;
@@ -39,8 +40,19 @@ public class HumanPlayerController : BasePlayableController
         {
             var newX = player.Cell.X + deltaX;
             var newY = player.Cell.Y + deltaY;
-            if (MapController.Move(player, newX, newY))
+            var playerCell = MapController.Map.Cells[newX, newY];
+            if (playerCell.ContainsMob())
+                OnTrigger(playerCell);
+            if (MapController.Move(player.Cell, newX, newY))
                 (player.Cell as PlayableCell)!.ParentCell = MapController.Map.Cells[newX, newY];
+        }
+    }
+    
+    public override void OnTrigger(ICell cell)
+    {
+        if (cell is CompositeCell compositeCell)
+        {
+            BattleController.Battle(player, compositeCell.GetCreatureInCell());
         }
     }
 

@@ -54,4 +54,14 @@ public class CompositeCell : ICell
     {
         return innerCells.FindIndex(cell => cell is IPlayableCell) != -1;
     }
+
+    public bool ContainsWall()
+    {
+        return innerCells.FindIndex(cell => cell is WallCell) != -1;
+    }
+
+    public bool ContainsMob()
+    {
+        return innerCells.FindIndex(cell => cell is MobCell) != -1;
+    }
 }

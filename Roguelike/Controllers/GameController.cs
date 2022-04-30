@@ -19,14 +19,17 @@ public class GameController
     public readonly List<IPlayableController> PlayableControllers = new();
     public MapController MapController { get; }
     public InventoryEquipmentController InventoryEquipmentController { get; }
+    public BattleController BattleController { get; }
 
     public GameController(Game game,
         MapController mapController,
-        InventoryEquipmentController inventoryEquipmentController)
+        InventoryEquipmentController inventoryEquipmentController,
+        BattleController battleController)
     {
         this.game = game;
         MapController = mapController;
         InventoryEquipmentController = inventoryEquipmentController;
+        BattleController = battleController;
     }
 
     public void EndGame()
@@ -70,6 +73,6 @@ public class GameController
 
     private ControllerContainer GetControllerContainer()
     {
-        return new ControllerContainer(this, MapController, InventoryEquipmentController);
+        return new ControllerContainer(this, MapController, InventoryEquipmentController, BattleController);
     }
 }

@@ -30,7 +30,8 @@ public class Game
         var map = new Map(200, 200);
         var mapController = new MapController(map);
         var inventoryEquipmentController = new InventoryEquipmentController();
-        GameController = new GameController(this, mapController, inventoryEquipmentController);
+        var battleController = new BattleController();
+        GameController = new GameController(this, mapController, inventoryEquipmentController, battleController);
 
         var playerCell = map.GetFirstEmptyCell();
         if (playerCell == null)
