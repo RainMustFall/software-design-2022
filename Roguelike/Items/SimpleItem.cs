@@ -11,4 +11,15 @@ public class SimpleItem : IItem
         Name = name;
         Type = type;
     }
+    public SimpleItem(ItemType type)
+    {
+        Type = type;
+        Name = Type switch
+        {
+            ItemType.Body => "Бронежилет",
+            ItemType.Helmet => "Каска",
+            ItemType.Weapon => "Камень",
+            _ => Name
+        };
+    }
 }

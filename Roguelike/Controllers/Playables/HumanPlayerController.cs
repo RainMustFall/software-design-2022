@@ -40,15 +40,26 @@ public class HumanPlayerController : BasePlayableController
         {
             var newX = player.Cell.X + deltaX;
             var newY = player.Cell.Y + deltaY;
-            var playerCell = MapController.Map.Cells[newX, newY];
-            if (playerCell.ContainsMob())
-                OnTrigger(playerCell);
+            var newPlayerCell = MapController.Map.Cells[newX, newY];
+            if (newPlayerCell.ContainsMob())
+                OnTriggerRenderingCreature(newPlayerCell);
+            if (newPlayerCell.ContainsItem())
+                OnTriggerInventory(newPlayerCell);
             if (MapController.Move(player.Cell, newX, newY))
                 (player.Cell as PlayableCell)!.ParentCell = MapController.Map.Cells[newX, newY];
         }
     }
-    
-    public override void OnTrigger(ICell cell)
+
+    private void OnTriggerInventory(ICell cell)
+    {
+        if (cell is CompositeCell compositeCell)
+        {
+            player.Inventory.TryPutItem(compositeCell.GetItemFromCell());
+            MapController.Map.Cells[cell.X, cell.Y].RemoveItemFromCell();
+        }
+    }
+
+    public override void OnTriggerRenderingCreature(ICell cell)
     {
         if (cell is CompositeCell compositeCell)
         {

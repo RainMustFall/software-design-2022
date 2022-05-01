@@ -17,7 +17,7 @@ public class MapController_Tests
     [SetUp]
     public void TestSetup()
     {
-        map = new Map(5, 5, false);
+        map = new Map(5, 5, 1, false);
         mapController = new MapController(map);
         map.Cells[1, 1].PutCell(testCell);
     }

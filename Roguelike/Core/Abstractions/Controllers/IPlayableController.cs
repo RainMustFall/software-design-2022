@@ -10,5 +10,5 @@ public interface IPlayableController
 {
     void Update();
     void OnDeath();
-    void OnTrigger(ICell cell);
+    void OnTriggerRenderingCreature(ICell cell);
 }

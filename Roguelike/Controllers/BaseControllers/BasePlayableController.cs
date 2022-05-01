@@ -53,7 +53,7 @@ public abstract partial class BasePlayableController : IPlayableController
             MapController.RemoveCell(renderable.Cell);
     }
 
-    public abstract void OnTrigger(ICell cell);
+    public abstract void OnTriggerRenderingCreature(ICell cell);
 
     protected abstract void UpdateInner();
 

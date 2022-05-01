@@ -27,7 +27,7 @@ public class Game
     public Game()
     {
         // todo: make use of DI container and initialization (i.e. load a save)
-        var map = new Map(200, 200);
+        var map = new Map(200, 200, 27);
         var mapController = new MapController(map);
         var inventoryEquipmentController = new InventoryEquipmentController();
         var battleController = new BattleController();

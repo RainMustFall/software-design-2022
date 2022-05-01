@@ -24,14 +24,14 @@ public class MobController : BasePlayableController
     protected override void UpdateInner()
     {
         var (newX, newY) = mob.MovementStrategy.NextCoordinates(mob.Cell);
-        var mobCell = MapController.Map.Cells[newX, newY];
-        if (mobCell.ContainsPlayer())
-            OnTrigger(mobCell);
+        var newMobCell = MapController.Map.Cells[newX, newY];
+        if (newMobCell.ContainsPlayer())
+            OnTriggerRenderingCreature(newMobCell);
         if (MapController.Move(mob.Cell, newX, newY))
             (mob.Cell as MobCell)!.ParentCell = MapController.Map.Cells[newX, newY];
     }
 
-    public override void OnTrigger(ICell cell)
+    public override void OnTriggerRenderingCreature(ICell cell)
     {
         if (cell is CompositeCell compositeCell)
         {

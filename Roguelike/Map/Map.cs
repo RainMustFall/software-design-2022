@@ -1,3 +1,6 @@
+using System;
+using System.Diagnostics;
+using Roguelike.Core.Abstractions.Items;
 using Roguelike.Map.Cells;
 
 namespace Roguelike.Map;
@@ -7,14 +10,17 @@ namespace Roguelike.Map;
 /// </summary>
 public class Map
 {
-    public Map(int width, int height, bool generate = true)
+    public Map(int width, int height, int inventoryCount, bool generate = true)
     {
         Cells = new CompositeCell[width, height];
         for (var x = 0; x < width; ++x)
         for (var y = 0; y < height; ++y)
             Cells[x, y] = new CompositeCell(x, y);
         if (generate)
+        {
             GenerateMap();
+            GenerateInventory(inventoryCount);
+        }
     }
 
     public CompositeCell[,] Cells { get; }
@@ -37,7 +43,6 @@ public class Map
                 if (nextDouble > placementThreshold)
                 {
                     Cells[i, j].PutCell(new WallCell(i, j));
-
                     var a = nextDouble < .5 ? 0 : nextDouble < .5 ? -1 : 1;
                     var b = a != 0 ? 0 : nextDouble < .5 ? -1 : 1;
                     Cells[i + a, j + b].PutCell(new WallCell(i, j));
@@ -45,6 +50,28 @@ public class Map
             }
     }
 
+    private void GenerateInventory(int inventoryCount)
+    {
+        var random = new Random();
+        var rMax = Cells.GetUpperBound(0);
+        var cMax = Cells.GetUpperBound(1);
+        for (var i = 0; i < inventoryCount;)
+        {
+            int rowRandom = random.Next(1, rMax - 1);
+            int columnRandom = random.Next(1, cMax - 1);
+            if (Cells[rowRandom, columnRandom].Empty())
+            {
+                if (i % 2 == 0)
+                    Cells[rowRandom, columnRandom].PutCell(new ItemCell(rowRandom, columnRandom, ItemType.Weapon));
+                else if (i % 3 == 0)
+                    Cells[rowRandom, columnRandom].PutCell(new ItemCell(rowRandom, columnRandom, ItemType.Helmet));
+                else
+                    Cells[rowRandom, columnRandom].PutCell(new ItemCell(rowRandom, columnRandom, ItemType.Body));
+                i++;
+            }
+        }
+    }
+    
     /// <summary>
     /// Returns the topmost left cell, which is not
     /// occupied by anything, and null if there is no such cell
