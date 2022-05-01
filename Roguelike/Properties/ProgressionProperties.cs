@@ -3,24 +3,39 @@
 /// <summary>
 /// Stores information that is sufficient to describe current level, experience and skills.
 /// </summary>
-public struct ProgressionProperties
+public class ProgressionProperties
 {
     public int Level { get; private set; }
     public int Experience { get; private set; }
-
-    public ProgressionProperties(int level, int experience)
+    public int MaxLevel { get; private set; }
+    public int MaxExperience { get; private set; }
+    
+    public ProgressionProperties(int level, int experience, int maxExperience = 3, int maxLevel = 5)
     {
         Level = level;
         Experience = experience;
+        MaxExperience = maxExperience;
+        MaxLevel = maxLevel;
     }
 
+    /// <summary>
+    /// Move to next game level.
+    /// </summary>
     public void NextLevel()
     {
         Level++;
     }
 
-    public void IncreaseExperience(int delta = 1)
+    /// <summary>
+    /// Increase experience after killing a mob.
+    /// </summary>
+    public void IncreaseExperience()
     {
-        Experience += delta;
+        Experience++;
+        if (Experience >= MaxExperience)
+        {
+            Experience = 0;
+            NextLevel();
+        }
     }
 }

@@ -63,7 +63,10 @@ public class HumanPlayerController : BasePlayableController
     {
         if (cell is CompositeCell compositeCell)
         {
-            BattleController.Battle(player, compositeCell.GetCreatureInCell());
+            var mob = compositeCell.GetCreatureInCell();
+            BattleController.Battle(player, mob);
+            if (mob.State.CurrentHealth <= 0)
+                player.Progression.IncreaseExperience();
         }
     }
 

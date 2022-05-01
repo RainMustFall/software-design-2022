@@ -19,7 +19,9 @@ public class CharacterView : View
 {
     private readonly InventoryEquipmentController inventoryEquipmentController;
     private readonly ProgressibleHumanoid character;
-    private ProgressBar bar;
+    private ProgressBar health;
+    private ProgressBar experience;
+    private ProgressBar level;
     private TableView equipment;
     private Label helmet;
     private Label body;
@@ -44,7 +46,14 @@ public class CharacterView : View
         };
 
         Add(frame);
-        AddHealthBar(frame);
+        
+        health = new ProgressBar();
+        experience = new ProgressBar();
+        level = new ProgressBar();
+
+        AddCaptionAndBar(0,0, "health", frame, health);
+        AddCaptionAndBar(0,2, "exp:", frame, experience);
+        AddCaptionAndBar(0,4, "level", frame, level);
         AddEquipmentView(frame);
         AddInventoryView(frame);
     }
@@ -71,19 +80,48 @@ public class CharacterView : View
         inventoryFrame.Add(inventory);
     }
 
-    void AddHealthBar(FrameView frame)
+    // void AddHealthBar(FrameView frame)
+    // {
+    //     health = new ProgressBar()
+    //     {
+    //         X = 0,
+    //         Y = 0,
+    //         Width = Dim.Fill(),
+    //         Fraction = 0.0f
+    //     };
+    //
+    //     frame.Add(health);
+    // }
+    //
+    // void AddExperienceBar(FrameView frame)
+    // {
+    //     experience = new ProgressBar()
+    //     {
+    //         X = 0,
+    //         Y = 2,
+    //         Width = Dim.Fill(),
+    //         Fraction = 0.0f
+    //     };
+    //
+    //     frame.Add(experience);
+    // }
+
+    static void AddCaptionAndBar(int x, int y, string title, FrameView frame, ProgressBar progressBar)
     {
-        bar = new ProgressBar()
+        var caption = new Label(title)
         {
-            X = 0,
-            Y = 0,
-            Width = Dim.Fill(),
-            Fraction = 0.0f
+            X = x,
+            Y = y,
+            Width = 6,
+            ColorScheme = Colors.Base
         };
-
-        frame.Add(bar);
+        progressBar.X = Pos.Right(caption);
+        progressBar.Y = y;
+        progressBar.Width = Dim.Fill();
+        progressBar.Fraction = 0.0f;
+        frame.Add(caption, progressBar);
     }
-
+    
     void AddEquipmentPart(FrameView frame, string title, ref Label labelToInit, View anchor, Key shortcut, Action action, int offset = 0)
     {
         var boldCaption = new Label(title)
@@ -108,7 +146,7 @@ public class CharacterView : View
     
     void AddEquipmentView(FrameView frame)
     {
-        AddEquipmentPart(frame, "Helmet", ref helmet, bar, Key.CtrlMask | Key.ShiftMask | Key.D1, UnwearHelmetShortcutAction, offset:1);
+        AddEquipmentPart(frame, "Helmet", ref helmet, level, Key.CtrlMask | Key.ShiftMask | Key.D1, UnwearHelmetShortcutAction, offset:1);
         AddEquipmentPart(frame, "Body", ref body, helmet, Key.CtrlMask | Key.ShiftMask | Key.D2, UnwearBodyShortcutAction);
         AddEquipmentPart(frame, "Weapon", ref weapon, body, Key.CtrlMask | Key.ShiftMask | Key.D3, UnwearWeaponShortcutAction);
     }
@@ -120,7 +158,9 @@ public class CharacterView : View
     
     public override void Redraw(Rect rect)
     {
-        bar.Fraction = 1.0f * character.State.CurrentHealth / character.Properties.MaxHealth;
+        health.Fraction = 1.0f * character.State.CurrentHealth / character.Properties.MaxHealth;
+        experience.Fraction = 1.0f * character.Progression.Experience / character.Progression.MaxExperience;
+        level.Fraction = 1.0f * character.Progression.Level / character.Progression.MaxLevel;
         
         UpdateEquipmentCaption(body, character.Equipment.Body);
         UpdateEquipmentCaption(helmet, character.Equipment.Helmet);

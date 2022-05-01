@@ -24,7 +24,7 @@ public class ProgressibleHumanoid : IProgressible, IHumanoid
     public CreatureProperties Properties => GetCurrentProperties();
     public ICell Cell { get; }
 
-    public ProgressionProperties Progression { get; set; } = new(1, 0);
+    public ProgressionProperties Progression { get; set; } = new ProgressionProperties(1,0);
 
     private CreatureProperties GetCurrentProperties()
     {
