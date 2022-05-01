@@ -7,8 +7,8 @@ public class ProgressionProperties
 {
     public int Level { get; private set; }
     public int Experience { get; private set; }
-    public int MaxLevel { get; private set; }
-    public int MaxExperience { get; private set; }
+    public int MaxLevel { get; }
+    public int MaxExperience { get; }
     
     public ProgressionProperties(int level, int experience, int maxExperience = 3, int maxLevel = 5)
     {

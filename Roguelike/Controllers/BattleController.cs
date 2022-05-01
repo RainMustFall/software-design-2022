@@ -2,6 +2,9 @@
 
 namespace Roguelike.Controllers;
 
+/// <summary>
+/// Controller for handle battle between characters. 
+/// </summary>
 public class BattleController
 {
     private readonly Random random = new();

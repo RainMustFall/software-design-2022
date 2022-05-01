@@ -80,32 +80,6 @@ public class CharacterView : View
         inventoryFrame.Add(inventory);
     }
 
-    // void AddHealthBar(FrameView frame)
-    // {
-    //     health = new ProgressBar()
-    //     {
-    //         X = 0,
-    //         Y = 0,
-    //         Width = Dim.Fill(),
-    //         Fraction = 0.0f
-    //     };
-    //
-    //     frame.Add(health);
-    // }
-    //
-    // void AddExperienceBar(FrameView frame)
-    // {
-    //     experience = new ProgressBar()
-    //     {
-    //         X = 0,
-    //         Y = 2,
-    //         Width = Dim.Fill(),
-    //         Fraction = 0.0f
-    //     };
-    //
-    //     frame.Add(experience);
-    // }
-
     static void AddCaptionAndBar(int x, int y, string title, FrameView frame, ProgressBar progressBar)
     {
         var caption = new Label(title)
