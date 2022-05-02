@@ -1,6 +1,6 @@
 namespace Roguelike.Helpers;
 
-public class IdGenerator
+internal class IdGenerator
 {
     private static int counter;
 

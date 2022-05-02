@@ -1,5 +1,8 @@
 ﻿namespace Roguelike.Helpers;
 
+/// <summary>
+/// Stores the <c>true</c> state temporarily. Decreases internal counter on every check.
+/// </summary>
 public class TemporaryBoolean
 {
     private int remaining;

@@ -3,7 +3,7 @@ using SharpHook.Native;
 
 namespace Roguelike.Helpers;
 
-public static class ShortcutHandler
+internal static class ShortcutHandler
 {
     private static Dictionary<KeyCode, bool> keysPressed = new();
 

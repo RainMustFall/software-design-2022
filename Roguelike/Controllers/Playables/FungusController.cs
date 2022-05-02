@@ -6,6 +6,9 @@ using Roguelike.Playables;
 
 namespace Roguelike.Controllers.Playables;
 
+/// <summary>
+/// Controller of fungus instances.
+/// </summary>
 public class FungusController : IPlayableController
 {
     private HashSet<Fungus> hashSet = new();

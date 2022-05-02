@@ -3,6 +3,9 @@ using Roguelike.Map.Cells;
 
 namespace Roguelike.Mobs.Strategies;
 
+/// <summary>
+/// Randomly walks in a 1-radius of provided cell. 
+/// </summary>
 public class RandomStrategy : IStrategy
 {
     private Random random;

@@ -3,6 +3,9 @@ using Roguelike.Map.Cells;
 
 namespace Roguelike.Mobs.Strategies;
 
+/// <summary>
+/// Chases player if it is seen in some radius.
+/// </summary>
 public class AggressiveStrategy : IStrategy
 {
     private Map.Map map;
@@ -22,8 +25,8 @@ public class AggressiveStrategy : IStrategy
         if (player == null)
             return (0, 0);
 
-        int dx = player.X - cell.X;
-        int dy = player.Y - cell.Y;
+        var dx = player.X - cell.X;
+        var dy = player.Y - cell.Y;
 
         if (Math.Abs(dx) > radius || Math.Abs(dy) > radius)
             return (cell.X, cell.Y);
@@ -40,8 +43,8 @@ public class AggressiveStrategy : IStrategy
         while (queue.Count != 0)
         {
             var current = queue.Dequeue();
-            for (int dx = -1; dx <= 1; ++dx)
-            for (int dy = -1; dy <= 1; ++dy)
+            for (var dx = -1; dx <= 1; ++dx)
+            for (var dy = -1; dy <= 1; ++dy)
                 if (Legal(current.X + dx, current.Y + dy, start, finish))
                 {
                     var next = map.Cells[current.X + dx, current.Y + dy];
@@ -56,12 +59,12 @@ public class AggressiveStrategy : IStrategy
         return (finish.X, finish.Y);
     }
 
-    bool BetweenBounds(int idx, Array array, int dimension)
+    private bool BetweenBounds(int idx, Array array, int dimension)
     {
         return idx >= array.GetLowerBound(dimension) && idx <= array.GetUpperBound(dimension);
     }
 
-    bool Legal(int x, int y, ICell start, ICell finish)
+    private bool Legal(int x, int y, ICell start, ICell finish)
     {
         return
             // Inside map
@@ -77,8 +80,8 @@ public class AggressiveStrategy : IStrategy
 
     private void ClearRoute()
     {
-        for (int i = 0; i < 2 * radius + 1; i++)
-        for (int j = 0; j < 2 * radius + 1; j++)
+        for (var i = 0; i < 2 * radius + 1; i++)
+        for (var j = 0; j < 2 * radius + 1; j++)
             used[i, j] = false;
     }
 }

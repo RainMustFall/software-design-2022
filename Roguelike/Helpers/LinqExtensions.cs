@@ -1,6 +1,6 @@
 namespace Roguelike.Helpers;
 
-public static class LinqExtensions
+internal static class LinqExtensions
 {
     public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> enumerable)
     {

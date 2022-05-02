@@ -7,6 +7,10 @@ namespace Roguelike.Controllers.BaseControllers;
 // little dirty hack just to see internals of base playable controller
 public abstract partial class BasePlayableController
 {
+    /// <summary>
+    /// Options of <see cref="BasePlayableController"/> which allows user to toggle on/off required playable features,
+    /// such as death handling, confusion handling etc...
+    /// </summary>
     public class BehaviourOptions
     {
         private readonly List<Action<BasePlayableController>> additionalActions;
@@ -60,5 +64,6 @@ public abstract partial class BasePlayableController
         }
 
         #endregion
+
     }
 }

@@ -1,3 +1,4 @@
+using Roguelike.Controllers.Playables;
 using Roguelike.Core.Abstractions.Behaviours;
 using Roguelike.Core.Abstractions.Map;
 using Roguelike.Map.Cells;
@@ -5,6 +6,9 @@ using Roguelike.Properties;
 
 namespace Roguelike.Playables;
 
+/// <summary>
+/// A model of fungus, which are controlled by <see cref="FungusController"/>.
+/// </summary>
 public class Fungus : IRenderable, ICreature, ICloneable<Fungus>
 {
     private readonly MobCell cell;
