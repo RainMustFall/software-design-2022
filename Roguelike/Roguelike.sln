@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roguelike", "Roguelike.csproj", "{72E1DB4B-34FB-424A-AE35-2F591EA05010}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roguelike_Tests", "Roguelike_Tests\Roguelike_Tests.csproj", "{DEBF79E0-7291-43A4-88F5-0C243B5364FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72E1DB4B-34FB-424A-AE35-2F591EA05010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E1DB4B-34FB-424A-AE35-2F591EA05010}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E1DB4B-34FB-424A-AE35-2F591EA05010}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E1DB4B-34FB-424A-AE35-2F591EA05010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEBF79E0-7291-43A4-88F5-0C243B5364FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEBF79E0-7291-43A4-88F5-0C243B5364FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEBF79E0-7291-43A4-88F5-0C243B5364FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEBF79E0-7291-43A4-88F5-0C243B5364FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

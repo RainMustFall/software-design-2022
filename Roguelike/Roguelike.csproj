@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="SharpHook" Version="3.0.0" />
+      <PackageReference Include="Terminal.Gui" Version="1.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Roguelike_Tests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Roguelike_Tests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Roguelike_Tests\**" />
+    </ItemGroup>
+
+</Project>
