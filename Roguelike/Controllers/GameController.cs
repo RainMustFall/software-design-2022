@@ -38,7 +38,7 @@ public class GameController
     }
 
     // todo: other factories and game methods...
-    public ProgressibleHumanoid? CreateHumanPlayer(CompositeCell initialPosition)
+    public ProgressibleHumanoid CreateHumanPlayer(CompositeCell initialPosition)
     {
         var humanoid = new ProgressibleHumanoid(initialPosition);
         var humanPlayerController = new HumanPlayerController(GetControllerContainer(), humanoid);
@@ -52,6 +52,13 @@ public class GameController
         var dragon = new Dragon(initialPosition, strategy);
         var mobController = new MobController(GetControllerContainer(), dragon);
         PlayableControllers.Add(mobController);
+    }
+
+    public void SpawnFungus(CompositeCell initialPosition)
+    {
+        var fungus = new Fungus(initialPosition);
+        var fungusController = new FungusController(GetControllerContainer(), fungus);
+        PlayableControllers.Add(fungusController);
     }
 
     private IStrategy SelectStrategy()

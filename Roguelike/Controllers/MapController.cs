@@ -19,12 +19,11 @@ public class MapController
     {
         Map = map;
     }
-    
+
     public bool Move(ICell toMove, int toX, int toY)
     {
-        if (toX >= Map.Cells.GetLength(0) || toX < 0 || toY >= Map.Cells.GetLength(1) || toY < 0)
-            return false;
-        if (!Map.Cells[toX, toY].Empty())
+        var cell = GetCell(toX, toY);
+        if (cell == null || !cell.Empty())
             return false;
         var (fromX, fromY) = (toMove.X, toMove.Y);
         Map.Cells[fromX, fromY].RemoveCell(toMove);
@@ -35,5 +34,12 @@ public class MapController
     public void RemoveCell(ICell cell)
     {
         Map.Cells[cell.X, cell.Y].RemoveCell(cell);
+    }
+
+    public CompositeCell? GetCell(int x, int y)
+    {
+        if (x >= Map.Cells.GetLength(0) || x < 0 || y >= Map.Cells.GetLength(1) || y < 0)
+            return null;
+        return Map.Cells[x, y];
     }
 }

@@ -21,8 +21,9 @@ public class Game
     public ProgressibleHumanoid? MainCharacter { get; }
 
     private bool running = true;
-    
-     static int MOB_COUNT = 100;
+
+    private const int MobCount = 100;
+    private const int FungusCount = 20;
 
     public Game()
     {
@@ -37,9 +38,12 @@ public class Game
         if (playerCell == null)
             throw new Exception("Generated map has no empty cells");
         MainCharacter = GameController.CreateHumanPlayer(playerCell);
-        
-        for (int i = 0; i < MOB_COUNT; ++i)
+
+        for (var i = 0; i < MobCount; ++i)
             GameController.SpawnMob(map.GetRandomEmptyCell()!);
+
+        for (var i = 0; i < FungusCount; ++i)
+            GameController.SpawnFungus(map.GetRandomEmptyCell()!);
 
         MainCharacter.Inventory.TryPutItem(new SimpleItem("Камень", ItemType.Weapon));
         MainCharacter.Inventory.TryPutItem(new SimpleItem("Японская удочка", ItemType.Weapon));
