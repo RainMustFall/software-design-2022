@@ -19,4 +19,9 @@ public class CreatureState
     {
         CurrentHealth += delta;
     }
+
+    public void UpdateHealth(int newHealth)
+    {
+        CurrentHealth = newHealth;
+    }
 }

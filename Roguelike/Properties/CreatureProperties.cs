@@ -12,14 +12,8 @@ public class CreatureProperties
         MaxHealth = maxHealth;
         AttackPower = attackPower;
     }
-
-    public void ChangeHealth(int delta)
+    public void SetMaxHealth(int newMaxHealth)
     {
-        MaxHealth += delta;
-    }
-
-    public void ChangeAttackPower(int delta)
-    {
-        AttackPower += delta;
+        MaxHealth = newMaxHealth;
     }
 };
