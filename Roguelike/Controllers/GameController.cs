@@ -2,6 +2,7 @@ using Roguelike.Controllers.Misc;
 using Roguelike.Controllers.Playables;
 using Roguelike.Core;
 using Roguelike.Core.Abstractions.Controllers;
+using Roguelike.Core.Abstractions.Generation;
 using Roguelike.Map.Cells;
 using Roguelike.Mobs;
 using Roguelike.Mobs.Strategies;
@@ -46,31 +47,30 @@ public class GameController
         return humanoid;
     }
 
-    public void SpawnMob(CompositeCell initialPosition)
+    public void SpawnMob(Map.Map map)
     {
-        var strategy = SelectStrategy();
-        var dragon = new Dragon(initialPosition, strategy);
-        var mobController = new MobController(GetControllerContainer(), dragon);
+        var mobFactory = SelectFactory();
+        var mob = mobFactory.CreateMob(map);
+        var mobController = new MobController(GetControllerContainer(), mob);
         PlayableControllers.Add(mobController);
     }
 
+    private MobFactory SelectFactory()
+    {
+        var random = new Random();
+        switch (random.Next(2))
+        {
+            case 0: return new SciFiFactory();
+            case 1: return new FantasyFactory();
+            default: throw new Exception("Random is broken!"); // impossible
+        }
+    }
+    
     public void SpawnFungus(CompositeCell initialPosition)
     {
         var fungus = new Fungus(initialPosition);
         var fungusController = new FungusController(GetControllerContainer(), fungus);
         PlayableControllers.Add(fungusController);
-    }
-
-    private IStrategy SelectStrategy()
-    {
-        var random = new Random();
-        switch (random.Next(3))
-        {
-            case 0: return new AggressiveStrategy(MapController.Map);
-            case 1: return new CowardlyStrategy(MapController.Map);
-            case 2: return new RandomStrategy();
-            default: throw new Exception("Random is broken!"); // impossible
-        }
     }
 
     public void OnPlayableDeath(IPlayableController controller)

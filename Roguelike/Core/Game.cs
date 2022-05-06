@@ -40,7 +40,7 @@ public class Game
         MainCharacter = GameController.CreateHumanPlayer(playerCell);
 
         for (var i = 0; i < MobCount; ++i)
-            GameController.SpawnMob(map.GetRandomEmptyCell()!);
+            GameController.SpawnMob(map);
 
         for (var i = 0; i < FungusCount; ++i)
             GameController.SpawnFungus(map.GetRandomEmptyCell()!);
