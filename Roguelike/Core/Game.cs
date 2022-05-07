@@ -6,11 +6,12 @@ using Roguelike.Items;
 using Roguelike.Mobs.Strategies;
 using Roguelike.Playables;
 using Roguelike.Playables.Mobs;
+using Roguelike.Map;
 using Terminal.Gui;
 
 namespace Roguelike.Core;
 
-using Map = Map.Map;
+//using Map = Map.Map;
 
 /// <summary>
 /// Main game class that is responsible for the creation of the game and processing of playable controller instances.
@@ -28,7 +29,9 @@ public class Game
     public Game()
     {
         // todo: make use of DI container and initialization (i.e. load a save)
-        var map = new Map(200, 200, 27);
+        var mapBuilder = new MapBuilder(true);
+        mapBuilder.SetParametersForGeneration(200, 200, 27);
+        var map = mapBuilder.Build();
         var mapController = new MapController(map);
         var inventoryEquipmentController = new InventoryEquipmentController();
         var battleController = new BattleController();
